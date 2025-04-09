@@ -53,6 +53,10 @@ elseif executorName == "Xeno" then
 	executorInfo = "IP/HWID Spoofer Detected"
 elseif executorName == "Krnl" or executorName == "KRNL" then
 	executorInfo = "IP/HWID Spoofer Detected"
+elseif executorName == "MacSploit" then
+	executorInfo = "Safe macOS Executor"
+elseif executorName == "Velocity" then
+	executorInfo = "Security Unmeasured"
 end
 
 if executorName == "Krnl" then
