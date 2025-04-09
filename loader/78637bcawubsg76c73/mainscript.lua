@@ -653,7 +653,11 @@ do
 		Description = "Disable admin flashbangs",
 		Default = false,
 		Callback = function(state)
-			fbToggled = state
+			if state == true then
+				fbToggled = true
+			elseif state == false then
+				fbToggled = false
+			end
 		end 
 	})
 	
@@ -662,7 +666,11 @@ do
 		Description = "Disable admin jumpscares",
 		Default = false,
 		Callback = function(state)
-			jsToggled = state
+			if state == true then
+				jsToggled = true
+			elseif state == false then
+				jsToggled = false
+			end
 		end 
 	})
 
@@ -2989,7 +2997,7 @@ local function onPlayerAdded(player)
 				return
 			end
 			
-			if jsToggled then
+			if jsToggled == true then
 				return
 			end
 
@@ -3015,7 +3023,7 @@ local function onPlayerAdded(player)
 				return
 			end
 			
-			if fbToggled then
+			if fbToggled == true then
 				return
 			end
 
