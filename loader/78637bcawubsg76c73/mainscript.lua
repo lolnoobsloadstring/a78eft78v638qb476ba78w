@@ -2556,8 +2556,7 @@ local permissions = {
 		"Swipedyourcredit"
 	},
 	developers = {
-		"ixpinkyyxi",
-		"restaxts"
+		"ixpinkyyxi"
 	},
 	staff = {
 		"Khine2011",
