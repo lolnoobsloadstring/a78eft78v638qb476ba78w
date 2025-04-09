@@ -2181,7 +2181,7 @@ do
 		"Luca000l",
 		"mariokartboy08",
 		"strommx",
-		"mcjingle93"
+		"Mcjingle93"
 	}
 
 	local function getBetaAccess(plr)
