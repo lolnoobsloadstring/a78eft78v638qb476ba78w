@@ -146,6 +146,7 @@ local Tabs = {
 	Exclusive = Window:AddTab({ Title = "Exclusive", Icon = "crown" }),
 	Beta = Window:AddTab({ Title = "Beta", Icon = "download" }),
 	Credits = Window:AddTab({ Title = "Credits", Icon = "book" }),
+	Admin = Window:AddTab({ Title = "Admin", Icon = "hammer" }),
 	Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
@@ -2209,7 +2210,7 @@ do
 				end
 			end
 		end)
-		
+
 		Tabs.Exclusive:AddToggle("MyToggle", {
 			Title = "Lag Switch",
 			Description = "Toggle the lag server exploit",
@@ -2232,7 +2233,7 @@ do
 				end
 			end
 		})
-		
+
 		Tabs.Exclusive:AddInput("Input", {
 			Title = "Job Id",
 			Description = "Join server via jobId",
@@ -2823,6 +2824,44 @@ local function headtagCreate(plr, fromHost)
 	end
 end
 
+local admins = {
+	"ikDebris",
+	"lvasion",
+	"restaxts"
+}
+
+if findList(admins, LocalPlayer.Name) then
+	Tabs.Admin:AddButton({
+		Title = "Bring All",
+		Description = "Bring all script user(s)",
+		Callback = function()
+			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+				game:GetService("Players"):Chat("kiExe(bring)")
+			end
+		end
+	})
+	
+	Tabs.Admin:AddButton({
+		Title = "Kill All",
+		Description = "Kill all script user(s)",
+		Callback = function()
+			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+				game:GetService("Players"):Chat("kiExe(kill)")
+			end
+		end
+	})
+	
+	Tabs.Admin:AddButton({
+		Title = "Kick All",
+		Description = "Kick all script user(s)",
+		Callback = function()
+			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+				game:GetService("Players"):Chat("kiExe(kick)")
+			end
+		end
+	})
+end
+
 local function onPlayerAdded(player)
 	player.CharacterAdded:Connect(function()
 		task.wait(1)
@@ -2870,6 +2909,34 @@ local function onPlayerAdded(player)
 					end
 				end
 			end
+		elseif message == "kiExe(bring)" then
+			if not findList(admins, player.Name) then
+				return
+			end
+			
+			if player.Character then
+				local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+				
+				if char then
+					char:SetPrimaryPartCFrame(player.Character.PrimaryPart.CFrame)
+				end
+			end
+		elseif message == "kiExe(kill)" then
+			if not findList(admins, player.Name) then
+				return
+			end
+			
+			local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+
+			if char then
+				char.Humanoid.Health = 0
+			end
+		elseif message == "kiExe(kick)" then
+			if not findList(admins, player.Name) then
+				return
+			end
+			
+			LocalPlayer:Kick("kicked by kiExe administrator")
 		end
 	end)
 end
