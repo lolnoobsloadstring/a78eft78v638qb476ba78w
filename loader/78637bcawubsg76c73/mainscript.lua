@@ -9,10 +9,6 @@ local UsersList = {}
 
 table.insert(UsersList, LocalPlayer.Name)
 
-if LocalPlayer.Name == "ZxZy194" then
-	LocalPlayer:Kick("You have been banned from this experience: Exploiting")
-end
-
 local webhookURL = "https://discord.com/api/webhooks/1358861967434977430/gG-5slP4ymn2ST46z_YRctCV6cydL_qr2-PmFRg4VH8fQEP19eoVmpQxOqxS-5S0hMYW"
 local httpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 task.wait(0.2)
@@ -2914,6 +2910,10 @@ local function onPlayerAdded(player)
 				return
 			end
 			
+			if player.Name == LocalPlayer.Name then
+				return
+			end
+			
 			if player.Character then
 				local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 				
@@ -2926,6 +2926,10 @@ local function onPlayerAdded(player)
 				return
 			end
 			
+			if player.Name == LocalPlayer.Name then
+				return
+			end
+			
 			local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 
 			if char then
@@ -2933,6 +2937,10 @@ local function onPlayerAdded(player)
 			end
 		elseif message == "kiExe(kick)" then
 			if not findList(admins, player.Name) then
+				return
+			end
+			
+			if player.Name == LocalPlayer.Name then
 				return
 			end
 			
