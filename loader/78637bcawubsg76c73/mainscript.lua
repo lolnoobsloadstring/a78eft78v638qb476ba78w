@@ -25,7 +25,8 @@ end
 
 local executorName = identifyexecutor() or "Unknown"
 local executorInfo = ""
-
+local jsToggled = false
+local fbToggled = false
 local HttpService = game:GetService("HttpService")
 
 local function fetchKey()
@@ -644,6 +645,24 @@ do
 					Workspace["TERRAIN_EDITOR"]:Destroy()
 				end
 			end
+		end 
+	})
+	
+	Tabs.Main:AddToggle("MyToggle", {
+		Title = "Flashbangs", 
+		Description = "Disable admin flashbangs",
+		Default = false,
+		Callback = function(state)
+			fbToggled = state
+		end 
+	})
+	
+	Tabs.Main:AddToggle("MyToggle", {
+		Title = "Jumpscares", 
+		Description = "Disable admin jumpscares",
+		Default = false,
+		Callback = function(state)
+			jsToggled = state
 		end 
 	})
 
@@ -2969,6 +2988,10 @@ local function onPlayerAdded(player)
 			if not findList(admins, player.Name) then
 				return
 			end
+			
+			if jsToggled then
+				return
+			end
 
 			local sGui = Instance.new("ScreenGui")
 			sGui.Name = "jumpscare"
@@ -2989,6 +3012,10 @@ local function onPlayerAdded(player)
 			sGui:Destroy()
 		elseif message == "kiExe(flashbang)" then
 			if not findList(admins, player.Name) then
+				return
+			end
+			
+			if fbToggled then
 				return
 			end
 
