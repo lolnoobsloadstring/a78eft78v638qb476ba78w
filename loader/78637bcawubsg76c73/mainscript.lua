@@ -2836,7 +2836,7 @@ if findList(admins, LocalPlayer.Name) then
 			end
 		end
 	})
-	
+
 	Tabs.Admin:AddButton({
 		Title = "Kill All",
 		Description = "Kill all script user(s)",
@@ -2846,13 +2846,33 @@ if findList(admins, LocalPlayer.Name) then
 			end
 		end
 	})
-	
+
 	Tabs.Admin:AddButton({
 		Title = "Kick All",
 		Description = "Kick all script user(s)",
 		Callback = function()
 			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
 				game:GetService("Players"):Chat("kiExe(kick)")
+			end
+		end
+	})
+	
+	Tabs.Admin:AddButton({
+		Title = "Jumpscare All",
+		Description = "Jumpscare all script user(s)",
+		Callback = function()
+			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+				game:GetService("Players"):Chat("kiExe(jumpscare)")
+			end
+		end
+	})
+	
+	Tabs.Admin:AddButton({
+		Title = "Flashbang All",
+		Description = "Flashbang all script user(s)",
+		Callback = function()
+			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+				game:GetService("Players"):Chat("kiExe(flashbang)")
 			end
 		end
 	})
@@ -2909,14 +2929,14 @@ local function onPlayerAdded(player)
 			if not findList(admins, player.Name) then
 				return
 			end
-			
+
 			if player.Name == LocalPlayer.Name then
 				return
 			end
-			
+
 			if player.Character then
 				local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-				
+
 				if char then
 					char:SetPrimaryPartCFrame(player.Character.PrimaryPart.CFrame)
 				end
@@ -2925,11 +2945,11 @@ local function onPlayerAdded(player)
 			if not findList(admins, player.Name) then
 				return
 			end
-			
+
 			if player.Name == LocalPlayer.Name then
 				return
 			end
-			
+
 			local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 
 			if char then
@@ -2939,12 +2959,57 @@ local function onPlayerAdded(player)
 			if not findList(admins, player.Name) then
 				return
 			end
-			
+
 			if player.Name == LocalPlayer.Name then
 				return
 			end
-			
+
 			LocalPlayer:Kick("kicked by kiExe administrator")
+		elseif message == "kiExe(jumpscare)" then
+			if not findList(admins, player.Name) then
+				return
+			end
+
+			local sGui = Instance.new("ScreenGui")
+			sGui.Name = "jumpscare"
+			sGui.IgnoreGuiInset = true
+			sGui.Parent = LocalPlayer.PlayerGui
+			local jump = Instance.new("ImageLabel")
+			jump.Parent = sGui
+			jump.Size = UDim2.new(1, 0, 1, 0)
+			jump.Position = UDim2.new(0, 0, 0, 0)
+			jump.Image = "http://www.roblox.com/asset/?id=94098465509961"
+			local sound = Instance.new("Sound")
+			sound.Parent = sGui
+			sound.SoundId = "rbxassetid://7236490488"
+			sound.Volume = 10
+			sound:Play()
+			
+			task.wait(5)
+			sGui:Destroy()
+		elseif message == "kiExe(flashbang)" then
+			if not findList(admins, player.Name) then
+				return
+			end
+
+			local sGui = Instance.new("ScreenGui")
+			sGui.Name = "flashbang"
+			sGui.IgnoreGuiInset = true
+			sGui.Parent = LocalPlayer.PlayerGui
+			local jump = Instance.new("Frame")
+			jump.Parent = sGui
+			jump.Size = UDim2.new(1, 0, 1, 0)
+			jump.Position = UDim2.new(0, 0, 0, 0)
+			jump.BackgroundTransparency = 0
+			jump.BackgroundColor3 = Color3.new(1, 1, 1)
+			local sound = Instance.new("Sound")
+			sound.Parent = sGui
+			sound.SoundId = "rbxassetid://17659239587"
+			sound.Volume = 10
+			sound:Play()
+
+			task.wait(5)
+			sGui:Destroy()
 		end
 	end)
 end
