@@ -2180,7 +2180,8 @@ do
 		"Mysterioustrangerz",
 		"Luca000l",
 		"mariokartboy08",
-		"strommx"
+		"strommx",
+		"mcjingle93"
 	}
 
 	local function getBetaAccess(plr)
