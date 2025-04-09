@@ -2849,7 +2849,8 @@ end
 local admins = {
 	"ikDebris",
 	"lvasion",
-	"restaxts"
+	"restaxts",
+	"NitroNukexYT"
 }
 
 if findList(admins, LocalPlayer.Name) then
