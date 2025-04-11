@@ -453,7 +453,7 @@ do
 			})
 		end
 	})
-	
+
 	Tabs.Players:AddButton({
 		Title = "Anti Bang",
 		Description = "Method 1",
@@ -2205,27 +2205,16 @@ do
 	-- exclusives tab
 
 	local betaWhitelist = {
-		"ikDebris",
 		"lvasion",
 		"pandaphoebe6760",
-		"NitroNukexYT",
-		"ixpinkyyxi",
-		"restaxts",
+		"Swipedyourcredit",
 		"SueZQ413",
 		"nine2044",
 		"Bad_OmenOriginal",
-		"ImNotAPancake565",
-		"Khine2011",
-		"Swipedyourcredit",
 		"1can3uss",
-		"bacontheporco",
-		"Salty_redhead",
-		"memeslolew",
-		"Mysterioustrangerz",
-		"Luca000l",
-		"mariokartboy08",
-		"strommx",
-		"Mcjingle93"
+		"Skyler_saint",
+		"ma7med_6y5",
+		"memeslolew"
 	}
 
 	local function getBetaAccess(plr)
@@ -2449,11 +2438,6 @@ do
 			Title = "Whoops!",
 			Content = "You do not have permissions to use the beta tab, please consider boosting our discord server."
 		})
-	else
-		Tabs.Beta:AddParagraph({
-			Title = "We're Sorry!",
-			Content = "There doesnt appear to be anything here right now.."
-		})
 	end
 
 
@@ -2625,278 +2609,6 @@ local function findList(list, name)
 	return false
 end
 
-local function headtagCreate(plr, fromHost)
-	local char = plr.Character or plr.CharacterAdded:Wait()
-
-	if char then
-		local kiExe_OH = Instance.new("BillboardGui")
-		local OwnerTag = Instance.new("Frame")
-		local TagContent = Instance.new("TextLabel")
-		local UICorner = Instance.new("UICorner")
-		local UIPadding = Instance.new("UIPadding")
-		local UIPadding_2 = Instance.new("UIPadding")
-		local UICorner_2 = Instance.new("UICorner")
-		local UIListLayout = Instance.new("UIListLayout")
-		local DeveloperTag = Instance.new("Frame")
-		local TagContent_2 = Instance.new("TextLabel")
-		local UICorner_3 = Instance.new("UICorner")
-		local UIPadding_3 = Instance.new("UIPadding")
-		local UIPadding_4 = Instance.new("UIPadding")
-		local UICorner_4 = Instance.new("UICorner")
-		local CoOwnerTag = Instance.new("Frame")
-		local TagContent_3 = Instance.new("TextLabel")
-		local UICorner_5 = Instance.new("UICorner")
-		local UIPadding_5 = Instance.new("UIPadding")
-		local UIPadding_6 = Instance.new("UIPadding")
-		local UICorner_6 = Instance.new("UICorner")
-		local UserTag = Instance.new("Frame")
-		local TagContent_4 = Instance.new("TextLabel")
-		local UICorner_7 = Instance.new("UICorner")
-		local UIPadding_7 = Instance.new("UIPadding")
-		local UIPadding_8 = Instance.new("UIPadding")
-		local UICorner_8 = Instance.new("UICorner")
-		local StaffTag = Instance.new("Frame")
-		local TagContent_5 = Instance.new("TextLabel")
-		local UICorner_9 = Instance.new("UICorner")
-		local UIPadding_9 = Instance.new("UIPadding")
-		local UIPadding_10 = Instance.new("UIPadding")
-		local UICorner_10 = Instance.new("UICorner")
-
-		kiExe_OH.Name = "kiExe_OH"
-		kiExe_OH.Parent = char.Head
-		kiExe_OH.Active = true
-		kiExe_OH.Size = UDim2.new(3, 0, 0.5, 0)
-		kiExe_OH.StudsOffset = Vector3.new(0, 2, 0)
-
-		OwnerTag.Name = "OwnerTag"
-		OwnerTag.Parent = kiExe_OH
-		OwnerTag.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
-		OwnerTag.BorderColor3 = Color3.fromRGB(31, 31, 31)
-		OwnerTag.BorderSizePixel = 5
-		OwnerTag.Position = UDim2.new(0.100000001, 0, 0, 0)
-		OwnerTag.Size = UDim2.new(1, 0, 1, 0)
-		OwnerTag.Visible = false
-		OwnerTag.ZIndex = 2
-
-		TagContent.Name = "TagContent"
-		TagContent.Parent = OwnerTag
-		TagContent.Active = true
-		TagContent.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-		TagContent.BorderColor3 = Color3.fromRGB(0, 255, 0)
-		TagContent.BorderSizePixel = 0
-		TagContent.Size = UDim2.new(1, 0, 1, 0)
-		TagContent.ZIndex = 2
-		TagContent.Font = Enum.Font.Unknown
-		TagContent.Text = "Owner"
-		TagContent.TextColor3 = Color3.fromRGB(85, 170, 255)
-		TagContent.TextScaled = true
-		TagContent.TextSize = 28.000
-		TagContent.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
-		TagContent.TextWrapped = true
-
-		UICorner.CornerRadius = UDim.new(0.200000003, 0)
-		UICorner.Parent = TagContent
-
-		UIPadding.Parent = TagContent
-		UIPadding.PaddingBottom = UDim.new(0.150000006, 0)
-		UIPadding.PaddingTop = UDim.new(0.150000006, 0)
-
-		UIPadding_2.Parent = OwnerTag
-		UIPadding_2.PaddingBottom = UDim.new(0.0799999982, 0)
-		UIPadding_2.PaddingLeft = UDim.new(0.0149999997, 0)
-		UIPadding_2.PaddingRight = UDim.new(0.0149999997, 0)
-		UIPadding_2.PaddingTop = UDim.new(0.0799999982, 0)
-
-		UICorner_2.CornerRadius = UDim.new(0.200000003, 0)
-		UICorner_2.Parent = OwnerTag
-
-		UIListLayout.Parent = kiExe_OH
-		UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-		UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-		UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-
-		DeveloperTag.Name = "DeveloperTag"
-		DeveloperTag.Parent = kiExe_OH
-		DeveloperTag.BackgroundColor3 = Color3.fromRGB(255, 255, 127)
-		DeveloperTag.BorderColor3 = Color3.fromRGB(31, 31, 31)
-		DeveloperTag.BorderSizePixel = 5
-		DeveloperTag.Position = UDim2.new(0.100000001, 0, 0, 0)
-		DeveloperTag.Size = UDim2.new(1, 0, 1, 0)
-		DeveloperTag.Visible = false
-		DeveloperTag.ZIndex = 2
-
-		TagContent_2.Name = "TagContent"
-		TagContent_2.Parent = DeveloperTag
-		TagContent_2.Active = true
-		TagContent_2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-		TagContent_2.BorderColor3 = Color3.fromRGB(0, 255, 0)
-		TagContent_2.BorderSizePixel = 0
-		TagContent_2.Size = UDim2.new(1, 0, 1, 0)
-		TagContent_2.ZIndex = 2
-		TagContent_2.Font = Enum.Font.Unknown
-		TagContent_2.Text = "Developer"
-		TagContent_2.TextColor3 = Color3.fromRGB(255, 255, 127)
-		TagContent_2.TextScaled = true
-		TagContent_2.TextSize = 28.000
-		TagContent_2.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
-		TagContent_2.TextWrapped = true
-
-		UICorner_3.CornerRadius = UDim.new(0.200000003, 0)
-		UICorner_3.Parent = TagContent_2
-
-		UIPadding_3.Parent = TagContent_2
-		UIPadding_3.PaddingBottom = UDim.new(0.150000006, 0)
-		UIPadding_3.PaddingTop = UDim.new(0.150000006, 0)
-
-		UIPadding_4.Parent = DeveloperTag
-		UIPadding_4.PaddingBottom = UDim.new(0.0799999982, 0)
-		UIPadding_4.PaddingLeft = UDim.new(0.0149999997, 0)
-		UIPadding_4.PaddingRight = UDim.new(0.0149999997, 0)
-		UIPadding_4.PaddingTop = UDim.new(0.0799999982, 0)
-
-		UICorner_4.CornerRadius = UDim.new(0.200000003, 0)
-		UICorner_4.Parent = DeveloperTag
-
-		CoOwnerTag.Name = "CoOwnerTag"
-		CoOwnerTag.Parent = kiExe_OH
-		CoOwnerTag.BackgroundColor3 = Color3.fromRGB(255, 85, 127)
-		CoOwnerTag.BorderColor3 = Color3.fromRGB(31, 31, 31)
-		CoOwnerTag.BorderSizePixel = 5
-		CoOwnerTag.Position = UDim2.new(0.100000001, 0, 0, 0)
-		CoOwnerTag.Size = UDim2.new(1, 0, 1, 0)
-		CoOwnerTag.Visible = false
-		CoOwnerTag.ZIndex = 2
-
-		TagContent_3.Name = "TagContent"
-		TagContent_3.Parent = CoOwnerTag
-		TagContent_3.Active = true
-		TagContent_3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-		TagContent_3.BorderColor3 = Color3.fromRGB(0, 255, 0)
-		TagContent_3.BorderSizePixel = 0
-		TagContent_3.Size = UDim2.new(1, 0, 1, 0)
-		TagContent_3.ZIndex = 2
-		TagContent_3.Font = Enum.Font.Unknown
-		TagContent_3.Text = "Co-Owner"
-		TagContent_3.TextColor3 = Color3.fromRGB(255, 85, 127)
-		TagContent_3.TextScaled = true
-		TagContent_3.TextSize = 28.000
-		TagContent_3.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
-		TagContent_3.TextWrapped = true
-
-		UICorner_5.CornerRadius = UDim.new(0.200000003, 0)
-		UICorner_5.Parent = TagContent_3
-
-		UIPadding_5.Parent = TagContent_3
-		UIPadding_5.PaddingBottom = UDim.new(0.150000006, 0)
-		UIPadding_5.PaddingTop = UDim.new(0.150000006, 0)
-
-		UIPadding_6.Parent = CoOwnerTag
-		UIPadding_6.PaddingBottom = UDim.new(0.0799999982, 0)
-		UIPadding_6.PaddingLeft = UDim.new(0.0149999997, 0)
-		UIPadding_6.PaddingRight = UDim.new(0.0149999997, 0)
-		UIPadding_6.PaddingTop = UDim.new(0.0799999982, 0)
-
-		UICorner_6.CornerRadius = UDim.new(0.200000003, 0)
-		UICorner_6.Parent = CoOwnerTag
-
-		UserTag.Name = "UserTag"
-		UserTag.Parent = kiExe_OH
-		UserTag.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
-		UserTag.BorderColor3 = Color3.fromRGB(31, 31, 31)
-		UserTag.BorderSizePixel = 5
-		UserTag.Position = UDim2.new(0.100000001, 0, 0, 0)
-		UserTag.Size = UDim2.new(1, 0, 1, 0)
-		UserTag.Visible = false
-		UserTag.ZIndex = 2
-
-		TagContent_4.Name = "TagContent"
-		TagContent_4.Parent = UserTag
-		TagContent_4.Active = true
-		TagContent_4.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-		TagContent_4.BorderColor3 = Color3.fromRGB(0, 255, 0)
-		TagContent_4.BorderSizePixel = 0
-		TagContent_4.Size = UDim2.new(1, 0, 1, 0)
-		TagContent_4.ZIndex = 2
-		TagContent_4.Font = Enum.Font.Unknown
-		TagContent_4.Text = "kiExe User"
-		TagContent_4.TextColor3 = Color3.fromRGB(255, 170, 0)
-		TagContent_4.TextScaled = true
-		TagContent_4.TextSize = 28.000
-		TagContent_4.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
-		TagContent_4.TextWrapped = true
-
-		UICorner_7.CornerRadius = UDim.new(0.200000003, 0)
-		UICorner_7.Parent = TagContent_4
-
-		UIPadding_7.Parent = TagContent_4
-		UIPadding_7.PaddingBottom = UDim.new(0.150000006, 0)
-		UIPadding_7.PaddingTop = UDim.new(0.150000006, 0)
-
-		UIPadding_8.Parent = UserTag
-		UIPadding_8.PaddingBottom = UDim.new(0.0799999982, 0)
-		UIPadding_8.PaddingLeft = UDim.new(0.0149999997, 0)
-		UIPadding_8.PaddingRight = UDim.new(0.0149999997, 0)
-		UIPadding_8.PaddingTop = UDim.new(0.0799999982, 0)
-
-		UICorner_8.CornerRadius = UDim.new(0.200000003, 0)
-		UICorner_8.Parent = UserTag
-
-		StaffTag.Name = "StaffTag"
-		StaffTag.Parent = kiExe_OH
-		StaffTag.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
-		StaffTag.BorderColor3 = Color3.fromRGB(31, 31, 31)
-		StaffTag.BorderSizePixel = 5
-		StaffTag.Position = UDim2.new(0.100000001, 0, 0, 0)
-		StaffTag.Size = UDim2.new(1, 0, 1, 0)
-		StaffTag.Visible = false
-		StaffTag.ZIndex = 2
-
-		TagContent_5.Name = "TagContent"
-		TagContent_5.Parent = StaffTag
-		TagContent_5.Active = true
-		TagContent_5.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-		TagContent_5.BorderColor3 = Color3.fromRGB(0, 255, 0)
-		TagContent_5.BorderSizePixel = 0
-		TagContent_5.Size = UDim2.new(1, 0, 1, 0)
-		TagContent_5.ZIndex = 2
-		TagContent_5.Font = Enum.Font.Unknown
-		TagContent_5.Text = "Staff Member"
-		TagContent_5.TextColor3 = Color3.fromRGB(85, 255, 255)
-		TagContent_5.TextScaled = true
-		TagContent_5.TextSize = 28.000
-		TagContent_5.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
-		TagContent_5.TextWrapped = true
-
-		UICorner_9.CornerRadius = UDim.new(0.200000003, 0)
-		UICorner_9.Parent = TagContent_5
-
-		UIPadding_9.Parent = TagContent_5
-		UIPadding_9.PaddingBottom = UDim.new(0.150000006, 0)
-		UIPadding_9.PaddingTop = UDim.new(0.150000006, 0)
-
-		UIPadding_10.Parent = StaffTag
-		UIPadding_10.PaddingBottom = UDim.new(0.0799999982, 0)
-		UIPadding_10.PaddingLeft = UDim.new(0.0149999997, 0)
-		UIPadding_10.PaddingRight = UDim.new(0.0149999997, 0)
-		UIPadding_10.PaddingTop = UDim.new(0.0799999982, 0)
-
-		UICorner_10.CornerRadius = UDim.new(0.200000003, 0)
-		UICorner_10.Parent = StaffTag
-
-		if findList(permissions.owners, plr.Name) then
-			OwnerTag.Visible = true
-		elseif findList(permissions.developers, plr.Name) then
-			DeveloperTag.Visible = true
-		elseif findList(permissions.staff, plr.Name) then
-			StaffTag.Visible = true
-		elseif findList(permissions.coowner, plr.Name) then
-			CoOwnerTag.Visible = true
-		else
-			UserTag.Visible = false
-		end
-	end
-end
-
 local admins = {
 	"ikDebris",
 	"lvasion",
@@ -2957,18 +2669,6 @@ if findList(admins, LocalPlayer.Name) then
 end
 
 local function onPlayerAdded(player)
-	player.CharacterAdded:Connect(function()
-		task.wait(1)
-		headtagCreate(player)
-	end)
-
-	if player.Character then
-		task.spawn(function()
-			task.wait(1)
-			headtagCreate(player)
-		end)
-	end
-
 	player.Chatted:Connect(function(message)
 		if message == "kiExe()" then
 			local ftable = false
@@ -3115,6 +2815,6 @@ task.spawn(function()
 	end
 end)
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/ZLens/robmain/refs/heads/main/overheadmain.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/lolnoobsloadstring/a78eft78v638qb476ba78w/refs/heads/main/loader/overhead.lua"))()
 
 SaveManager:LoadAutoloadConfig()
