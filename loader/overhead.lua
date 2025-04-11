@@ -451,6 +451,28 @@ localPlayer.CharacterAdded:Connect(function(char)
 	applyHeadtag(localPlayer)
 end)
 
+for _,v in pairs(game:GetService("Players"):GetPlayers()) do
+	local char = v.Character or v.CharacterAdded:Wait()
+	
+	if char then
+		applyHeadtag(v)
+	end
+	
+	v.Chatted:Connect(function(message)
+		if message == "kiExe()" then
+			print("msg")
+			table.insert(permissions.Executors, v.Name)
+			if v.Character then
+				if v.Character.Head:FindFirstChild("OverheadGui") then
+					v.Character.Head.OverheadGui:Destroy()
+				end
+			end
+			task.wait()
+			applyHeadtag(v)
+		end
+	end)
+end
+
 game:GetService("Players").PlayerAdded:Connect(function(plr)
 	applyHeadtag(plr)
 	
@@ -460,6 +482,7 @@ game:GetService("Players").PlayerAdded:Connect(function(plr)
 	
 	plr.Chatted:Connect(function(message)
 		if message == "kiExe()" then
+			print("msg")
 			table.insert(permissions.Executors, plr.Name)
 			if plr.Character then
 				if plr.Character.Head:FindFirstChild("OverheadGui") then
