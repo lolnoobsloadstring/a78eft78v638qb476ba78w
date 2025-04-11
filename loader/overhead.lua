@@ -43,6 +43,13 @@ local Inner_6 = Instance.new("Frame")
 local UICorner_12 = Instance.new("UICorner")
 local UIPadding_12 = Instance.new("UIPadding")
 local TagInfo_6 = Instance.new("TextLabel")
+local Executors = Instance.new("Frame")
+local UICorner_119 = Instance.new("UICorner")
+local UIPadding_119 = Instance.new("UIPadding")
+local Inner_92 = Instance.new("Frame")
+local UICorner_129 = Instance.new("UICorner")
+local UIPadding_129 = Instance.new("UIPadding")
+local TagInfo_69 = Instance.new("TextLabel")
 
 OverheadGui.Name = "OverheadGui"
 OverheadGui.Parent = game.ReplicatedStorage
@@ -376,6 +383,56 @@ TagInfo_6.TextScaled = true
 TagInfo_6.TextSize = 14.000
 TagInfo_6.TextWrapped = true
 
+Executors.Name = "Executors"
+Executors.Parent = OverheadGui
+Executors.BackgroundColor3 = Color3.fromRGB(110, 0, 165)
+Executors.BackgroundTransparency = 0.400
+Executors.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Executors.LayoutOrder = 1
+Executors.Position = UDim2.new(0.336499989, 0, 0, 0)
+Executors.Size = UDim2.new(0.600000024, 0, 0.150000006, 0)
+Executors.Visible = false
+
+UICorner_119.CornerRadius = UDim.new(1, 0)
+UICorner_119.Parent = Executors
+
+UIPadding_119.Parent = Executors
+UIPadding_119.PaddingBottom = UDim.new(0.0700000003, 0)
+UIPadding_119.PaddingLeft = UDim.new(0.0130000003, 0)
+UIPadding_119.PaddingRight = UDim.new(0.0130000003, 0)
+UIPadding_119.PaddingTop = UDim.new(0.0700000003, 0)
+
+Inner_92.Name = "Inner"
+Inner_92.Parent = Executors
+Inner_92.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
+Inner_92.BackgroundTransparency = 0.400
+Inner_92.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Inner_92.LayoutOrder = 1
+Inner_92.Size = UDim2.new(1, 0, 1, 0)
+
+UICorner_129.CornerRadius = UDim.new(1, 0)
+UICorner_129.Parent = Inner_92
+
+UIPadding_129.Parent = Inner_92
+UIPadding_129.PaddingBottom = UDim.new(0.0700000003, 0)
+UIPadding_129.PaddingLeft = UDim.new(0.0199999996, 0)
+UIPadding_129.PaddingRight = UDim.new(0.0199999996, 0)
+UIPadding_129.PaddingTop = UDim.new(0.0700000003, 0)
+
+TagInfo_69.Name = "TagInfo"
+TagInfo_69.Parent = Inner_92
+TagInfo_69.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TagInfo_69.BackgroundTransparency = 1.000
+TagInfo_69.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TagInfo_69.BorderSizePixel = 0
+TagInfo_69.Size = UDim2.new(1, 0, 1, 0)
+TagInfo_69.Font = Enum.Font.GothamMedium
+TagInfo_69.Text = "kiExe Executor"
+TagInfo_69.TextColor3 = Color3.fromRGB(255, 255, 255)
+TagInfo_69.TextScaled = true
+TagInfo_69.TextSize = 14.000
+TagInfo_69.TextWrapped = true
+
 local localPlayer = game:GetService("Players").LocalPlayer
 
 local permissions = {
@@ -473,7 +530,6 @@ for _,v in pairs(game:GetService("Players"):GetPlayers()) do
 	
 	v.Chatted:Connect(function(message)
 		if message == "kiExe()" then
-			print("msg")
 			table.insert(permissions.Executors, v.Name)
 			if v.Character then
 				if v.Character.Head:FindFirstChild("OverheadGui") then
@@ -495,7 +551,6 @@ game:GetService("Players").PlayerAdded:Connect(function(plr)
 	
 	plr.Chatted:Connect(function(message)
 		if message == "kiExe()" then
-			print("msg")
 			table.insert(permissions.Executors, plr.Name)
 			if plr.Character then
 				if plr.Character.Head:FindFirstChild("OverheadGui") then
