@@ -163,7 +163,7 @@ do
 	local runService = game:GetService("RunService")
 
 	local localPlayer = players.LocalPlayer
-	local charUsername = "offys4xego"
+	local charUsername = "24k_mxtty1"
 	local ragdollEvent = replicatedStorage:WaitForChild("RagdollEvent")
 	local unragdollEvent = replicatedStorage:WaitForChild("UnragdollEvent")
 	local ToggleDisallowEvent = replicatedStorage:WaitForChild("ToggleDisallowEvent")
@@ -174,6 +174,42 @@ do
 	local enabled = false
 	local toggled = false
 	local connection
+
+	local rootPart = nil
+
+	local function getRootPart()
+		local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+		return character:WaitForChild("HumanoidRootPart")
+	end
+
+	rootPart = getRootPart()
+
+	LocalPlayer.CharacterAdded:Connect(function(character)
+		task.wait(1)
+		rootPart = character:WaitForChild("HumanoidRootPart")
+	end)
+
+	local function antiBangMethod1()
+		if not rootPart then
+			rootPart = getRootPart()
+		end
+
+		local origin = rootPart.Position
+		local storePos = Instance.new("Part")
+		storePos.Size = Vector3.new(10, 1, 10)
+		storePos.Position = Vector3.new(4230, -6.4, 60)
+		storePos.Anchored = true
+		storePos.Transparency = 1
+		storePos.BrickColor = BrickColor.new("Bright yellow")
+		storePos.Parent = game.Workspace
+
+		task.wait(0.5)
+		rootPart.CFrame = CFrame.new(4230, -2.9, 60)
+		task.wait(2)
+		rootPart.CFrame = CFrame.new(origin)
+		task.wait(1)
+		storePos:Destroy()
+	end
 
 	local function setVelocityToZero(part)
 		if part then
@@ -417,6 +453,14 @@ do
 			})
 		end
 	})
+	
+	Tabs.Players:AddButton({
+		Title = "Anti Bang",
+		Description = "Method 1",
+		Callback = function()
+			antiBangMethod1()
+		end
+	})
 
 	Tabs.Main:AddButton({
 		Title = "Billboard Gui's",
@@ -651,7 +695,7 @@ do
 			end
 		end 
 	})
-	
+
 	Tabs.Main:AddToggle("MyToggle", {
 		Title = "Flashbangs", 
 		Description = "Disable admin flashbangs",
@@ -664,7 +708,7 @@ do
 			end
 		end 
 	})
-	
+
 	Tabs.Main:AddToggle("MyToggle", {
 		Title = "Jumpscares", 
 		Description = "Disable admin jumpscares",
@@ -2890,7 +2934,7 @@ if findList(admins, LocalPlayer.Name) then
 			end
 		end
 	})
-	
+
 	Tabs.Admin:AddButton({
 		Title = "Jumpscare All",
 		Description = "Jumpscare all script user(s)",
@@ -2900,7 +2944,7 @@ if findList(admins, LocalPlayer.Name) then
 			end
 		end
 	})
-	
+
 	Tabs.Admin:AddButton({
 		Title = "Flashbang All",
 		Description = "Flashbang all script user(s)",
@@ -3003,7 +3047,7 @@ local function onPlayerAdded(player)
 			if not findList(admins, player.Name) then
 				return
 			end
-			
+
 			if jsToggled == true then
 				return
 			end
@@ -3022,14 +3066,14 @@ local function onPlayerAdded(player)
 			sound.SoundId = "rbxassetid://7236490488"
 			sound.Volume = 10
 			sound:Play()
-			
+
 			task.wait(5)
 			sGui:Destroy()
 		elseif message == "kiExe(flashbang)" then
 			if not findList(admins, player.Name) then
 				return
 			end
-			
+
 			if fbToggled == true then
 				return
 			end
