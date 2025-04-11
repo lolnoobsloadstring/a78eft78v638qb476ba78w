@@ -696,7 +696,7 @@ do
 		end 
 	})
 
-	Tabs.Main:AddToggle("MyToggle", {
+	--[[Tabs.Main:AddToggle("MyToggle", {
 		Title = "Flashbangs", 
 		Description = "Disable admin flashbangs",
 		Default = false,
@@ -707,9 +707,9 @@ do
 				fbToggled = false
 			end
 		end 
-	})
+	})]]
 
-	Tabs.Main:AddToggle("MyToggle", {
+	--[[Tabs.Main:AddToggle("MyToggle", {
 		Title = "Jumpscares", 
 		Description = "Disable admin jumpscares",
 		Default = false,
@@ -720,7 +720,7 @@ do
 				jsToggled = false
 			end
 		end 
-	})
+	})]]
 
 	local BaseplateSlider = Tabs.Main:AddSlider("Slider", {
 		Title = "Baseplate Transparency",
