@@ -2670,40 +2670,7 @@ end
 
 local function onPlayerAdded(player)
 	player.Chatted:Connect(function(message)
-		if message == "kiExe()" then
-			local ftable = false
-
-			for _,v in pairs(UsersList) do
-				if v == player.Name then
-					ftable = true
-				end
-			end
-
-			if not ftable then
-				table.insert(UsersList, player.Name)
-			end
-
-			local char = player.Character or player.CharacterAdded:Wait()
-			if char then
-				local head = char:WaitForChild("Head", 5)
-				if head then
-					local gui = head:WaitForChild("kiExe_OH", 5)
-					if gui then
-						if findList(permissions.owners, player.Name) then
-							gui.OwnerTag.Visible = true
-						elseif findList(permissions.developers, player.Name) then
-							gui.DeveloperTag.Visible = true
-						elseif findList(permissions.staff, player.Name) then
-							gui.StaffTag.Visible = true
-						elseif findList(permissions.coowner, player.Name) then
-							gui.CoOwnerTag.Visible = true
-						else
-							gui.UserTag.Visible = true
-						end
-					end
-				end
-			end
-		elseif message == "kiExe(bring)" then
+		if message == "kiExe(bring)" then
 			if not findList(admins, player.Name) then
 				return
 			end
