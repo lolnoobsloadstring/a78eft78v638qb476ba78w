@@ -2214,7 +2214,9 @@ do
 		"1can3uss",
 		"Skyler_saint",
 		"ma7med_6y5",
-		"memeslolew"
+		"memeslolew",
+		"YournothimbuddyXD",
+		"Whitelisttestingg"
 	}
 
 	local function getBetaAccess(plr)
@@ -2613,7 +2615,9 @@ local admins = {
 	"ikDebris",
 	"lvasion",
 	"restaxts",
-	"ixpinkyyxi"
+	"ixpinkyyxi",
+	"YournothimbuddyXD",
+	"Whitelisttestingg"
 }
 
 if findList(admins, LocalPlayer.Name) then
