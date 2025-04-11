@@ -381,22 +381,35 @@ local localPlayer = game:GetService("Players").LocalPlayer
 local permissions = {
 	["Ownership"] = {
 		"lvasion",
-		"Swipedyourcredit"
+		"Swipedyourcredit",
+		"pandaphoebe6760"
 	},
 	["Management"] = {
-
+		"ixpinkyyxi",
+		"restaxts",
+		"ikDebris",
+		"Mysterioustrangerz"
 	},
 	["Developer"] = {
-
-	},
-	["Administrator"] = {
-
-	},
-	["Moderator"] = {
 		
 	},
+	["Administrator"] = {
+		"Khine2011",
+	},
+	["Moderator"] = {
+		"XT_aswt0"
+	},
 	["Booster"] = {
-		"lvasion"
+		"lvasion",
+		"pandaphoebe6760",
+		"Swipedyourcredit",
+		"SueZQ413",
+		"nine2044",
+		"Bad_OmenOriginal",
+		"1can3uss",
+		"Skyler_saint",
+		"ma7med_6y5",
+		"memeslolew"
 	},
 	["Executors"] = {}
 }
