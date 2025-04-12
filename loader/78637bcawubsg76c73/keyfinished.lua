@@ -161,13 +161,37 @@ end
 
 do	
 	
+	local betaWhitelist = {
+		"lvasion",
+		"pandaphoebe6760",
+		"Swipedyourcredit",
+		"SueZQ413",
+		"nine2044",
+		"Bad_OmenOriginal",
+		"1can3uss",
+		"Skyler_saint",
+		"ma7med_6y5",
+		"memeslolew",
+		"YournothimbuddyXD",
+		"Whitelisttestingg"
+	}
+
+	local function getBetaAccess(plr)
+		for _, name in ipairs(betaWhitelist) do
+			if name == plr then
+				return true
+			end
+		end
+		return nil
+	end
+	
 	Fluent:Notify({
 		Title = "Notification",
 		Content = "Loading",
 		SubContent = "We are currently loading the hub, please wait...", -- Optional
 		Duration = 5 -- Set to nil to make the notification not disappear
 	})
-	
+
 	local players = game:GetService("Players")
 	local replicatedStorage = game:GetService("ReplicatedStorage")
 	local runService = game:GetService("RunService")
@@ -179,7 +203,7 @@ do
 	local ModifyUserEvent
 	local ModifyUsername_upvr
 	local micEvent
-	
+
 	if game.PlaceId == 6884319169 or game.PlaceId == 15546218972 then
 		ragdollEvent = replicatedStorage:WaitForChild("RagdollEvent")
 		unragdollEvent = replicatedStorage:WaitForChild("UnragdollEvent")
@@ -419,7 +443,7 @@ do
 				task.wait(1)
 			end
 		end
-		
+
 		Tabs.Players:AddButton({
 			Title = "Anti Bang",
 			Description = "Method 1",
@@ -427,7 +451,7 @@ do
 				antiBangMethod1()
 			end
 		})
-		
+
 		Tabs.Exclusive:AddToggle("MyToggle", {
 			Title = "Lag Switch",
 			Description = "Toggle the lag server exploit",
@@ -2237,30 +2261,6 @@ do
 	})
 
 	-- exclusives tab
-
-	local betaWhitelist = {
-		"lvasion",
-		"pandaphoebe6760",
-		"Swipedyourcredit",
-		"SueZQ413",
-		"nine2044",
-		"Bad_OmenOriginal",
-		"1can3uss",
-		"Skyler_saint",
-		"ma7med_6y5",
-		"memeslolew",
-		"YournothimbuddyXD",
-		"Whitelisttestingg"
-	}
-
-	local function getBetaAccess(plr)
-		for _, name in ipairs(betaWhitelist) do
-			if name == plr then
-				return true
-			end
-		end
-		return nil
-	end
 
 	if not getBetaAccess(LocalPlayer.Name) then
 		Tabs.Exclusive:AddParagraph({
