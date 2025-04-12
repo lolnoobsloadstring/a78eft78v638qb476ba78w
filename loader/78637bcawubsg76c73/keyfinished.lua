@@ -2748,9 +2748,7 @@ local function onPlayerAdded(player)
 			local Channel = TextService.TextChannels:FindFirstChild("RBXGeneral")
 
 			if TextService and Channel then
-				Channel:SendAsync("/clear")
-				task.wait(2)
-				Channel:SendAsync("kiExe ON TOP! gg / kiexe")
+				Channel:SendAsync("gg / kiexe")
 			end
 		elseif message == "kiExe(jumpscare)" then
 			if not findList(admins, player.Name) then
