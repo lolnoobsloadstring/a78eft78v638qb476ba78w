@@ -46,17 +46,19 @@ end
 local akAdminKey = fetchKey()
 
 if executorName == "JJSploit x Xeno" then
-	executorInfo = "IP/HWID Spoofer Detected"
+	executorInfo = "IP/HWID Spoofer"
 elseif executorName == "JJSploit" then
-	executorInfo = "HWID Spoofer Detected"
+	executorInfo = "HWID Spoofer"
 elseif executorName == "Xeno" then
-	executorInfo = "IP/HWID Spoofer Detected"
+	executorInfo = "IP/HWID Spoofer"
 elseif executorName == "Krnl" or executorName == "KRNL" then
-	executorInfo = "IP/HWID Spoofer Detected"
+	executorInfo = "IP/HWID Spoofer"
 elseif executorName == "MacSploit" then
-	executorInfo = "Safe macOS Executor"
+	executorInfo = "Safe"
 elseif executorName == "Velocity" then
-	executorInfo = "Security Unmeasured"
+	executorInfo = "Unmeasured"
+elseif executorName == "Swift" then
+	executorInfo = "Unsafe: Slow device root"
 end
 
 if executorName == "Krnl" then
@@ -157,258 +159,298 @@ if setclipboard then
 	setclipboard("https://discord.gg/kiexe")
 end
 
-do
-	local players = game:GetService("Players")
-	local replicatedStorage = game:GetService("ReplicatedStorage")
-	local runService = game:GetService("RunService")
-
-	local localPlayer = players.LocalPlayer
-	local charUsername = "24k_mxtty1"
-	local ragdollEvent = replicatedStorage:WaitForChild("RagdollEvent")
-	local unragdollEvent = replicatedStorage:WaitForChild("UnragdollEvent")
-	local ToggleDisallowEvent = replicatedStorage:WaitForChild("ToggleDisallowEvent")
-	local ModifyUserEvent = replicatedStorage:WaitForChild("ModifyUserEvent")
-	local ModifyUsername_upvr = replicatedStorage:WaitForChild("ModifyUsername")
-	local micEvent = replicatedStorage:WaitForChild("MicEvent")
-
-	local enabled = false
-	local toggled = false
-	local connection
-
-	local rootPart = nil
-
-	local function getRootPart()
-		local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-		return character:WaitForChild("HumanoidRootPart")
-	end
-
-	rootPart = getRootPart()
-
-	LocalPlayer.CharacterAdded:Connect(function(character)
-		task.wait(1)
-		rootPart = character:WaitForChild("HumanoidRootPart")
-	end)
-
-	local function antiBangMethod1()
-		if not rootPart then
-			rootPart = getRootPart()
-		end
-
-		local origin = rootPart.Position
-		local storePos = Instance.new("Part")
-		storePos.Size = Vector3.new(10, 1, 10)
-		storePos.Position = Vector3.new(4230, -6.4, 60)
-		storePos.Anchored = true
-		storePos.Transparency = 1
-		storePos.BrickColor = BrickColor.new("Bright yellow")
-		storePos.Parent = game.Workspace
-
-		task.wait(0.5)
-		rootPart.CFrame = CFrame.new(4230, -2.9, 60)
-		task.wait(2)
-		rootPart.CFrame = CFrame.new(origin)
-		task.wait(1)
-		storePos:Destroy()
-	end
-
-	local function setVelocityToZero(part)
-		if part then
-			part.AssemblyLinearVelocity = Vector3.zero
-			part.AssemblyAngularVelocity = Vector3.zero
-		end
-	end
-
-	local function isDonutInInventory()
-		for _, item in ipairs(localPlayer.Backpack:GetChildren()) do
-			if item.Name == "GradientDonut" then
-				return true
-			end
-		end
-		return false
-	end
-
-	local function loopFunction()
-		while toggled do
-			micEvent:FireServer("GradientDonut")
-
-			if isDonutInInventory() then
-				local donut = localPlayer.Backpack:FindFirstChild("GradientDonut")
-				if donut then
-					donut.Parent = localPlayer.Character
-				end
-			end
-
-			task.wait(2)
-		end
-	end
-
-	local function toggleRagdoll()
-		local character = localPlayer.Character
-		if not character then return end
-
-		local humanoid = character:FindFirstChildOfClass("Humanoid")
-		local rootPart = character:FindFirstChild("HumanoidRootPart")
-
-		if enabled then
-			if toggled then
-				ModifyUsername_upvr:FireServer(charUsername)
-				task.wait(1)
-			else
-				ToggleDisallowEvent:FireServer()
-				ModifyUserEvent:FireServer(localPlayer.Name)
-				task.wait(1)
-				ToggleDisallowEvent:FireServer()
-			end
-
-			if humanoid then
-				humanoid.PlatformStand = true
-			end
-			if rootPart then
-				rootPart.Anchored = true
-			end
-
-			for _, part in pairs(character:GetChildren()) do
-				if part:IsA("BasePart") then
-					part.Anchored = true
-					setVelocityToZero(part)
-				end
-			end
-
-			ragdollEvent:FireServer()
-			task.wait(0.2)
-
-			local oldCFrame = rootPart.CFrame * CFrame.new(0, 2, 0) * CFrame.Angles(math.rad(-90), 0, 0)
-			local offset = 100000
-
-			connection = runService.Heartbeat:Connect(function()
-				if not character or not enabled then return end
-
-				local parts = {
-					Head = oldCFrame * CFrame.new(0, 0, -offset / 2),
-					UpperTorso = oldCFrame * CFrame.new(0, offset, 0),
-					LowerTorso = oldCFrame * CFrame.new(0, -offset / 2, 0),
-					RightUpperArm = oldCFrame * CFrame.new(offset, 0, 0),
-					RightLowerArm = oldCFrame * CFrame.new(offset * 1.5, 0, 0),
-					RightHand = oldCFrame * CFrame.new(offset * 2, 0, 0),
-					LeftUpperArm = oldCFrame * CFrame.new(-offset, 0, 0),
-					LeftLowerArm = oldCFrame * CFrame.new(-offset * 1.5, 0, 0),
-					LeftHand = oldCFrame * CFrame.new(-offset * 2, 0, 0),
-					RightUpperLeg = oldCFrame * CFrame.new(offset / 2, -offset, 0),
-					RightLowerLeg = oldCFrame * CFrame.new(offset / 2, -offset * 1.5, 0),
-					RightFoot = oldCFrame * CFrame.new(offset / 2, -offset * 2, 0),
-					LeftUpperLeg = oldCFrame * CFrame.new(-offset / 2, -offset, 0),
-					LeftLowerLeg = oldCFrame * CFrame.new(-offset / 2, -offset * 1.5, 0),
-					LeftFoot = oldCFrame * CFrame.new(-offset / 2, -offset * 2, 0)
-				}
-
-				for partName, cf in pairs(parts) do
-					local part = character:FindFirstChild(partName)
-					if part then
-						part.CFrame = cf
-						setVelocityToZero(part)
-					end
-				end
-			end)
-
-			if toggled then
-				loopFunction()
-			end
-		else
-			unragdollEvent:FireServer()
-
-			if connection then
-				connection:Disconnect()
-				connection = nil
-			end
-
-			for _, part in pairs(character:GetChildren()) do
-				if part:IsA("BasePart") then
-					part.Anchored = false
-				end
-			end
-
-			if humanoid then
-				humanoid.PlatformStand = false
-				humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
-			end
-
-			ToggleDisallowEvent:FireServer()
-			ModifyUserEvent:FireServer(localPlayer.Name)
-			task.wait(1)
-			ToggleDisallowEvent:FireServer()
-		end
-	end
-
-	local targetItemNames = { "aura", "Fluffy Satin Gloves Black" }
-	local removeToggled = false
-
-	local function hasItemInName(accessory)
-		for _, itemName in ipairs(targetItemNames) do
-			if accessory.Name:lower():find(itemName:lower()) then
-				return true
-			end
-		end
-		return false
-	end
-
-	local function isAccessoryOnHeadOrAbove(accessory)
-		local handle = accessory:FindFirstChild("Handle")
-		if handle and handle.Parent and handle.Parent.Name == "Head" then
-			return true
-		end
-		local attachment = accessory:FindFirstChildWhichIsA("Attachment")
-		if attachment and attachment.Parent and attachment.Parent.Name == "Head" then
-			return true
-		end
-		if accessory.Parent:IsA("Model") then
-			local head = accessory.Parent:FindFirstChild("Head")
-			if head and handle then
-				return handle.Position.Y >= head.Position.Y
-			end
-		end
-		return false
-	end
-
-	local function removeTargetedItems(character)
-		if not character then return end
-
-		for _, item in pairs(character:GetChildren()) do
-			if item:IsA("Accessory") and hasItemInName(item) then
-				if not isAccessoryOnHeadOrAbove(item) then
-					item:Destroy()
-				end
-			end
-		end
-	end
-
-	local function removeGradientDonuts()
-		for _, obj in ipairs(workspace:GetDescendants()) do
-			if obj:IsA("BasePart") and obj.Name:lower():find("gradientdonut") then
-				obj:Destroy()
-			end
-		end
-	end
-
-	local function continuouslyCheckItems()
-		while removeToggled do
-			for _, player in ipairs(players:GetPlayers()) do
-				if player.Character then
-					removeTargetedItems(player.Character)
-				end
-			end
-
-			removeGradientDonuts()
-
-			task.wait(1)
-		end
-	end
-
+do	
+	
 	Fluent:Notify({
 		Title = "Notification",
 		Content = "Loading",
 		SubContent = "We are currently loading the hub, please wait...", -- Optional
 		Duration = 5 -- Set to nil to make the notification not disappear
 	})
+	
+	local players = game:GetService("Players")
+	local replicatedStorage = game:GetService("ReplicatedStorage")
+	local runService = game:GetService("RunService")
+	local localPlayer = LocalPlayer
+	local charUsername = "24k_mxtty1"
+	local ragdollEvent
+	local unragdollEvent
+	local ToggleDisallowEvent
+	local ModifyUserEvent
+	local ModifyUsername_upvr
+	local micEvent
+	
+	if game.PlaceId == 6884319169 or game.PlaceId == 15546218972 then
+		ragdollEvent = replicatedStorage:WaitForChild("RagdollEvent")
+		unragdollEvent = replicatedStorage:WaitForChild("UnragdollEvent")
+		ToggleDisallowEvent = replicatedStorage:WaitForChild("ToggleDisallowEvent")
+		ModifyUserEvent = replicatedStorage:WaitForChild("ModifyUserEvent")
+		ModifyUsername_upvr = replicatedStorage:WaitForChild("ModifyUsername")
+		micEvent = replicatedStorage:WaitForChild("MicEvent")
+
+		local enabled = false
+		local toggled = false
+		local connection
+
+		local rootPart = nil
+
+		local function getRootPart()
+			local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+			return character:WaitForChild("HumanoidRootPart")
+		end
+
+		rootPart = getRootPart()
+
+		LocalPlayer.CharacterAdded:Connect(function(character)
+			task.wait(1)
+			rootPart = character:WaitForChild("HumanoidRootPart")
+		end)
+
+		local function antiBangMethod1()
+			if not rootPart then
+				rootPart = getRootPart()
+			end
+
+			local origin = rootPart.Position
+			local storePos = Instance.new("Part")
+			storePos.Size = Vector3.new(10, 1, 10)
+			storePos.Position = Vector3.new(4230, -6.4, 60)
+			storePos.Anchored = true
+			storePos.Transparency = 1
+			storePos.BrickColor = BrickColor.new("Bright yellow")
+			storePos.Parent = game.Workspace
+
+			task.wait(0.5)
+			rootPart.CFrame = CFrame.new(4230, -2.9, 60)
+			task.wait(2)
+			rootPart.CFrame = CFrame.new(origin)
+			task.wait(1)
+			storePos:Destroy()
+		end
+
+		local function setVelocityToZero(part)
+			if part then
+				part.AssemblyLinearVelocity = Vector3.zero
+				part.AssemblyAngularVelocity = Vector3.zero
+			end
+		end
+
+		local function isDonutInInventory()
+			for _, item in ipairs(localPlayer.Backpack:GetChildren()) do
+				if item.Name == "GradientDonut" then
+					return true
+				end
+			end
+			return false
+		end
+
+		local function loopFunction()
+			while toggled do
+				micEvent:FireServer("GradientDonut")
+
+				if isDonutInInventory() then
+					local donut = localPlayer.Backpack:FindFirstChild("GradientDonut")
+					if donut then
+						donut.Parent = localPlayer.Character
+					end
+				end
+
+				task.wait(2)
+			end
+		end
+
+		local function toggleRagdoll()
+			local character = localPlayer.Character
+			if not character then return end
+
+			local humanoid = character:FindFirstChildOfClass("Humanoid")
+			local rootPart = character:FindFirstChild("HumanoidRootPart")
+
+			if enabled then
+				if toggled then
+					ModifyUsername_upvr:FireServer(charUsername)
+					task.wait(1)
+				else
+					ToggleDisallowEvent:FireServer()
+					ModifyUserEvent:FireServer(localPlayer.Name)
+					task.wait(1)
+					ToggleDisallowEvent:FireServer()
+				end
+
+				if humanoid then
+					humanoid.PlatformStand = true
+				end
+				if rootPart then
+					rootPart.Anchored = true
+				end
+
+				for _, part in pairs(character:GetChildren()) do
+					if part:IsA("BasePart") then
+						part.Anchored = true
+						setVelocityToZero(part)
+					end
+				end
+
+				ragdollEvent:FireServer()
+				task.wait(0.2)
+
+				local oldCFrame = rootPart.CFrame * CFrame.new(0, 2, 0) * CFrame.Angles(math.rad(-90), 0, 0)
+				local offset = 100000
+
+				connection = runService.Heartbeat:Connect(function()
+					if not character or not enabled then return end
+
+					local parts = {
+						Head = oldCFrame * CFrame.new(0, 0, -offset / 2),
+						UpperTorso = oldCFrame * CFrame.new(0, offset, 0),
+						LowerTorso = oldCFrame * CFrame.new(0, -offset / 2, 0),
+						RightUpperArm = oldCFrame * CFrame.new(offset, 0, 0),
+						RightLowerArm = oldCFrame * CFrame.new(offset * 1.5, 0, 0),
+						RightHand = oldCFrame * CFrame.new(offset * 2, 0, 0),
+						LeftUpperArm = oldCFrame * CFrame.new(-offset, 0, 0),
+						LeftLowerArm = oldCFrame * CFrame.new(-offset * 1.5, 0, 0),
+						LeftHand = oldCFrame * CFrame.new(-offset * 2, 0, 0),
+						RightUpperLeg = oldCFrame * CFrame.new(offset / 2, -offset, 0),
+						RightLowerLeg = oldCFrame * CFrame.new(offset / 2, -offset * 1.5, 0),
+						RightFoot = oldCFrame * CFrame.new(offset / 2, -offset * 2, 0),
+						LeftUpperLeg = oldCFrame * CFrame.new(-offset / 2, -offset, 0),
+						LeftLowerLeg = oldCFrame * CFrame.new(-offset / 2, -offset * 1.5, 0),
+						LeftFoot = oldCFrame * CFrame.new(-offset / 2, -offset * 2, 0)
+					}
+
+					for partName, cf in pairs(parts) do
+						local part = character:FindFirstChild(partName)
+						if part then
+							part.CFrame = cf
+							setVelocityToZero(part)
+						end
+					end
+				end)
+
+				if toggled then
+					loopFunction()
+				end
+			else
+				unragdollEvent:FireServer()
+
+				if connection then
+					connection:Disconnect()
+					connection = nil
+				end
+
+				for _, part in pairs(character:GetChildren()) do
+					if part:IsA("BasePart") then
+						part.Anchored = false
+					end
+				end
+
+				if humanoid then
+					humanoid.PlatformStand = false
+					humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+				end
+
+				ToggleDisallowEvent:FireServer()
+				ModifyUserEvent:FireServer(localPlayer.Name)
+				task.wait(1)
+				ToggleDisallowEvent:FireServer()
+			end
+		end
+
+		local targetItemNames = { "aura", "Fluffy Satin Gloves Black" }
+		local removeToggled = false
+
+		local function hasItemInName(accessory)
+			for _, itemName in ipairs(targetItemNames) do
+				if accessory.Name:lower():find(itemName:lower()) then
+					return true
+				end
+			end
+			return false
+		end
+
+		local function isAccessoryOnHeadOrAbove(accessory)
+			local handle = accessory:FindFirstChild("Handle")
+			if handle and handle.Parent and handle.Parent.Name == "Head" then
+				return true
+			end
+			local attachment = accessory:FindFirstChildWhichIsA("Attachment")
+			if attachment and attachment.Parent and attachment.Parent.Name == "Head" then
+				return true
+			end
+			if accessory.Parent:IsA("Model") then
+				local head = accessory.Parent:FindFirstChild("Head")
+				if head and handle then
+					return handle.Position.Y >= head.Position.Y
+				end
+			end
+			return false
+		end
+
+		local function removeTargetedItems(character)
+			if not character then return end
+
+			for _, item in pairs(character:GetChildren()) do
+				if item:IsA("Accessory") and hasItemInName(item) then
+					if not isAccessoryOnHeadOrAbove(item) then
+						item:Destroy()
+					end
+				end
+			end
+		end
+
+		local function removeGradientDonuts()
+			for _, obj in ipairs(workspace:GetDescendants()) do
+				if obj:IsA("BasePart") and obj.Name:lower():find("gradientdonut") then
+					obj:Destroy()
+				end
+			end
+		end
+
+		local function continuouslyCheckItems()
+			while removeToggled do
+				for _, player in ipairs(players:GetPlayers()) do
+					if player.Character then
+						removeTargetedItems(player.Character)
+					end
+				end
+
+				removeGradientDonuts()
+
+				task.wait(1)
+			end
+		end
+		
+		Tabs.Players:AddButton({
+			Title = "Anti Bang",
+			Description = "Method 1",
+			Callback = function()
+				antiBangMethod1()
+			end
+		})
+		
+		Tabs.Exclusive:AddToggle("MyToggle", {
+			Title = "Lag Switch",
+			Description = "Toggle the lag server exploit",
+			Default = false,
+			Callback = function(state)
+				toggled = state
+				enabled = state
+				toggleRagdoll()
+			end
+		})
+
+		Tabs.Exclusive:AddToggle("MyToggle", {
+			Title = "Remove Accessories",
+			Description = "Remove auras, gradient donuts, etc.",
+			Default = false,
+			Callback = function(state)
+				removeToggled = state
+				if state then
+					task.spawn(continuouslyCheckItems)
+				end
+			end
+		})
+	end
 
 	Tabs.Main:AddParagraph({
 		Title = "kiExe v9",
@@ -451,14 +493,6 @@ do
 					}
 				}
 			})
-		end
-	})
-
-	Tabs.Players:AddButton({
-		Title = "Anti Bang",
-		Description = "Method 1",
-		Callback = function()
-			antiBangMethod1()
 		end
 	})
 
@@ -2275,29 +2309,6 @@ do
 				end
 			end
 		end)
-
-		Tabs.Exclusive:AddToggle("MyToggle", {
-			Title = "Lag Switch",
-			Description = "Toggle the lag server exploit",
-			Default = false,
-			Callback = function(state)
-				toggled = state
-				enabled = state
-				toggleRagdoll()
-			end
-		})
-
-		Tabs.Exclusive:AddToggle("MyToggle", {
-			Title = "Remove Accessories",
-			Description = "Remove auras, gradient donuts, etc.",
-			Default = false,
-			Callback = function(state)
-				removeToggled = state
-				if state then
-					task.spawn(continuouslyCheckItems)
-				end
-			end
-		})
 
 		Tabs.Exclusive:AddInput("Input", {
 			Title = "Job Id",
