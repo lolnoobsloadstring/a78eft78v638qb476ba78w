@@ -120,7 +120,7 @@ local uis = game:GetService("UserInputService")
 local sStoreSize = UDim2.fromOffset(0, 0)
 
 if uis.TouchEnabled then
-	sStoreSize = UDim2.fromOffset(380, 260)
+	sStoreSize = UDim2.fromOffset(280, 360)
 else
 	sStoreSize = UDim2.fromOffset(580, 460)
 end
