@@ -1,4 +1,3 @@
-
 --  Protected by DMCA — violations will be met with immediate legal enforcement.
 
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
@@ -121,7 +120,7 @@ local uis = game:GetService("UserInputService")
 local sStoreSize = UDim2.fromOffset(0, 0)
 
 if uis.TouchEnabled then
-	sStoreSize = UDim2.fromOffset(280, 360)
+	sStoreSize = UDim2.fromOffset(380, 300)
 else
 	sStoreSize = UDim2.fromOffset(580, 460)
 end
