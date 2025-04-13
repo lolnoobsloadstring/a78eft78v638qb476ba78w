@@ -133,7 +133,7 @@ local Window = Fluent:CreateWindow({
 	TabWidth = 160,
 	Size = sStoreSize,
 	Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
-	Theme = "Dark",
+	Theme = "Rose",
 	MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
 })
 
