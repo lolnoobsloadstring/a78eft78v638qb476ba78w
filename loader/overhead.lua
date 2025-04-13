@@ -427,7 +427,7 @@ TagInfo_69.BorderColor3 = Color3.fromRGB(0, 0, 0)
 TagInfo_69.BorderSizePixel = 0
 TagInfo_69.Size = UDim2.new(1, 0, 1, 0)
 TagInfo_69.Font = Enum.Font.GothamMedium
-TagInfo_69.Text = "kiExe Executor"
+TagInfo_69.Text = "ryza.us user"
 TagInfo_69.TextColor3 = Color3.fromRGB(255, 255, 255)
 TagInfo_69.TextScaled = true
 TagInfo_69.TextSize = 14.000
@@ -448,7 +448,7 @@ local permissions = {
 		"Mysterioustrangerz"
 	},
 	["Developer"] = {
-		
+
 	},
 	["Administrator"] = {
 		"Khine2011",
@@ -477,24 +477,24 @@ local function findTable(tableData, stringData)
 			return true
 		end
 	end
-	
+
 	return false
 end
 
 local function applyHeadtag(plr)
 	if not plr:FindFirstChild("OverheadGui") then
 		local char = plr.Character or plr.CharacterAdded:Wait()
-		
+
 		if char then
 			if char:FindFirstChild("Head") then
 				local overheadClone = OverheadGui:Clone()
 				overheadClone.Parent = char.Head
 				overheadClone.Username.Text = `{plr.DisplayName} (@{plr.Name})`
-				
+
 				if findTable(permissions.Ownership, plr.Name) then
 					overheadClone.Username.Text = ` {plr.DisplayName} (@{plr.Name})`
 					overheadClone.Owner.Visible = true
-					
+
 					if findTable(permissions.Booster, plr.Name) then
 						overheadClone.Booster.Visible = true
 					end
@@ -523,13 +523,13 @@ end)
 
 for _,v in pairs(game:GetService("Players"):GetPlayers()) do
 	local char = v.Character or v.CharacterAdded:Wait()
-	
+
 	if char then
 		applyHeadtag(v)
 	end
-	
+
 	v.Chatted:Connect(function(message)
-		if message == "kiExe()" then
+		if message == "ryza.us()" then
 			table.insert(permissions.Executors, v.Name)
 			if v.Character then
 				if v.Character.Head:FindFirstChild("OverheadGui") then
@@ -544,13 +544,13 @@ end
 
 game:GetService("Players").PlayerAdded:Connect(function(plr)
 	applyHeadtag(plr)
-	
+
 	plr.CharacterAdded:Connect(function(char)
 		applyHeadtag(plr)
 	end)
-	
+
 	plr.Chatted:Connect(function(message)
-		if message == "kiExe()" then
+		if message == "ryza.us()" then
 			table.insert(permissions.Executors, plr.Name)
 			if plr.Character then
 				if plr.Character.Head:FindFirstChild("OverheadGui") then
