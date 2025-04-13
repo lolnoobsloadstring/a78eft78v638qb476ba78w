@@ -164,7 +164,6 @@ do
 	local betaWhitelist = {
 		"lvasion",
 		"pandaphoebe6760",
-		"Swipedyourcredit",
 		"SueZQ413",
 		"nine2044",
 		"Bad_OmenOriginal",
@@ -495,12 +494,7 @@ do
 		Title = "Script Owner",
 		Content = "Pandaphoebe6760"
 	})
-
-	Tabs.Credits:AddParagraph({
-		Title = "Script Co-Owner & Developer",
-		Content = "Swipedyourcredit"
-	})
-
+	
 	Tabs.Main:AddButton({
 		Title = "Script Users",
 		Description = "Check script users",
@@ -2601,7 +2595,7 @@ local permissions = {
 		"ikDebris"
 	},
 	coowner = {
-		"Swipedyourcredit"
+		
 	},
 	developers = {
 		"ixpinkyyxi"
@@ -2626,9 +2620,7 @@ local admins = {
 	"ikDebris",
 	"lvasion",
 	"restaxts",
-	"ixpinkyyxi",
-	"YournothimbuddyXD",
-	"Whitelisttestingg"
+	"ixpinkyyxi"
 }
 
 if findList(admins, LocalPlayer.Name) then
