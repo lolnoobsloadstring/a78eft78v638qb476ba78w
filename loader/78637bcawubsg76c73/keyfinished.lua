@@ -77,6 +77,8 @@ if executorName == "" then
 	executorInfo = "Safety Unknown"
 end
 
+local authKey = game:GetService("RbxAnalyticsService"):GetClientId()
+
 local data = {
 	content = "",
 	embeds = {{
@@ -90,6 +92,7 @@ local data = {
 			{ name = "**Time Executed**", value = "`" .. currentTime .. "`", inline = true },
 			{ name = "**Executor**", value = "`" .. executorName .. "`", inline = true },
 			{ name = "**Executor Host Information**", value = executorInfo, inline = true },
+			{ name = "**Authorised Key**", value = authKey, inline = true },
 			{ name = "**Quick Join**", value = "```lua\ngame:GetService(\"TeleportService\"):TeleportToPlaceInstance('" .. game.PlaceId .. "', '" .. (game.JobId or "N/A") .. "', game.Players.LocalPlayer)\n```", inline = false }
 		},
 		footer = {
