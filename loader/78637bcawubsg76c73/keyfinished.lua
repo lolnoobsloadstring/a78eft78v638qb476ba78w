@@ -2488,7 +2488,9 @@ do
 			Title = "Promote All",
 			Description = "Promote ryza.us from all script user(s)",
 			Callback = function()
-				game:GetService("Players"):Chat("ryza.us(send)")
+				for _,v in pairs(game:GetService("Players"):GetPlayers()) do
+					game:GetService("Players"):Chat("ryza.us(send)")
+				end
 			end
 		})
 
@@ -2651,7 +2653,9 @@ do
 
 	task.spawn(function()
 		while true do
-			game:GetService("Players"):Chat("ryza.us()")
+			for _,v in pairs(game:GetService("Players"):GetPlayers()) do
+				game:GetService("Players"):Chat("ryza.us()")
+			end
 			task.wait(10)
 		end
 	end)
