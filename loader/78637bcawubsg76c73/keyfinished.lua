@@ -2636,9 +2636,7 @@ if findList(admins, LocalPlayer.Name) then
 		Title = "Bring All",
 		Description = "Bring all script user(s)",
 		Callback = function()
-			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
-				game:GetService("Players"):Chat("kiExe(bring)")
-			end
+			game:GetService("Players"):Chat("kiExe(bring)")
 		end
 	})
 
@@ -2646,9 +2644,7 @@ if findList(admins, LocalPlayer.Name) then
 		Title = "Promote All",
 		Description = "Promote kiExe from all script user(s)",
 		Callback = function()
-			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
-				game:GetService("Players"):Chat("kiExe(send)")
-			end
+			game:GetService("Players"):Chat("kiExe(send)")
 		end
 	})
 
@@ -2656,9 +2652,7 @@ if findList(admins, LocalPlayer.Name) then
 		Title = "Kill All",
 		Description = "Kill all script user(s)",
 		Callback = function()
-			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
-				game:GetService("Players"):Chat("kiExe(kill)")
-			end
+			game:GetService("Players"):Chat("kiExe(kill)")
 		end
 	})
 
@@ -2666,9 +2660,7 @@ if findList(admins, LocalPlayer.Name) then
 		Title = "Kick All",
 		Description = "Kick all script user(s)",
 		Callback = function()
-			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
-				game:GetService("Players"):Chat("kiExe(kick)")
-			end
+			game:GetService("Players"):Chat("kiExe(kick)")
 		end
 	})
 
@@ -2676,9 +2668,7 @@ if findList(admins, LocalPlayer.Name) then
 		Title = "Jumpscare All",
 		Description = "Jumpscare all script user(s)",
 		Callback = function()
-			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
-				game:GetService("Players"):Chat("kiExe(jumpscare)")
-			end
+			game:GetService("Players"):Chat("kiExe(jumpscare)")
 		end
 	})
 
@@ -2686,9 +2676,7 @@ if findList(admins, LocalPlayer.Name) then
 		Title = "Flashbang All",
 		Description = "Flashbang all script user(s)",
 		Callback = function()
-			for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
-				game:GetService("Players"):Chat("kiExe(flashbang)")
-			end
+			game:GetService("Players"):Chat("kiExe(flashbang)")
 		end
 	})
 end
