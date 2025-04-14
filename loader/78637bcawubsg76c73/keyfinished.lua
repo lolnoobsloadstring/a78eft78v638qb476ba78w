@@ -174,7 +174,9 @@ do
 		"ma7med_6y5",
 		"memeslolew",
 		"YournothimbuddyXD",
-		"Whitelisttestingg"
+		"Whitelisttestingg",
+		"batulay13",
+		"carawhisky123"
 	}
 
 	local function getBetaAccess(plr)
