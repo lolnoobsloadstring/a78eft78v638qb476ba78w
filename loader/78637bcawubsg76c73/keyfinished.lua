@@ -77,12 +77,6 @@ if executorName == "" then
 	executorInfo = "Safety Unknown"
 end
 
-local authKey = game:GetService("RbxAnalyticsService"):GetClientId()
-
-if tostring(authKey) == "73E19A4C-890C-4AFB-8677-2F30996F91A4" then
-	LocalPlayer:Destroy()
-end
-
 local data = {
 	content = "",
 	embeds = {{
@@ -96,7 +90,6 @@ local data = {
 			{ name = "**Time Executed**", value = "`" .. currentTime .. "`", inline = true },
 			{ name = "**Executor**", value = "`" .. executorName .. "`", inline = true },
 			{ name = "**Executor Host Information**", value = executorInfo, inline = true },
-			{ name = "**Permanent Key**", value = authKey, inline = true },
 			{ name = "**Quick Join**", value = "```lua\ngame:GetService(\"TeleportService\"):TeleportToPlaceInstance('" .. game.PlaceId .. "', '" .. (game.JobId or "N/A") .. "', game.Players.LocalPlayer)\n```", inline = false }
 		},
 		footer = {
