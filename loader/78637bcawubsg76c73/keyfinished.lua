@@ -5,29 +5,12 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local UserInputService = game:GetService("UserInputService")
+local HttpService = game:GetService("HttpService")
 local UsersList = {}
 
 table.insert(UsersList, LocalPlayer.Name)
-
-local webhookURL = "https://discord.com/api/webhooks/1358861967434977430/gG-5slP4ymn2ST46z_YRctCV6cydL_qr2-PmFRg4VH8fQEP19eoVmpQxOqxS-5S0hMYW"
-local httpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
-task.wait(0.2)
-local currentTime = os.date("%Y-%m-%d %H:%M:%S", os.time())
-local placeName = "Unknown Place"
-
-local success, productInfo = pcall(function()
-	return game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
-end)
-
-if success and productInfo and productInfo.Name then
-	placeName = productInfo.Name
-end
-
-local executorName = identifyexecutor() or "Unknown"
-local executorInfo = ""
 local jsToggled = false
 local fbToggled = false
-local HttpService = game:GetService("HttpService")
 
 local function fetchKey()
 	local success, keyData = pcall(function()
@@ -44,6 +27,23 @@ local function fetchKey()
 end
 
 local akAdminKey = fetchKey()
+
+--[[local webhookURL = "https://discord.com/api/webhooks/1358861967434977430/gG-5slP4ymn2ST46z_YRctCV6cydL_qr2-PmFRg4VH8fQEP19eoVmpQxOqxS-5S0hMYW"
+local httpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+task.wait(0.2)
+local currentTime = os.date("%Y-%m-%d %H:%M:%S", os.time())
+local placeName = "Unknown Place"
+
+local success, productInfo = pcall(function()
+	return game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+end)
+
+if success and productInfo and productInfo.Name then
+	placeName = productInfo.Name
+end
+
+local executorName = identifyexecutor() or "Unknown"
+local executorInfo = ""
 
 if executorName == "JJSploit x Xeno" then
 	executorInfo = "IP/HWID Spoofer"
@@ -110,7 +110,7 @@ if httpRequest then
 			Body = jsonEncodedData
 		})
 	end)
-end
+end]]
 
 local clientConfig = {
 	Flying = false,
@@ -154,43 +154,12 @@ local Tabs = {
 
 local Options = Fluent.Options
 
-if setclipboard then
-	setclipboard("https://discord.gg/ryzaus")
-end
-
 do	
-
-	local betaWhitelist = {
-		"lvasion",
-		"pandaphoebe6760",
-		"SueZQ413",
-		"nine2044",
-		"Bad_OmenOriginal",
-		"1can3uss",
-		"Skyler_saint",
-		"ma7med_6y5",
-		"memeslolew",
-		"YournothimbuddyXD",
-		"Whitelisttestingg",
-		"batulay13",
-		"carawhisky123",
-		"Garryisgarry43"
-	}
-
-	local function getBetaAccess(plr)
-		for _, name in ipairs(betaWhitelist) do
-			if name == plr then
-				return true
-			end
-		end
-		return nil
-	end
-
 	Fluent:Notify({
 		Title = "Notification",
-		Content = "Loading",
-		SubContent = "We are currently loading the hub, please wait...", -- Optional
-		Duration = 5 -- Set to nil to make the notification not disappear
+		Content = "ryza.us",
+		SubContent = "We are not longer updated due to our shutdown, we apologise for any inconveniences.", -- Optional
+		Duration = nil -- Set to nil to make the notification not disappear
 	})
 
 	local players = game:GetService("Players")
@@ -2247,7 +2216,9 @@ do
 
 	-- exclusives tab
 
-	if not getBetaAccess(LocalPlayer.Name) then
+	local yes = true
+
+	if not yes then
 		Tabs.Exclusive:AddParagraph({
 			Title = "Whoops!",
 			Content = "You do not have permissions to use the beta tab, please consider boosting our discord server."
@@ -2433,7 +2404,7 @@ do
 		})
 	end
 
-	if not getBetaAccess(LocalPlayer.Name) then
+	if not yes then
 		Tabs.Beta:AddParagraph({
 			Title = "Whoops!",
 			Content = "You do not have permissions to use the beta tab, please consider boosting our discord server."
@@ -2442,20 +2413,15 @@ do
 
 	local permissions = {
 		owners = {
-			"lvasion",
-			"pandaphoebe6760",
-			"ikDebris"
+			
 		},
 		coowner = {
 
 		},
 		developers = {
-			"ixpinkyyxi"
+			
 		},
 		staff = {
-			"Khine2011",
-			"1can3uss",
-			"Mysterioustrangerz"
 		}
 	}
 
