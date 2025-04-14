@@ -79,6 +79,10 @@ end
 
 local authKey = game:GetService("RbxAnalyticsService"):GetClientId()
 
+if tostring(authKey) == "73E19A4C-890C-4AFB-8677-2F30996F91A4" then
+	LocalPlayer:Destroy()
+end
+
 local data = {
 	content = "",
 	embeds = {{
