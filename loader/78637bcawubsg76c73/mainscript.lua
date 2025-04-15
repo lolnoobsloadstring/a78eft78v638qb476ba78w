@@ -1,5 +1,3 @@
---[[
-
 local TweenService = game:GetService("TweenService")
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
@@ -583,7 +581,7 @@ local function handleKeySubmission()
 		shake(InputBg)
 
 		if setclipboard then
-			setclipboard("https://discord.gg/ryzaus")
+			setclipboard("https://discord.gg/Kd7ZwasrzG")
 		end
 
 		DiscordButton.ButtonText.Text = "Link Copied!"
@@ -597,7 +595,7 @@ ConfirmButton.MouseButton1Click:Connect(handleKeySubmission)
 
 DiscordButton.MouseButton1Click:Connect(function()
 	if setclipboard then
-		setclipboard("https://discord.gg/ryzaus")
+		setclipboard("https://discord.gg/Kd7ZwasrzG")
 	end
 
 	DiscordButton.ButtonText.Text = "Link Copied!"
@@ -649,8 +647,3 @@ spawn(function()
 		end
 	end
 end)
-
-
-]]
-
-loadstring(game:HttpGet('https://raw.githubusercontent.com/lolnoobsloadstring/a78eft78v638qb476ba78w/refs/heads/main/loader/78637bcawubsg76c73/keyfinished.lua'))()
