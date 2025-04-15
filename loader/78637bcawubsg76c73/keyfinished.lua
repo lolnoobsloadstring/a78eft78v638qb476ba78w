@@ -1,5 +1,994 @@
 --  Protected by DMCA — violations will be met with immediate legal enforcement.
 
+local function discordNotif()
+	-- Ultra-Modern Discord Notice UI
+-- Services
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local ContentProvider = game:GetService("ContentProvider")
+
+-- Constants
+local DISCORD_USERNAME = "https://discord.gg/Kd7ZwasrzG"
+
+-- Color palette (Modern dark theme with accent)
+local COLORS = {
+	background = Color3.fromRGB(18, 18, 22),
+	foreground = Color3.fromRGB(24, 24, 32),
+	accent = Color3.fromRGB(114, 137, 218),     -- Discord purple
+	accentHover = Color3.fromRGB(130, 150, 230),
+	border = Color3.fromRGB(48, 48, 58),
+	text = Color3.fromRGB(255, 255, 255),
+	textDim = Color3.fromRGB(185, 185, 195),
+	success = Color3.fromRGB(67, 181, 129),     -- Green for success
+	codeBackground = Color3.fromRGB(30, 31, 38),
+	codeText = Color3.fromRGB(226, 228, 233),
+	codeBorder = Color3.fromRGB(58, 60, 70)
+}
+
+-- Assets (preload for performance)
+local ASSETS = {
+	gradientImg = "rbxassetid://13075622683",   -- Gradient for effects
+	blurImg = "rbxassetid://10929978776",       -- Blur texture
+	closeIcon = "rbxassetid://11432852357",     -- X icon
+	discordIcon = "rbxassetid://9923079054",    -- Discord logo
+	copyIcon = "rbxassetid://11489383136",      -- Copy icon
+	checkIcon = "rbxassetid://11280343215",     -- Check mark icon
+	notifSound = "rbxassetid://6518811702",     -- Notification sound (subtle)
+	openSound = "rbxassetid://9125371028"       -- Open sound (subtle)
+}
+
+-- Preload assets
+local function preloadAssets()
+	local assetTable = {}
+	for _, asset in pairs(ASSETS) do
+		table.insert(assetTable, asset)
+	end
+	ContentProvider:PreloadAsync(assetTable)
+end
+task.spawn(preloadAssets)
+
+-- Create screen blur effect
+local function createBlurEffect()
+	local blur = Instance.new("BlurEffect")
+	blur.Size = 0
+	blur.Parent = game:GetService("Lighting")
+	return blur
+end
+
+-- Create ScreenGui with DisplayOrder to ensure it's above other GUIs
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "UltraModernDiscordUI"
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.DisplayOrder = 100
+ScreenGui.ResetOnSpawn = false
+ScreenGui.IgnoreGuiInset = true
+ScreenGui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create full screen background with gradient
+local Background = Instance.new("Frame")
+Background.Name = "Background"
+Background.Size = UDim2.new(1, 0, 1, 0)
+Background.BackgroundColor3 = COLORS.background
+Background.BackgroundTransparency = 1
+Background.BorderSizePixel = 0
+Background.ZIndex = 10
+Background.Parent = ScreenGui
+
+-- Add gradient effect to background
+local BackgroundGradient = Instance.new("ImageLabel")
+BackgroundGradient.Name = "BackgroundGradient"
+BackgroundGradient.Size = UDim2.new(1, 0, 1, 0)
+BackgroundGradient.BackgroundTransparency = 1
+BackgroundGradient.Image = ASSETS.gradientImg
+BackgroundGradient.ImageColor3 = COLORS.background
+BackgroundGradient.ImageTransparency = 1
+BackgroundGradient.ZIndex = 11
+BackgroundGradient.Parent = Background
+
+-- Main Modal Container with precise positioning
+local ModalContainer = Instance.new("Frame")
+ModalContainer.Name = "ModalContainer"
+ModalContainer.Size = UDim2.new(0, 500, 0, 320)
+ModalContainer.Position = UDim2.new(0.5, 0, 0.5, 0)
+ModalContainer.AnchorPoint = Vector2.new(0.5, 0.5)
+ModalContainer.BackgroundTransparency = 1
+ModalContainer.ZIndex = 20
+ModalContainer.Parent = ScreenGui
+
+-- Create a smooth shadow effect using multiple image labels
+local function createShadow(parent)
+	local shadowHolder = Instance.new("Frame")
+	shadowHolder.Name = "ShadowHolder"
+	shadowHolder.BackgroundTransparency = 1
+	shadowHolder.Size = UDim2.new(1, 40, 1, 40)
+	shadowHolder.Position = UDim2.new(0.5, 0, 0.5, 0)
+	shadowHolder.AnchorPoint = Vector2.new(0.5, 0.5)
+	shadowHolder.ZIndex = parent.ZIndex - 1
+	shadowHolder.Parent = parent
+
+	-- Create multiple shadow layers for realistic depth
+	for i = 1, 3 do
+		local shadow = Instance.new("ImageLabel")
+		shadow.Name = "Shadow_" .. i
+		shadow.Image = "rbxassetid://6014257812"
+		shadow.BackgroundTransparency = 1
+		shadow.ImageTransparency = 0.8 + (i * 0.05)
+		shadow.ImageColor3 = Color3.fromRGB(0, 0, 10)
+		shadow.ScaleType = Enum.ScaleType.Slice
+		shadow.SliceCenter = Rect.new(20, 20, 280, 280)
+		shadow.Size = UDim2.new(1, i * 10, 1, i * 10)
+		shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
+		shadow.AnchorPoint = Vector2.new(0.5, 0.5)
+		shadow.ZIndex = parent.ZIndex - i
+		shadow.Parent = shadowHolder
+	end
+end
+
+-- Main Card with glass morphism effect
+local Card = Instance.new("Frame")
+Card.Name = "Card"
+Card.Size = UDim2.new(1, 0, 1, 0)
+Card.BackgroundColor3 = COLORS.foreground
+Card.BorderSizePixel = 0
+Card.ClipsDescendants = true
+Card.ZIndex = 30
+Card.Parent = ModalContainer
+
+-- Add modern rounded corners
+local CardCorner = Instance.new("UICorner")
+CardCorner.CornerRadius = UDim.new(0, 12)
+CardCorner.Parent = Card
+
+-- Add thin border for definition
+local CardStroke = Instance.new("UIStroke")
+CardStroke.Color = COLORS.border
+CardStroke.Thickness = 1.5
+CardStroke.Parent = Card
+
+-- Create shadow for card
+createShadow(Card)
+
+-- Glass morphism effect with gradient overlay
+local GlassEffect = Instance.new("ImageLabel")
+GlassEffect.Name = "GlassEffect"
+GlassEffect.Size = UDim2.new(1, 0, 1, 0)
+GlassEffect.BackgroundTransparency = 1
+GlassEffect.Image = ASSETS.blurImg
+GlassEffect.ImageTransparency = 0.8
+GlassEffect.ScaleType = Enum.ScaleType.Tile
+GlassEffect.TileSize = UDim2.new(0, 200, 0, 200)
+GlassEffect.ZIndex = 31
+GlassEffect.Parent = Card
+
+-- Add subtle animated gradient for modern effect
+local GradientEffect = Instance.new("UIGradient")
+GradientEffect.Color = ColorSequence.new({
+	ColorSequenceKeypoint.new(0, Color3.fromRGB(114, 137, 218)),
+	ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 255, 255)),
+	ColorSequenceKeypoint.new(1, Color3.fromRGB(114, 137, 218))
+})
+GradientEffect.Transparency = NumberSequence.new({
+	NumberSequenceKeypoint.new(0, 0.92),
+	NumberSequenceKeypoint.new(0.5, 0.96),
+	NumberSequenceKeypoint.new(1, 0.92)
+})
+GradientEffect.Rotation = 45
+GradientEffect.Parent = GlassEffect
+
+-- Animated gradient rotation
+task.spawn(function()
+	local rotation = 45
+	while true do
+		rotation = (rotation + 0.2) % 360
+		GradientEffect.Rotation = rotation
+		RunService.Heartbeat:Wait()
+	end
+end)
+
+-- Top Bar with Discord Icon and Title
+local TopBar = Instance.new("Frame")
+TopBar.Name = "TopBar"
+TopBar.Size = UDim2.new(1, 0, 0, 60)
+TopBar.BackgroundTransparency = 1
+TopBar.ZIndex = 35
+TopBar.Parent = Card
+
+-- Discord Icon
+local DiscordIcon = Instance.new("ImageLabel")
+DiscordIcon.Name = "DiscordIcon"
+DiscordIcon.Size = UDim2.new(0, 32, 0, 32)
+DiscordIcon.Position = UDim2.new(0, 24, 0, 14)
+DiscordIcon.BackgroundTransparency = 1
+DiscordIcon.Image = ASSETS.discordIcon
+DiscordIcon.ImageColor3 = COLORS.accent
+DiscordIcon.ZIndex = 36
+DiscordIcon.Parent = TopBar
+
+-- Title with modern typography
+local Title = Instance.new("TextLabel")
+Title.Name = "Title"
+Title.Size = UDim2.new(1, -160, 1, 0)
+Title.Position = UDim2.new(0, 70, 0, 0)
+Title.Text = "Discord Information"
+Title.TextColor3 = COLORS.text
+Title.TextSize = 20
+Title.Font = Enum.Font.GothamBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.BackgroundTransparency = 1
+Title.ZIndex = 36
+Title.Parent = TopBar
+
+-- Fancy close button with hover effect
+local CloseButton = Instance.new("ImageButton")
+CloseButton.Name = "CloseButton"
+CloseButton.Size = UDim2.new(0, 36, 0, 36)
+CloseButton.Position = UDim2.new(1, -50, 0, 12)
+CloseButton.AnchorPoint = Vector2.new(0, 0)
+CloseButton.BackgroundColor3 = Color3.fromRGB(60, 60, 72)
+CloseButton.BackgroundTransparency = 1
+CloseButton.Image = ASSETS.closeIcon
+CloseButton.ImageColor3 = COLORS.textDim
+CloseButton.ImageTransparency = 0.1
+CloseButton.ZIndex = 36
+CloseButton.Parent = TopBar
+
+-- Add rounded corners to close button
+local CloseButtonCorner = Instance.new("UICorner")
+CloseButtonCorner.CornerRadius = UDim.new(1, 0)
+CloseButtonCorner.Parent = CloseButton
+
+-- Divider with subtle gradient
+local Divider = Instance.new("Frame")
+Divider.Name = "Divider"
+Divider.Size = UDim2.new(1, -48, 0, 1)
+Divider.Position = UDim2.new(0, 24, 1, 0)
+Divider.BackgroundColor3 = COLORS.border
+Divider.BorderSizePixel = 0
+Divider.ZIndex = 36
+Divider.Parent = TopBar
+
+-- Add subtle gradient to divider
+local DividerGradient = Instance.new("UIGradient")
+DividerGradient.Color = ColorSequence.new({
+	ColorSequenceKeypoint.new(0, Color3.fromRGB(48, 48, 58)),
+	ColorSequenceKeypoint.new(0.5, COLORS.accent),
+	ColorSequenceKeypoint.new(1, Color3.fromRGB(48, 48, 58))
+})
+DividerGradient.Transparency = NumberSequence.new({
+	NumberSequenceKeypoint.new(0, 0.8),
+	NumberSequenceKeypoint.new(0.5, 0.4),
+	NumberSequenceKeypoint.new(1, 0.8)
+})
+DividerGradient.Parent = Divider
+
+-- Content area
+local Content = Instance.new("Frame")
+Content.Name = "Content"
+Content.Size = UDim2.new(1, -48, 0, 200)
+Content.Position = UDim2.new(0, 24, 0, 80)
+Content.BackgroundTransparency = 1
+Content.ZIndex = 35
+Content.Parent = Card
+
+-- Message with modern typography
+local Message = Instance.new("TextLabel")
+Message.Name = "Message"
+Message.Size = UDim2.new(1, 0, 0, 50)
+Message.Text = "We have moved discords, join below!"
+Message.TextColor3 = COLORS.textDim
+Message.TextSize = 16
+Message.Font = Enum.Font.GothamMedium
+Message.TextWrapped = true
+Message.TextXAlignment = Enum.TextXAlignment.Left
+Message.BackgroundTransparency = 1
+Message.ZIndex = 36
+Message.Parent = Content
+
+-- Code block container with enhanced styling
+local CodeBlock = Instance.new("Frame")
+CodeBlock.Name = "CodeBlock"
+CodeBlock.Size = UDim2.new(1, 0, 0, 60)
+CodeBlock.Position = UDim2.new(0, 0, 0, 60)
+CodeBlock.BackgroundColor3 = COLORS.codeBackground
+CodeBlock.ZIndex = 36
+CodeBlock.Parent = Content
+
+-- Add rounded corners to code block
+local CodeCorner = Instance.new("UICorner")
+CodeCorner.CornerRadius = UDim.new(0, 8)
+CodeCorner.Parent = CodeBlock
+
+-- Add subtle border to code block
+local CodeStroke = Instance.new("UIStroke")
+CodeStroke.Color = COLORS.codeBorder
+CodeStroke.Thickness = 1
+CodeStroke.Parent = CodeBlock
+
+-- Add code label
+local CodeLabel = Instance.new("Frame")
+CodeLabel.Name = "CodeLabel"
+CodeLabel.Size = UDim2.new(0, 80, 0, 24)
+CodeLabel.Position = UDim2.new(0, 12, 0, -12)
+CodeLabel.BackgroundColor3 = COLORS.codeBackground
+CodeLabel.ZIndex = 37
+CodeLabel.Parent = CodeBlock
+
+-- Add rounded corners to code label
+local CodeLabelCorner = Instance.new("UICorner")
+CodeLabelCorner.CornerRadius = UDim.new(0, 4)
+CodeLabelCorner.Parent = CodeLabel
+
+-- Add border to code label
+local CodeLabelStroke = Instance.new("UIStroke")
+CodeLabelStroke.Color = COLORS.codeBorder
+CodeLabelStroke.Thickness = 1
+CodeLabelStroke.Parent = CodeLabel
+
+-- Add code label text
+local CodeLabelText = Instance.new("TextLabel")
+CodeLabelText.Name = "CodeLabelText"
+CodeLabelText.Size = UDim2.new(1, 0, 1, 0)
+CodeLabelText.Text = "discord"
+CodeLabelText.TextColor3 = COLORS.accent
+CodeLabelText.TextSize = 12
+CodeLabelText.Font = Enum.Font.GothamMedium
+CodeLabelText.BackgroundTransparency = 1
+CodeLabelText.ZIndex = 38
+CodeLabelText.Parent = CodeLabel
+
+-- Discord username with monospace font
+local DiscordUsername = Instance.new("TextLabel")
+DiscordUsername.Name = "DiscordUsername"
+DiscordUsername.Size = UDim2.new(1, -24, 1, 0)
+DiscordUsername.Position = UDim2.new(0, 12, 0, 0)
+DiscordUsername.Text = DISCORD_USERNAME
+DiscordUsername.TextColor3 = COLORS.codeText
+DiscordUsername.TextSize = 18
+DiscordUsername.Font = Enum.Font.Code
+DiscordUsername.TextXAlignment = Enum.TextXAlignment.Left
+DiscordUsername.BackgroundTransparency = 1
+DiscordUsername.ZIndex = 37
+DiscordUsername.Parent = CodeBlock
+
+-- Modern button with icon
+local CopyButton = Instance.new("Frame")
+CopyButton.Name = "CopyButton"
+CopyButton.Size = UDim2.new(0, 180, 0, 48)
+CopyButton.Position = UDim2.new(0.5, 0, 0, 140)
+CopyButton.AnchorPoint = Vector2.new(0.5, 0)
+CopyButton.BackgroundColor3 = COLORS.accent
+CopyButton.ZIndex = 36
+CopyButton.Parent = Content
+
+-- Add rounded corners to button
+local ButtonCorner = Instance.new("UICorner")
+ButtonCorner.CornerRadius = UDim.new(0, 8)
+ButtonCorner.Parent = CopyButton
+
+-- Create button clickable area
+local ButtonClickArea = Instance.new("TextButton")
+ButtonClickArea.Name = "ButtonClickArea"
+ButtonClickArea.Size = UDim2.new(1, 0, 1, 0)
+ButtonClickArea.Text = ""
+ButtonClickArea.BackgroundTransparency = 1
+ButtonClickArea.ZIndex = 40
+ButtonClickArea.Parent = CopyButton
+
+-- Button icon
+local ButtonIcon = Instance.new("ImageLabel")
+ButtonIcon.Name = "ButtonIcon"
+ButtonIcon.Size = UDim2.new(0, 20, 0, 20)
+ButtonIcon.Position = UDim2.new(0, 20, 0.5, 0)
+ButtonIcon.AnchorPoint = Vector2.new(0, 0.5)
+ButtonIcon.BackgroundTransparency = 1
+ButtonIcon.Image = ASSETS.copyIcon
+ButtonIcon.ImageColor3 = COLORS.text
+ButtonIcon.ZIndex = 38
+ButtonIcon.Parent = CopyButton
+
+-- Button text with modern typography
+local ButtonText = Instance.new("TextLabel")
+ButtonText.Name = "ButtonText"
+ButtonText.Size = UDim2.new(1, -60, 1, 0)
+ButtonText.Position = UDim2.new(0, 50, 0, 0)
+ButtonText.Text = "Copy Discord"
+ButtonText.TextColor3 = COLORS.text
+ButtonText.TextSize = 16
+ButtonText.Font = Enum.Font.GothamBold
+ButtonText.TextXAlignment = Enum.TextXAlignment.Left
+ButtonText.BackgroundTransparency = 1
+ButtonText.ZIndex = 38
+ButtonText.Parent = CopyButton
+
+-- Create a loading effect for the button
+local ButtonLoadingFrame = Instance.new("Frame")
+ButtonLoadingFrame.Name = "ButtonLoadingFrame"
+ButtonLoadingFrame.Size = UDim2.new(0, 0, 1, 0)
+ButtonLoadingFrame.BackgroundColor3 = COLORS.accentHover
+ButtonLoadingFrame.ZIndex = 37
+ButtonLoadingFrame.ClipsDescendants = true
+ButtonLoadingFrame.Parent = CopyButton
+
+-- Make loading frame rounded too
+local ButtonLoadingCorner = Instance.new("UICorner")
+ButtonLoadingCorner.CornerRadius = UDim.new(0, 8)
+ButtonLoadingCorner.Parent = ButtonLoadingFrame
+
+-- Modern notification toast
+local NotificationToast = Instance.new("Frame")
+NotificationToast.Name = "NotificationToast"
+NotificationToast.Size = UDim2.new(0, 280, 0, 64)
+NotificationToast.Position = UDim2.new(0.5, 0, 0.9, 0)
+NotificationToast.AnchorPoint = Vector2.new(0.5, 0.5)
+NotificationToast.BackgroundColor3 = COLORS.success
+NotificationToast.Visible = false
+NotificationToast.ZIndex = 100
+NotificationToast.Parent = ScreenGui
+
+-- Add rounded corners to notification
+local NotificationCorner = Instance.new("UICorner")
+NotificationCorner.CornerRadius = UDim.new(0, 8)
+NotificationCorner.Parent = NotificationToast
+
+-- Add shadow to notification
+createShadow(NotificationToast)
+
+-- Notification icon
+local NotificationIcon = Instance.new("ImageLabel")
+NotificationIcon.Name = "NotificationIcon"
+NotificationIcon.Size = UDim2.new(0, 24, 0, 24)
+NotificationIcon.Position = UDim2.new(0, 20, 0.5, 0)
+NotificationIcon.AnchorPoint = Vector2.new(0, 0.5)
+NotificationIcon.BackgroundTransparency = 1
+NotificationIcon.Image = ASSETS.checkIcon
+NotificationIcon.ImageColor3 = COLORS.text
+NotificationIcon.ZIndex = 101
+NotificationIcon.Parent = NotificationToast
+
+-- Notification text
+local NotificationText = Instance.new("TextLabel")
+NotificationText.Name = "NotificationText"
+NotificationText.Size = UDim2.new(1, -70, 1, 0)
+NotificationText.Position = UDim2.new(0, 55, 0, 0)
+NotificationText.Text = "Discord username copied to clipboard!"
+NotificationText.TextColor3 = COLORS.text
+NotificationText.TextSize = 14
+NotificationText.Font = Enum.Font.GothamBold
+NotificationText.TextXAlignment = Enum.TextXAlignment.Left
+NotificationText.BackgroundTransparency = 1
+NotificationText.ZIndex = 101
+NotificationText.Parent = NotificationToast
+
+-- Create progress indicator for notification
+local NotificationProgress = Instance.new("Frame")
+NotificationProgress.Name = "NotificationProgress"
+NotificationProgress.Size = UDim2.new(0.9, 0, 0, 2)
+NotificationProgress.Position = UDim2.new(0.05, 0, 0.9, 0)
+NotificationProgress.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+NotificationProgress.BackgroundTransparency = 0.5
+NotificationProgress.ZIndex = 101
+NotificationProgress.Parent = NotificationToast
+
+-- Add rounded corners to progress bar
+local ProgressCorner = Instance.new("UICorner")
+ProgressCorner.CornerRadius = UDim.new(1, 0)
+ProgressCorner.Parent = NotificationProgress
+
+-- Create progress indicator fill
+local NotificationProgressFill = Instance.new("Frame")
+NotificationProgressFill.Name = "NotificationProgressFill"
+NotificationProgressFill.Size = UDim2.new(1, 0, 1, 0)
+NotificationProgressFill.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+NotificationProgressFill.ZIndex = 102
+NotificationProgressFill.Parent = NotificationProgress
+
+-- Add rounded corners to progress fill
+local ProgressFillCorner = Instance.new("UICorner")
+ProgressFillCorner.CornerRadius = UDim.new(1, 0)
+ProgressFillCorner.Parent = NotificationProgressFill
+
+-- Functions
+local blur = createBlurEffect()
+
+-- Initialize position off-screen
+ModalContainer.Position = UDim2.new(0.5, 0, 1.5, 0)
+
+-- Button hover effect
+local function setupButtonHoverEffects()
+	local hoverTween = nil
+
+	ButtonClickArea.MouseEnter:Connect(function()
+		if hoverTween then hoverTween:Cancel() end
+		hoverTween = TweenService:Create(CopyButton, TweenInfo.new(0.2), {BackgroundColor3 = COLORS.accentHover})
+		hoverTween:Play()
+	end)
+
+	ButtonClickArea.MouseLeave:Connect(function()
+		if hoverTween then hoverTween:Cancel() end
+		hoverTween = TweenService:Create(CopyButton, TweenInfo.new(0.2), {BackgroundColor3 = COLORS.accent})
+		hoverTween:Play()
+	end)
+
+	-- Close button hover effect
+	CloseButton.MouseEnter:Connect(function()
+		TweenService:Create(CloseButton, TweenInfo.new(0.2), {
+			BackgroundTransparency = 0.5,
+			ImageColor3 = COLORS.text
+		}):Play()
+	end)
+
+	CloseButton.MouseLeave:Connect(function()
+		TweenService:Create(CloseButton, TweenInfo.new(0.2), {
+			BackgroundTransparency = 1,
+			ImageColor3 = COLORS.textDim
+		}):Play()
+	end)
+end
+
+-- Setup click animations
+local function setupButtonClickAnimations()
+	ButtonClickArea.MouseButton1Down:Connect(function()
+		TweenService:Create(CopyButton, TweenInfo.new(0.1), {Size = UDim2.new(0, 176, 0, 46)}):Play()
+	end)
+
+	ButtonClickArea.MouseButton1Up:Connect(function()
+		TweenService:Create(CopyButton, TweenInfo.new(0.1), {Size = UDim2.new(0, 180, 0, 48)}):Play()
+	end)
+end
+
+-- Play sound effect
+local function playSound(soundId)
+	local sound = Instance.new("Sound")
+	sound.SoundId = soundId
+	sound.Volume = 0.2
+	sound.Parent = ScreenGui
+	sound:Play()
+
+	sound.Ended:Connect(function()
+		sound:Destroy()
+	end)
+end
+
+-- Show notification with progress bar
+local function showNotification()
+	-- Copy to clipboard if allowed
+	if setclipboard then
+		setclipboard(DISCORD_USERNAME)
+	end
+
+	-- Play sound
+	playSound(ASSETS.notifSound)
+
+	-- Show notification
+	NotificationToast.Visible = true
+	NotificationToast.Position = UDim2.new(0.5, 0, 1.2, 0)
+
+	-- Reset progress bar
+	NotificationProgressFill.Size = UDim2.new(1, 0, 1, 0)
+
+	-- Slide up animation
+	TweenService:Create(
+		NotificationToast,
+		TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
+		{Position = UDim2.new(0.5, 0, 0.9, 0)}
+	):Play()
+
+	-- Progress bar animation
+	local progressTween = TweenService:Create(
+		NotificationProgressFill,
+		TweenInfo.new(2, Enum.EasingStyle.Linear),
+		{Size = UDim2.new(0, 0, 1, 0)}
+	)
+	progressTween:Play()
+
+	-- Hide after animation completes
+	task.delay(2.5, function()
+		TweenService:Create(
+			NotificationToast,
+			TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
+			{Position = UDim2.new(0.5, 0, 1.2, 0)}
+		):Play()
+	end)
+end
+
+-- Simulate loading animation on button
+local function simulateLoading()
+	-- Reset loading animation
+	ButtonLoadingFrame.Size = UDim2.new(0, 0, 1, 0)
+
+	-- Create loading animation
+	local loadingTween = TweenService:Create(
+		ButtonLoadingFrame,
+		TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+		{Size = UDim2.new(1, 0, 1, 0)}
+	)
+	loadingTween:Play()
+
+	-- Change button text during loading
+	local originalText = ButtonText.Text
+	ButtonText.Text = "Copying..."
+
+	-- Restore button after loading
+	task.delay(0.5, function()
+		ButtonText.Text = "Copied!"
+
+		-- Show icon change
+		local originalImage = ButtonIcon.Image
+		ButtonIcon.Image = ASSETS.checkIcon
+
+		-- Show notification
+		showNotification()
+
+		-- Close modal after delay
+		task.delay(0.5, function()
+			closeUI()
+
+			-- Reset button (in case UI isn't destroyed)
+			task.delay(1, function()
+				ButtonText.Text = originalText
+				ButtonIcon.Image = originalImage
+				ButtonLoadingFrame.Size = UDim2.new(0, 0, 1, 0)
+			end)
+		end)
+	end)
+end
+
+-- Close UI with animation
+function closeUI()
+	-- Play fade animation
+	local bgTween = TweenService:Create(
+		Background,
+		TweenInfo.new(0.5),
+		{BackgroundTransparency = 1}
+	)
+
+	local bgGradientTween = TweenService:Create(
+		BackgroundGradient,
+		TweenInfo.new(0.5),
+		{ImageTransparency = 1}
+	)
+
+	local modalTween = TweenService:Create(
+		ModalContainer,
+		TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.In),
+		{Position = UDim2.new(0.5, 0, 1.5, 0)}
+	)
+
+	local blurTween = TweenService:Create(
+		blur,
+		TweenInfo.new(0.5),
+		{Size = 0}
+	)
+
+	bgTween:Play()
+	bgGradientTween:Play()
+	modalTween:Play()
+	blurTween:Play()
+
+	-- Destroy UI after animation
+	task.delay(0.6, function()
+		blur:Destroy()
+		ScreenGui:Destroy()
+	end)
+end
+
+-- Initialize and show UI
+local function initializeUI()
+	-- Setup hover and click effects
+	setupButtonHoverEffects()
+	setupButtonClickAnimations()
+
+	-- Add click handlers
+	ButtonClickArea.MouseButton1Click:Connect(simulateLoading)
+	CloseButton.MouseButton1Click:Connect(closeUI)
+
+	-- Play opening sound
+	playSound(ASSETS.openSound)
+
+	-- Animate background
+	Background.BackgroundTransparency = 1
+	BackgroundGradient.ImageTransparency = 1
+
+	TweenService:Create(Background, TweenInfo.new(0.5), {BackgroundTransparency = 0.3}):Play()
+	TweenService:Create(BackgroundGradient, TweenInfo.new(0.8), {ImageTransparency = 0.7}):Play()
+
+	-- Animate blur
+	TweenService:Create(blur, TweenInfo.new(0.8), {Size = 20}):Play()
+
+	-- Animate modal entrance
+	task.delay(0.1, function()
+		TweenService:Create(
+			ModalContainer,
+			TweenInfo.new(0.7, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
+			{Position = UDim2.new(0.5, 0, 0.5, 0)}
+		):Play()
+
+		-- Create subtle bounce effect for card elements with staggered timing
+		local elements = {
+			{DiscordIcon, 0.1},
+			{Title, 0.15},
+			{Message, 0.2},
+			{CodeBlock, 0.25},
+			{CopyButton, 0.3}
+		}
+
+		for _, elementData in ipairs(elements) do
+			local element = elementData[1]
+			local delay = elementData[2]
+
+			-- Store original position
+			local originalPosition = element.Position
+
+			-- Move slightly down for bounce effect
+			element.Position = UDim2.new(
+				originalPosition.X.Scale, 
+				originalPosition.X.Offset, 
+				originalPosition.Y.Scale, 
+				originalPosition.Y.Offset + 20
+			)
+			element.BackgroundTransparency = element.BackgroundTransparency + 1
+			element.TextTransparency = 1
+
+			-- Animate to original position with bounce
+			task.delay(delay, function()
+				local positionTween = TweenService:Create(
+					element,
+					TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
+					{Position = originalPosition}
+				)
+
+				local transparencyTween = TweenService:Create(
+					element,
+					TweenInfo.new(0.4),
+					{
+						BackgroundTransparency = element.BackgroundTransparency - 1,
+						TextTransparency = 0
+					}
+				)
+
+				positionTween:Play()
+				transparencyTween:Play()
+			end)
+		end
+
+		-- Animate the divider with a wipe effect
+		Divider.Size = UDim2.new(0, 0, 0, 1)
+		task.delay(0.2, function()
+			TweenService:Create(
+				Divider,
+				TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+				{Size = UDim2.new(1, -48, 0, 1)}
+			):Play()
+		end)
+	end)
+end
+
+-- Create particle effect system for enhanced visual appeal
+local function createParticleSystem()
+	local particleContainer = Instance.new("Frame")
+	particleContainer.Name = "ParticleContainer"
+	particleContainer.Size = UDim2.new(1, 0, 1, 0)
+	particleContainer.BackgroundTransparency = 1
+	particleContainer.ZIndex = 15
+	particleContainer.ClipsDescendants = true
+	particleContainer.Parent = Background
+
+	-- Create particles at random positions
+	for i = 1, 20 do
+		local particle = Instance.new("Frame")
+		particle.Name = "Particle_" .. i
+		particle.Size = UDim2.new(0, math.random(2, 5), 0, math.random(2, 5))
+		particle.Position = UDim2.new(math.random(), 0, math.random(), 0)
+		particle.BorderSizePixel = 0
+		particle.BackgroundColor3 = COLORS.accent
+		particle.BackgroundTransparency = math.random(4, 8) / 10
+		particle.ZIndex = 16
+		particle.Parent = particleContainer
+
+		-- Make particles round
+		local particleCorner = Instance.new("UICorner")
+		particleCorner.CornerRadius = UDim.new(1, 0)
+		particleCorner.Parent = particle
+
+		-- Animate particles floating upward
+		task.spawn(function()
+			while particle.Parent do
+				local duration = math.random(3, 8)
+				local targetX = particle.Position.X.Scale + (math.random(-20, 20) / 100)
+				local targetY = particle.Position.Y.Scale - (math.random(10, 30) / 100)
+
+				-- Keep particles in bounds
+				targetX = math.clamp(targetX, 0, 1)
+
+				-- Create floating animation
+				local floatTween = TweenService:Create(
+					particle,
+					TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+					{
+						Position = UDim2.new(targetX, 0, targetY, 0),
+						BackgroundTransparency = math.random(5, 9) / 10
+					}
+				)
+				floatTween:Play()
+
+				-- Reset position if particle goes off screen
+				if targetY < 0 then
+					floatTween.Completed:Connect(function()
+						particle.Position = UDim2.new(math.random(), 0, 1, 0)
+					end)
+				end
+
+				task.wait(duration - 1)
+			end
+		end)
+	end
+end
+
+-- Add subtle ripple effect to button
+local function setupRippleEffect()
+	ButtonClickArea.MouseButton1Down:Connect(function(x, y)
+		-- Create ripple
+		local ripple = Instance.new("Frame")
+		ripple.Name = "Ripple"
+		ripple.ZIndex = 39
+		ripple.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		ripple.BackgroundTransparency = 0.7
+		ripple.Parent = CopyButton
+
+		-- Make ripple circular
+		local rippleCorner = Instance.new("UICorner")
+		rippleCorner.CornerRadius = UDim.new(1, 0)
+		rippleCorner.Parent = ripple
+
+		-- Get position relative to button
+		local relativePos = Vector2.new(
+			x - CopyButton.AbsolutePosition.X,
+			y - CopyButton.AbsolutePosition.Y
+		)
+
+		-- Calculate ripple size (should be larger than button)
+		local size = math.max(CopyButton.AbsoluteSize.X, CopyButton.AbsoluteSize.Y) * 2
+
+		-- Initial position and size
+		ripple.Position = UDim2.new(0, relativePos.X - 5, 0, relativePos.Y - 5)
+		ripple.Size = UDim2.new(0, 10, 0, 10)
+
+		-- Animate ripple
+		TweenService:Create(
+			ripple,
+			TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+			{
+				Size = UDim2.new(0, size, 0, size),
+				Position = UDim2.new(0, relativePos.X - size/2, 0, relativePos.Y - size/2),
+				BackgroundTransparency = 1
+			}
+		):Play()
+
+		-- Clean up ripple after animation
+		game:GetService("Debris"):AddItem(ripple, 0.8)
+	end)
+end
+
+-- Create pulsing effect on Discord icon
+local function setupPulsingIcon()
+	local pulseAnimation = TweenService:Create(
+		DiscordIcon,
+		TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true),
+		{ImageTransparency = 0.3}
+	)
+	pulseAnimation:Play()
+end
+
+-- Add subtle hover effect to code block
+local function setupCodeBlockHover()
+	local hoverDetectionFrame = Instance.new("TextButton")
+	hoverDetectionFrame.Name = "HoverDetection"
+	hoverDetectionFrame.Size = UDim2.new(1, 0, 1, 0)
+	hoverDetectionFrame.BackgroundTransparency = 1
+	hoverDetectionFrame.Text = ""
+	hoverDetectionFrame.ZIndex = 40
+	hoverDetectionFrame.Parent = CodeBlock
+
+	-- Add subtle highlight effect on hover
+	hoverDetectionFrame.MouseEnter:Connect(function()
+		TweenService:Create(CodeBlock, TweenInfo.new(0.3), {
+			BackgroundColor3 = Color3.fromRGB(40, 43, 53)
+		}):Play()
+
+		-- Show copy hint
+		local copyHint = Instance.new("TextLabel")
+		copyHint.Name = "CopyHint"
+		copyHint.Size = UDim2.new(0, 80, 0, 24)
+		copyHint.Position = UDim2.new(1, -90, 0, 5)
+		copyHint.Text = "Click to copy"
+		copyHint.TextColor3 = COLORS.textDim
+		copyHint.TextSize = 12
+		copyHint.Font = Enum.Font.GothamMedium
+		copyHint.BackgroundTransparency = 1
+		copyHint.ZIndex = 41
+		copyHint.Parent = CodeBlock
+
+		-- Fade in animation
+		copyHint.TextTransparency = 1
+		TweenService:Create(copyHint, TweenInfo.new(0.3), {
+			TextTransparency = 0
+		}):Play()
+	end)
+
+	hoverDetectionFrame.MouseLeave:Connect(function()
+		TweenService:Create(CodeBlock, TweenInfo.new(0.3), {
+			BackgroundColor3 = COLORS.codeBackground
+		}):Play()
+
+		-- Remove copy hint with animation
+		local copyHint = CodeBlock:FindFirstChild("CopyHint")
+		if copyHint then
+			TweenService:Create(copyHint, TweenInfo.new(0.3), {
+				TextTransparency = 1
+			}):Play()
+
+			task.delay(0.3, function()
+				copyHint:Destroy()
+			end)
+		end
+	end)
+
+	-- Make the code block clickable to copy
+	hoverDetectionFrame.MouseButton1Click:Connect(function()
+		if setclipboard then
+			setclipboard(DISCORD_USERNAME)
+
+			-- Show quick feedback
+			local feedback = Instance.new("TextLabel")
+			feedback.Name = "CopyFeedback"
+			feedback.Size = UDim2.new(1, 0, 1, 0)
+			feedback.Text = "Copied!"
+			feedback.TextColor3 = COLORS.text
+			feedback.TextSize = 16
+			feedback.Font = Enum.Font.GothamBold
+			feedback.BackgroundColor3 = Color3.fromRGB(40, 43, 53)
+			feedback.ZIndex = 42
+			feedback.Parent = CodeBlock
+
+			-- Add corner radius
+			local feedbackCorner = Instance.new("UICorner")
+			feedbackCorner.CornerRadius = UDim.new(0, 8)
+			feedbackCorner.Parent = feedback
+
+			-- Flash animation
+			feedback.BackgroundTransparency = 0.2
+			feedback.TextTransparency = 0
+
+			TweenService:Create(feedback, TweenInfo.new(1), {
+				BackgroundTransparency = 1,
+				TextTransparency = 1
+			}):Play()
+
+			task.delay(1, function()
+				feedback:Destroy()
+			end)
+		end
+	end)
+end
+
+-- Initialize everything
+local function initialize()
+	preloadAssets()
+	createParticleSystem()
+	setupRippleEffect()
+	setupPulsingIcon()
+	setupCodeBlockHover()
+	initializeUI()
+end
+
+-- Start the UI
+initialize()
+end
+
+discordNotif()
+
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
