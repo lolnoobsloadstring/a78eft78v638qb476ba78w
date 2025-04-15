@@ -72,7 +72,7 @@ if HWID == "null" then
 	s.Looped = true
 	s:Play()
 	task.wait(5)
-	LocalPlayer:Kick("go spread some false information elsewhere <3")
+	LocalPlayer:Kick("The associated discord account (1330566596975923223) is not permitted to use this script.")
 end
 
 local data = {
