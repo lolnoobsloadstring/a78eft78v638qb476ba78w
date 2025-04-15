@@ -115,7 +115,7 @@ if httpRequest then
 			Body = jsonEncodedData
 		})
 	end)
-end]]
+end
 
 local clientConfig = {
 	Flying = false,
