@@ -56,22 +56,8 @@ elseif executorName == "MacSploit" then
 elseif executorName == "Velocity" then
 	executorInfo = "Unmeasured"
 elseif executorName == "Swift" then
-	executorInfo = "Unsafe: Slow device root"
-end
-
-if executorName == "Krnl" then
-	executorInfo = "Safe Executor"
-end
-
-if executorName == "Delta" then
-	executorInfo = "Safe Mobile Executor"
-end
-
-if executorName == "Solara" then
-	executorInfo = "Safe PC Executor"
-end
-
-if executorName == "" then
+	executorInfo = "Unsafe: Slow device root cause"
+else
 	executorInfo = "Safety Unknown"
 end
 
@@ -143,7 +129,7 @@ end
 
 local Window = Fluent:CreateWindow({
 	Title = "ryza.us",
-	SubTitle = "by lvasion",
+	SubTitle = "by rylie.",
 	TabWidth = 160,
 	Size = sStoreSize,
 	Acrylic = true,
@@ -170,9 +156,14 @@ local Options = Fluent.Options
 
 do	
 	Fluent:Notify({
-		Title = "Notification",
-		Content = "ryza.us",
-		SubContent = "https://discord.gg/Kd7ZwasrzG", -- Optional
+		Title = "ryza.us",
+		Content = "https://discord.gg/Kd7ZwasrzG", -- Optional
+		Duration = nil -- Set to nil to make the notification not disappear
+	})
+
+	Fluent:Notify({
+		Title = "ryza.us",
+		Content = "ryza.us is undergoing new ownership, make sure to join the discord!",
 		Duration = nil -- Set to nil to make the notification not disappear
 	})
 
@@ -467,17 +458,17 @@ do
 
 	Tabs.Main:AddParagraph({
 		Title = "Discord Server",
-		Content = "Invite: https://discord.gg/ryzaus"
+		Content = "Invite: https://discord.gg/Kd7ZwasrzG"
 	})
 
 	Tabs.Credits:AddParagraph({
-		Title = "Script Owner & Developer",
+		Title = "Script Creator",
 		Content = "lvasion"
 	})
 
 	Tabs.Credits:AddParagraph({
 		Title = "Script Owner",
-		Content = "Pandaphoebe6760"
+		Content = "rylie."
 	})
 
 	Tabs.Main:AddButton({
