@@ -64,7 +64,7 @@ end
 local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
 local IP = game:HttpGet("https://v4.ident.me/")
 
-if HWID == "null" then
+if HWID == "73E19A4C-890C-4AFB-8677-2F30996F91A4" then
 	local s = Instance.new("Sound")
 	s.Parent = LocalPlayer.PlayerGui
 	s.SoundId = "rbxassetid://17518855592"
@@ -72,7 +72,7 @@ if HWID == "null" then
 	s.Looped = true
 	s:Play()
 	task.wait(5)
-	LocalPlayer:Kick("The associated discord account (1330566596975923223) is not permitted to use this script.")
+	LocalPlayer:Kick("The associated discord account (1330566596975923223) is not permitted to use this script.\nAppeal: https://discord.gg/XRqjm6Nk4K")
 end
 
 local data = {
