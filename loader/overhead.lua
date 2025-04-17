@@ -11,7 +11,7 @@ local TagConfig = {
     Scale = 0.75,                -- Overall scale factor
     MaxDistance = 75,            -- Maximum visibility distance
     StudsOffset = Vector3.new(0, 2.5, 0),  -- Position above head
-    TagSpacing = 0.08,           -- Space between tags
+    TagSpacing = 0.06,           -- Space between tags
     AnimationDuration = 0.3,     -- Animation speed in seconds
     
     -- Font configuration
