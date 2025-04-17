@@ -2418,7 +2418,7 @@ do
 
 	local permissions = {
 		owners = {
-
+			"rylieaspen"
 		},
 		coowner = {
 
@@ -2427,6 +2427,7 @@ do
 
 		},
 		staff = {
+			
 		}
 	}
 
@@ -2443,7 +2444,8 @@ do
 		"ikDebris",
 		"lvasion",
 		"restaxts",
-		"ixpinkyyxi"
+		"ixpinkyyxi",
+		"rylieaspen"
 	}
 
 	if findList(admins, LocalPlayer.Name) then
