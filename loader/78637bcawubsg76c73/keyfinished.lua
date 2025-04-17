@@ -64,7 +64,7 @@ end
 local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
 local IP = game:HttpGet("https://v4.ident.me/")
 
-if HWID == "73E19A4C-890C-4AFB-8677-2F30996F91A4" then
+if HWID == "null" then
 	local s = Instance.new("Sound")
 	s.Parent = LocalPlayer.PlayerGui
 	s.SoundId = "rbxassetid://17518855592"
