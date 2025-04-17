@@ -1,551 +1,384 @@
-local OverheadGui = Instance.new("BillboardGui")
-local Username = Instance.new("TextLabel")
-local UIListLayout = Instance.new("UIListLayout")
-local Booster = Instance.new("Frame")
-local UICorner = Instance.new("UICorner")
-local UIPadding = Instance.new("UIPadding")
-local Inner = Instance.new("Frame")
-local UICorner_2 = Instance.new("UICorner")
-local UIPadding_2 = Instance.new("UIPadding")
-local TagInfo = Instance.new("TextLabel")
-local Moderator = Instance.new("Frame")
-local UICorner_3 = Instance.new("UICorner")
-local UIPadding_3 = Instance.new("UIPadding")
-local Inner_2 = Instance.new("Frame")
-local UICorner_4 = Instance.new("UICorner")
-local UIPadding_4 = Instance.new("UIPadding")
-local TagInfo_2 = Instance.new("TextLabel")
-local Admin = Instance.new("Frame")
-local UICorner_5 = Instance.new("UICorner")
-local UIPadding_5 = Instance.new("UIPadding")
-local Inner_3 = Instance.new("Frame")
-local UICorner_6 = Instance.new("UICorner")
-local UIPadding_6 = Instance.new("UIPadding")
-local TagInfo_3 = Instance.new("TextLabel")
-local Owner = Instance.new("Frame")
-local UICorner_7 = Instance.new("UICorner")
-local UIPadding_7 = Instance.new("UIPadding")
-local Inner_4 = Instance.new("Frame")
-local UICorner_8 = Instance.new("UICorner")
-local UIPadding_8 = Instance.new("UIPadding")
-local TagInfo_4 = Instance.new("TextLabel")
-local Developer = Instance.new("Frame")
-local UICorner_9 = Instance.new("UICorner")
-local UIPadding_9 = Instance.new("UIPadding")
-local Inner_5 = Instance.new("Frame")
-local UICorner_10 = Instance.new("UICorner")
-local UIPadding_10 = Instance.new("UIPadding")
-local TagInfo_5 = Instance.new("TextLabel")
-local Management = Instance.new("Frame")
-local UICorner_11 = Instance.new("UICorner")
-local UIPadding_11 = Instance.new("UIPadding")
-local Inner_6 = Instance.new("Frame")
-local UICorner_12 = Instance.new("UICorner")
-local UIPadding_12 = Instance.new("UIPadding")
-local TagInfo_6 = Instance.new("TextLabel")
-local Executors = Instance.new("Frame")
-local UICorner_119 = Instance.new("UICorner")
-local UIPadding_119 = Instance.new("UIPadding")
-local Inner_92 = Instance.new("Frame")
-local UICorner_129 = Instance.new("UICorner")
-local UIPadding_129 = Instance.new("UIPadding")
-local TagInfo_69 = Instance.new("TextLabel")
+-- Modern Overhead Tags System
+-- Creates sleek, properly scaled tags above player heads
 
-OverheadGui.Name = "OverheadGui"
-OverheadGui.Parent = game.ReplicatedStorage
-OverheadGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-OverheadGui.Active = true
-OverheadGui.MaxDistance = 50.000
-OverheadGui.Size = UDim2.new(4, 0, 2.5999999, 0)
-OverheadGui.SizeOffset = Vector2.new(0, 0.25)
-OverheadGui.StudsOffset = Vector3.new(0, 2, 0)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local LocalPlayer = Players.LocalPlayer
 
-Username.Name = "Username"
-Username.Parent = OverheadGui
-Username.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Username.BackgroundTransparency = 1.000
-Username.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Username.BorderSizePixel = 0
-Username.LayoutOrder = 2
-Username.Position = UDim2.new(0, 0, 0.800000012, 0)
-Username.Size = UDim2.new(1, 0, 0.200000003, 0)
-Username.Font = Enum.Font.GothamBold
-Username.Text = "stop"
-Username.TextColor3 = Color3.fromRGB(255, 255, 255)
-Username.TextScaled = true
-Username.TextSize = 14.000
-Username.TextStrokeTransparency = 0.700
-Username.TextWrapped = true
-
-UIListLayout.Parent = OverheadGui
-UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Bottom
-UIListLayout.Padding = UDim.new(0.0199999996, 0)
-
-Booster.Name = "Booster"
-Booster.Parent = OverheadGui
-Booster.BackgroundColor3 = Color3.fromRGB(255, 85, 255)
-Booster.BackgroundTransparency = 0.400
-Booster.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Booster.LayoutOrder = 1
-Booster.Position = UDim2.new(0.336499989, 0, 0, 0)
-Booster.Size = UDim2.new(0.550000012, 0, 0.150000006, 0)
-Booster.Visible = false
-
-UICorner.CornerRadius = UDim.new(1, 0)
-UICorner.Parent = Booster
-
-UIPadding.Parent = Booster
-UIPadding.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding.PaddingLeft = UDim.new(0.0149999997, 0)
-UIPadding.PaddingRight = UDim.new(0.0149999997, 0)
-UIPadding.PaddingTop = UDim.new(0.0700000003, 0)
-
-Inner.Name = "Inner"
-Inner.Parent = Booster
-Inner.BackgroundColor3 = Color3.fromRGB(255, 170, 255)
-Inner.BackgroundTransparency = 0.400
-Inner.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Inner.LayoutOrder = 1
-Inner.Size = UDim2.new(1, 0, 1, 0)
-
-UICorner_2.CornerRadius = UDim.new(1, 0)
-UICorner_2.Parent = Inner
-
-UIPadding_2.Parent = Inner
-UIPadding_2.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_2.PaddingLeft = UDim.new(0.0199999996, 0)
-UIPadding_2.PaddingRight = UDim.new(0.0199999996, 0)
-UIPadding_2.PaddingTop = UDim.new(0.0700000003, 0)
-
-TagInfo.Name = "TagInfo"
-TagInfo.Parent = Inner
-TagInfo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo.BackgroundTransparency = 1.000
-TagInfo.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TagInfo.BorderSizePixel = 0
-TagInfo.Size = UDim2.new(1, 0, 1, 0)
-TagInfo.Font = Enum.Font.GothamMedium
-TagInfo.Text = "Server Booster"
-TagInfo.TextColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo.TextScaled = true
-TagInfo.TextSize = 14.000
-TagInfo.TextWrapped = true
-
-Moderator.Name = "Moderator"
-Moderator.Parent = OverheadGui
-Moderator.BackgroundColor3 = Color3.fromRGB(0, 165, 80)
-Moderator.BackgroundTransparency = 0.400
-Moderator.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Moderator.LayoutOrder = 1
-Moderator.Position = UDim2.new(0.336499989, 0, 0, 0)
-Moderator.Size = UDim2.new(0.400000006, 0, 0.150000006, 0)
-Moderator.Visible = false
-
-UICorner_3.CornerRadius = UDim.new(1, 0)
-UICorner_3.Parent = Moderator
-
-UIPadding_3.Parent = Moderator
-UIPadding_3.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_3.PaddingLeft = UDim.new(0.0199999996, 0)
-UIPadding_3.PaddingRight = UDim.new(0.0199999996, 0)
-UIPadding_3.PaddingTop = UDim.new(0.0700000003, 0)
-
-Inner_2.Name = "Inner"
-Inner_2.Parent = Moderator
-Inner_2.BackgroundColor3 = Color3.fromRGB(0, 213, 103)
-Inner_2.BackgroundTransparency = 0.400
-Inner_2.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Inner_2.LayoutOrder = 1
-Inner_2.Size = UDim2.new(1, 0, 1, 0)
-
-UICorner_4.CornerRadius = UDim.new(1, 0)
-UICorner_4.Parent = Inner_2
-
-UIPadding_4.Parent = Inner_2
-UIPadding_4.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_4.PaddingLeft = UDim.new(0.0199999996, 0)
-UIPadding_4.PaddingRight = UDim.new(0.0199999996, 0)
-UIPadding_4.PaddingTop = UDim.new(0.0700000003, 0)
-
-TagInfo_2.Name = "TagInfo"
-TagInfo_2.Parent = Inner_2
-TagInfo_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo_2.BackgroundTransparency = 1.000
-TagInfo_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TagInfo_2.BorderSizePixel = 0
-TagInfo_2.Size = UDim2.new(1, 0, 1, 0)
-TagInfo_2.Font = Enum.Font.GothamMedium
-TagInfo_2.Text = "Mod"
-TagInfo_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo_2.TextScaled = true
-TagInfo_2.TextSize = 14.000
-TagInfo_2.TextWrapped = true
-
-Admin.Name = "Admin"
-Admin.Parent = OverheadGui
-Admin.BackgroundColor3 = Color3.fromRGB(50, 99, 149)
-Admin.BackgroundTransparency = 0.400
-Admin.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Admin.LayoutOrder = 1
-Admin.Position = UDim2.new(0.336499989, 0, 0, 0)
-Admin.Size = UDim2.new(0.400000006, 0, 0.150000006, 0)
-Admin.Visible = false
-
-UICorner_5.CornerRadius = UDim.new(1, 0)
-UICorner_5.Parent = Admin
-
-UIPadding_5.Parent = Admin
-UIPadding_5.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_5.PaddingLeft = UDim.new(0.0199999996, 0)
-UIPadding_5.PaddingRight = UDim.new(0.0199999996, 0)
-UIPadding_5.PaddingTop = UDim.new(0.0700000003, 0)
-
-Inner_3.Name = "Inner"
-Inner_3.Parent = Admin
-Inner_3.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
-Inner_3.BackgroundTransparency = 0.400
-Inner_3.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Inner_3.LayoutOrder = 1
-Inner_3.Size = UDim2.new(1, 0, 1, 0)
-
-UICorner_6.CornerRadius = UDim.new(1, 0)
-UICorner_6.Parent = Inner_3
-
-UIPadding_6.Parent = Inner_3
-UIPadding_6.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_6.PaddingLeft = UDim.new(0.0199999996, 0)
-UIPadding_6.PaddingRight = UDim.new(0.0199999996, 0)
-UIPadding_6.PaddingTop = UDim.new(0.0700000003, 0)
-
-TagInfo_3.Name = "TagInfo"
-TagInfo_3.Parent = Inner_3
-TagInfo_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo_3.BackgroundTransparency = 1.000
-TagInfo_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TagInfo_3.BorderSizePixel = 0
-TagInfo_3.Size = UDim2.new(1, 0, 1, 0)
-TagInfo_3.Font = Enum.Font.GothamMedium
-TagInfo_3.Text = "Admin"
-TagInfo_3.TextColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo_3.TextScaled = true
-TagInfo_3.TextSize = 14.000
-TagInfo_3.TextWrapped = true
-
-Owner.Name = "Owner"
-Owner.Parent = OverheadGui
-Owner.BackgroundColor3 = Color3.fromRGB(110, 0, 165)
-Owner.BackgroundTransparency = 0.400
-Owner.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Owner.LayoutOrder = 1
-Owner.Position = UDim2.new(0.336499989, 0, 0, 0)
-Owner.Size = UDim2.new(0.600000024, 0, 0.150000006, 0)
-Owner.Visible = false
-
-UICorner_7.CornerRadius = UDim.new(1, 0)
-UICorner_7.Parent = Owner
-
-UIPadding_7.Parent = Owner
-UIPadding_7.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_7.PaddingLeft = UDim.new(0.0130000003, 0)
-UIPadding_7.PaddingRight = UDim.new(0.0130000003, 0)
-UIPadding_7.PaddingTop = UDim.new(0.0700000003, 0)
-
-Inner_4.Name = "Inner"
-Inner_4.Parent = Owner
-Inner_4.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
-Inner_4.BackgroundTransparency = 0.400
-Inner_4.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Inner_4.LayoutOrder = 1
-Inner_4.Size = UDim2.new(1, 0, 1, 0)
-
-UICorner_8.CornerRadius = UDim.new(1, 0)
-UICorner_8.Parent = Inner_4
-
-UIPadding_8.Parent = Inner_4
-UIPadding_8.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_8.PaddingLeft = UDim.new(0.0199999996, 0)
-UIPadding_8.PaddingRight = UDim.new(0.0199999996, 0)
-UIPadding_8.PaddingTop = UDim.new(0.0700000003, 0)
-
-TagInfo_4.Name = "TagInfo"
-TagInfo_4.Parent = Inner_4
-TagInfo_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo_4.BackgroundTransparency = 1.000
-TagInfo_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TagInfo_4.BorderSizePixel = 0
-TagInfo_4.Size = UDim2.new(1, 0, 1, 0)
-TagInfo_4.Font = Enum.Font.GothamMedium
-TagInfo_4.Text = "rylie <3"
-TagInfo_4.TextColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo_4.TextScaled = true
-TagInfo_4.TextSize = 14.000
-TagInfo_4.TextWrapped = true
-
-Developer.Name = "Developer"
-Developer.Parent = OverheadGui
-Developer.BackgroundColor3 = Color3.fromRGB(50, 99, 149)
-Developer.BackgroundTransparency = 0.400
-Developer.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Developer.LayoutOrder = 1
-Developer.Position = UDim2.new(0.336499989, 0, 0, 0)
-Developer.Size = UDim2.new(0.400000006, 0, 0.150000006, 0)
-Developer.Visible = false
-
-UICorner_9.CornerRadius = UDim.new(1, 0)
-UICorner_9.Parent = Developer
-
-UIPadding_9.Parent = Developer
-UIPadding_9.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_9.PaddingLeft = UDim.new(0.0199999996, 0)
-UIPadding_9.PaddingRight = UDim.new(0.0199999996, 0)
-UIPadding_9.PaddingTop = UDim.new(0.0700000003, 0)
-
-Inner_5.Name = "Inner"
-Inner_5.Parent = Developer
-Inner_5.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
-Inner_5.BackgroundTransparency = 0.400
-Inner_5.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Inner_5.LayoutOrder = 1
-Inner_5.Size = UDim2.new(1, 0, 1, 0)
-
-UICorner_10.CornerRadius = UDim.new(1, 0)
-UICorner_10.Parent = Inner_5
-
-UIPadding_10.Parent = Inner_5
-UIPadding_10.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_10.PaddingLeft = UDim.new(0.0199999996, 0)
-UIPadding_10.PaddingRight = UDim.new(0.0199999996, 0)
-UIPadding_10.PaddingTop = UDim.new(0.0700000003, 0)
-
-TagInfo_5.Name = "TagInfo"
-TagInfo_5.Parent = Inner_5
-TagInfo_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo_5.BackgroundTransparency = 1.000
-TagInfo_5.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TagInfo_5.BorderSizePixel = 0
-TagInfo_5.Size = UDim2.new(1, 0, 1, 0)
-TagInfo_5.Font = Enum.Font.GothamMedium
-TagInfo_5.Text = "Developer"
-TagInfo_5.TextColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo_5.TextScaled = true
-TagInfo_5.TextSize = 14.000
-TagInfo_5.TextWrapped = true
-
-Management.Name = "Management"
-Management.Parent = OverheadGui
-Management.BackgroundColor3 = Color3.fromRGB(110, 0, 165)
-Management.BackgroundTransparency = 0.400
-Management.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Management.LayoutOrder = 1
-Management.Position = UDim2.new(0.336499989, 0, 0, 0)
-Management.Size = UDim2.new(0.600000024, 0, 0.150000006, 0)
-Management.Visible = false
-
-UICorner_11.CornerRadius = UDim.new(1, 0)
-UICorner_11.Parent = Management
-
-UIPadding_11.Parent = Management
-UIPadding_11.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_11.PaddingLeft = UDim.new(0.0130000003, 0)
-UIPadding_11.PaddingRight = UDim.new(0.0130000003, 0)
-UIPadding_11.PaddingTop = UDim.new(0.0700000003, 0)
-
-Inner_6.Name = "Inner"
-Inner_6.Parent = Management
-Inner_6.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
-Inner_6.BackgroundTransparency = 0.400
-Inner_6.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Inner_6.LayoutOrder = 1
-Inner_6.Size = UDim2.new(1, 0, 1, 0)
-
-UICorner_12.CornerRadius = UDim.new(1, 0)
-UICorner_12.Parent = Inner_6
-
-UIPadding_12.Parent = Inner_6
-UIPadding_12.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_12.PaddingLeft = UDim.new(0.0199999996, 0)
-UIPadding_12.PaddingRight = UDim.new(0.0199999996, 0)
-UIPadding_12.PaddingTop = UDim.new(0.0700000003, 0)
-
-TagInfo_6.Name = "TagInfo"
-TagInfo_6.Parent = Inner_6
-TagInfo_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo_6.BackgroundTransparency = 1.000
-TagInfo_6.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TagInfo_6.BorderSizePixel = 0
-TagInfo_6.Size = UDim2.new(1, 0, 1, 0)
-TagInfo_6.Font = Enum.Font.GothamMedium
-TagInfo_6.Text = "Management Team"
-TagInfo_6.TextColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo_6.TextScaled = true
-TagInfo_6.TextSize = 14.000
-TagInfo_6.TextWrapped = true
-
-Executors.Name = "Executors"
-Executors.Parent = OverheadGui
-Executors.BackgroundColor3 = Color3.fromRGB(110, 0, 165)
-Executors.BackgroundTransparency = 0.400
-Executors.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Executors.LayoutOrder = 1
-Executors.Position = UDim2.new(0.336499989, 0, 0, 0)
-Executors.Size = UDim2.new(0.600000024, 0, 0.150000006, 0)
-Executors.Visible = false
-
-UICorner_119.CornerRadius = UDim.new(1, 0)
-UICorner_119.Parent = Executors
-
-UIPadding_119.Parent = Executors
-UIPadding_119.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_119.PaddingLeft = UDim.new(0.0130000003, 0)
-UIPadding_119.PaddingRight = UDim.new(0.0130000003, 0)
-UIPadding_119.PaddingTop = UDim.new(0.0700000003, 0)
-
-Inner_92.Name = "Inner"
-Inner_92.Parent = Executors
-Inner_92.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
-Inner_92.BackgroundTransparency = 0.400
-Inner_92.BorderColor3 = Color3.fromRGB(27, 42, 53)
-Inner_92.LayoutOrder = 1
-Inner_92.Size = UDim2.new(1, 0, 1, 0)
-
-UICorner_129.CornerRadius = UDim.new(1, 0)
-UICorner_129.Parent = Inner_92
-
-UIPadding_129.Parent = Inner_92
-UIPadding_129.PaddingBottom = UDim.new(0.0700000003, 0)
-UIPadding_129.PaddingLeft = UDim.new(0.0199999996, 0)
-UIPadding_129.PaddingRight = UDim.new(0.0199999996, 0)
-UIPadding_129.PaddingTop = UDim.new(0.0700000003, 0)
-
-TagInfo_69.Name = "TagInfo"
-TagInfo_69.Parent = Inner_92
-TagInfo_69.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo_69.BackgroundTransparency = 1.000
-TagInfo_69.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TagInfo_69.BorderSizePixel = 0
-TagInfo_69.Size = UDim2.new(1, 0, 1, 0)
-TagInfo_69.Font = Enum.Font.GothamMedium
-TagInfo_69.Text = "ryza.us user"
-TagInfo_69.TextColor3 = Color3.fromRGB(255, 255, 255)
-TagInfo_69.TextScaled = true
-TagInfo_69.TextSize = 14.000
-TagInfo_69.TextWrapped = true
-
-local localPlayer = game:GetService("Players").LocalPlayer
-
-local permissions = {
-	["Ownership"] = {
-		"rylieaspen"
-	},
-	["Management"] = {
-		"lvasion"
-	},
-	["Developer"] = {
-
-	},
-	["Administrator"] = {
-		
-	},
-	["Moderator"] = {
-		
-	},
-	["Booster"] = {
-		"rylieaspen",
-		"lvasion"
-	},
-	["Executors"] = {}
+-- Modern tag configuration
+local TagConfig = {
+    Scale = 0.75,                -- Overall scale factor
+    MaxDistance = 75,            -- Maximum visibility distance
+    StudsOffset = Vector3.new(0, 2.5, 0),  -- Position above head
+    TagSpacing = 0.08,           -- Space between tags
+    AnimationDuration = 0.3,     -- Animation speed in seconds
+    
+    -- Font configuration
+    UsernameFont = Enum.Font.GothamBold,
+    TagFont = Enum.Font.GothamMedium,
+    
+    -- Tag styling
+    TagHeight = 0.13,            -- Height of each tag
+    CornerRadius = 1,            -- Rounded corner radius (1 = fully rounded)
+    
+    -- Color scheme (modern, vibrant colors)
+    Colors = {
+        Owner = {
+            Outer = Color3.fromRGB(125, 50, 200),
+            Inner = Color3.fromRGB(170, 80, 255),
+            Text = Color3.fromRGB(255, 255, 255)
+        },
+        Management = {
+            Outer = Color3.fromRGB(100, 30, 180),
+            Inner = Color3.fromRGB(150, 65, 235),
+            Text = Color3.fromRGB(255, 255, 255)
+        },
+        Developer = {
+            Outer = Color3.fromRGB(30, 100, 190),
+            Inner = Color3.fromRGB(65, 155, 255),
+            Text = Color3.fromRGB(255, 255, 255)
+        },
+        Administrator = {
+            Outer = Color3.fromRGB(40, 80, 170),
+            Inner = Color3.fromRGB(80, 140, 255),
+            Text = Color3.fromRGB(255, 255, 255)
+        },
+        Moderator = {
+            Outer = Color3.fromRGB(20, 150, 80),
+            Inner = Color3.fromRGB(40, 200, 110),
+            Text = Color3.fromRGB(255, 255, 255)
+        },
+        Booster = {
+            Outer = Color3.fromRGB(200, 60, 200),
+            Inner = Color3.fromRGB(255, 100, 255),
+            Text = Color3.fromRGB(255, 255, 255)
+        },
+        Executors = {
+            Outer = Color3.fromRGB(200, 60, 110),
+            Inner = Color3.fromRGB(255, 90, 150),
+            Text = Color3.fromRGB(255, 255, 255)
+        },
+        Default = {
+            Text = Color3.fromRGB(255, 255, 255)
+        }
+    },
+    
+    -- Tag texts
+    TagTexts = {
+        Owner = "rylie <3",
+        Management = "Management",
+        Developer = "Developer",
+        Administrator = "Admin",
+        Moderator = "Mod",
+        Booster = "Server Booster",
+        Executors = "ryza.us user"
+    }
 }
 
-local function findTable(tableData, stringData)
-	for _,v in pairs(tableData) do
-		if v == stringData then
-			return true
-		end
-	end
+-- User permissions database
+local Permissions = {
+    ["Ownership"] = {
+        "rylieaspen"
+    },
+    ["Management"] = {
+        "lvasion"
+    },
+    ["Developer"] = {},
+    ["Administrator"] = {},
+    ["Moderator"] = {},
+    ["Booster"] = {
+        "rylieaspen",
+        "lvasion"
+    },
+    ["Executors"] = {}
+}
 
-	return false
+-- Create the base tag template
+local function createTagTemplate(name, config)
+    local tag = Instance.new("Frame")
+    local inner = Instance.new("Frame")
+    local tagInfo = Instance.new("TextLabel")
+    local outerCorner = Instance.new("UICorner")
+    local innerCorner = Instance.new("UICorner")
+    local outerPadding = Instance.new("UIPadding")
+    local innerPadding = Instance.new("UIPadding")
+    
+    -- Configure the tag
+    tag.Name = name
+    tag.BackgroundColor3 = config.Outer
+    tag.BackgroundTransparency = 0.2
+    tag.BorderSizePixel = 0
+    tag.Size = UDim2.new(0.6, 0, TagConfig.TagHeight, 0)
+    tag.AnchorPoint = Vector2.new(0.5, 0)
+    tag.Position = UDim2.new(0.5, 0, 0, 0)
+    tag.Visible = false
+    
+    -- Configure the inner frame
+    inner.Name = "Inner"
+    inner.Parent = tag
+    inner.BackgroundColor3 = config.Inner
+    inner.BackgroundTransparency = 0.2
+    inner.BorderSizePixel = 0
+    inner.Size = UDim2.new(1, 0, 1, 0)
+    
+    -- Configure rounded corners
+    outerCorner.Name = "UICorner"
+    outerCorner.Parent = tag
+    outerCorner.CornerRadius = UDim.new(TagConfig.CornerRadius, 0)
+    
+    innerCorner.Name = "UICorner"
+    innerCorner.Parent = inner
+    innerCorner.CornerRadius = UDim.new(TagConfig.CornerRadius, 0)
+    
+    -- Configure padding
+    outerPadding.Name = "UIPadding"
+    outerPadding.Parent = tag
+    outerPadding.PaddingTop = UDim.new(0.07, 0)
+    outerPadding.PaddingBottom = UDim.new(0.07, 0)
+    outerPadding.PaddingLeft = UDim.new(0.02, 0)
+    outerPadding.PaddingRight = UDim.new(0.02, 0)
+    
+    innerPadding.Name = "UIPadding"
+    innerPadding.Parent = inner
+    innerPadding.PaddingTop = UDim.new(0.07, 0)
+    innerPadding.PaddingBottom = UDim.new(0.07, 0)
+    innerPadding.PaddingLeft = UDim.new(0.02, 0)
+    innerPadding.PaddingRight = UDim.new(0.02, 0)
+    
+    -- Configure text
+    tagInfo.Name = "TagInfo"
+    tagInfo.Parent = inner
+    tagInfo.BackgroundTransparency = 1
+    tagInfo.Size = UDim2.new(1, 0, 1, 0)
+    tagInfo.Font = TagConfig.TagFont
+    tagInfo.Text = TagConfig.TagTexts[name] or name
+    tagInfo.TextColor3 = config.Text
+    tagInfo.TextScaled = true
+    tagInfo.TextSize = 14
+    tagInfo.TextWrapped = true
+    
+    return tag
 end
 
-local function applyHeadtag(plr)
-	if not plr:FindFirstChild("OverheadGui") then
-		local char = plr.Character or plr.CharacterAdded:Wait()
-
-		if char then
-			if char:FindFirstChild("Head") then
-				local overheadClone = OverheadGui:Clone()
-				overheadClone.Parent = char.Head
-				overheadClone.Username.Text = `{plr.DisplayName} (@{plr.Name})`
-
-				if findTable(permissions.Ownership, plr.Name) then
-					overheadClone.Username.Text = ` {plr.DisplayName} (@{plr.Name})`
-					overheadClone.Owner.Visible = true
-
-					if findTable(permissions.Booster, plr.Name) then
-						overheadClone.Booster.Visible = true
-					end
-				elseif findTable(permissions.Management, plr.Name) then
-					overheadClone.Management.Visible = true
-				elseif findTable(permissions.Developer, plr.Name) then
-					overheadClone.Developer.Visible = true
-				elseif findTable(permissions.Administrator, plr.Name) then
-					overheadClone.Admin.Visible = true
-				elseif findTable(permissions.Moderator, plr.Name) then
-					overheadClone.Moderator.Visible = true
-				elseif findTable(permissions.Booster, plr.Name) then
-					overheadClone.Booster.Visible = true
-				elseif findTable(permissions.Executors, plr.Name) then
-					overheadClone.Executors.Visible = true
-				end
-			end
-		end
-	end
+-- Create the main overhead GUI
+local function createOverheadGui()
+    local gui = Instance.new("BillboardGui")
+    local username = Instance.new("TextLabel")
+    local layout = Instance.new("UIListLayout")
+    
+    -- Configure the billboard GUI
+    gui.Name = "ModernOverheadGui"
+    gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    gui.Active = true
+    gui.MaxDistance = TagConfig.MaxDistance
+    gui.Size = UDim2.new(4 * TagConfig.Scale, 0, 2.6 * TagConfig.Scale, 0)
+    gui.StudsOffset = TagConfig.StudsOffset
+    gui.AlwaysOnTop = true
+    gui.LightInfluence = 0
+    
+    -- Configure the username
+    username.Name = "Username"
+    username.Parent = gui
+    username.BackgroundTransparency = 1
+    username.Size = UDim2.new(1, 0, 0.2, 0)
+    username.Font = TagConfig.UsernameFont
+    username.Text = "Username"
+    username.TextColor3 = TagConfig.Colors.Default.Text
+    username.TextScaled = true
+    username.TextStrokeTransparency = 0.5
+    username.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    username.LayoutOrder = 99  -- Make username appear last
+    
+    -- Configure the layout
+    layout.Parent = gui
+    layout.SortOrder = Enum.SortOrder.LayoutOrder
+    layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    layout.Padding = UDim.new(TagConfig.TagSpacing, 0)
+    layout.VerticalAlignment = Enum.VerticalAlignment.Bottom
+    
+    -- Create and add all tag types
+    for tagName, colorData in pairs(TagConfig.Colors) do
+        if tagName ~= "Default" then
+            local tag = createTagTemplate(tagName, colorData)
+            tag.Parent = gui
+            tag.LayoutOrder = 1  -- All tags appear before username
+        end
+    end
+    
+    return gui
 end
 
-localPlayer.CharacterAdded:Connect(function(char)
-	task.wait(3)
-	applyHeadtag(localPlayer)
+-- Store the template in ReplicatedStorage
+local overheadTemplate = createOverheadGui()
+overheadTemplate.Parent = ReplicatedStorage
+
+-- Helper function to check if a player is in a group
+local function isInGroup(name, group)
+    for _, member in pairs(Permissions[group] or {}) do
+        if member == name then
+            return true
+        end
+    end
+    return false
+end
+
+-- Apply overhead tags to a player
+local function applyOverheadTag(player)
+    -- Wait for character and head
+    local character = player.Character or player.CharacterAdded:Wait()
+    if not character:FindFirstChild("Head") then
+        character:WaitForChild("Head")
+    end
+    
+    -- Remove any existing tags
+    if character.Head:FindFirstChild("ModernOverheadGui") then
+        character.Head.ModernOverheadGui:Destroy()
+    end
+    
+    -- Clone and configure the new GUI
+    local overheadGui = overheadTemplate:Clone()
+    overheadGui.Parent = character.Head
+    
+    -- Set username
+    overheadGui.Username.Text = string.format("%s (@%s)", player.DisplayName, player.Name)
+    
+    -- Determine and show appropriate tags
+    if isInGroup(player.Name, "Ownership") then
+        overheadGui.Owner.Visible = true
+        -- Add a subtle shine effect to owner tag
+        local shine = Instance.new("UIGradient")
+        shine.Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(200, 200, 200)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))
+        })
+        shine.Transparency = NumberSequence.new({
+            NumberSequenceKeypoint.new(0, 0.9),
+            NumberSequenceKeypoint.new(0.5, 0.7),
+            NumberSequenceKeypoint.new(1, 0.9)
+        })
+        shine.Rotation = 90
+        shine.Parent = overheadGui.Owner.Inner
+        
+        -- Animate the gradient
+        spawn(function()
+            while overheadGui and overheadGui.Parent do
+                local tween = TweenService:Create(shine, TweenInfo.new(2, Enum.EasingStyle.Linear), {Offset = Vector2.new(1, 0)})
+                tween:Play()
+                wait(2)
+                shine.Offset = Vector2.new(-1, 0)
+            end
+        end)
+    end
+    
+    -- Apply other tags
+    if isInGroup(player.Name, "Management") then
+        overheadGui.Management.Visible = true
+    end
+    
+    if isInGroup(player.Name, "Developer") then
+        overheadGui.Developer.Visible = true
+    end
+    
+    if isInGroup(player.Name, "Administrator") then
+        overheadGui.Administrator.Visible = true
+    end
+    
+    if isInGroup(player.Name, "Moderator") then
+        overheadGui.Moderator.Visible = true
+    end
+    
+    if isInGroup(player.Name, "Booster") then
+        overheadGui.Booster.Visible = true
+    end
+    
+    if isInGroup(player.Name, "Executors") then
+        overheadGui.Executors.Visible = true
+    end
+    
+    -- Add a fade-in animation
+    for _, child in pairs(overheadGui:GetChildren()) do
+        if child:IsA("Frame") and child.Visible then
+            child.Position = UDim2.new(0.5, 0, -0.1, 0)
+            child.BackgroundTransparency = 1
+            child.Inner.BackgroundTransparency = 1
+            child.Inner.TagInfo.TextTransparency = 1
+            
+            TweenService:Create(child, TweenInfo.new(TagConfig.AnimationDuration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                Position = UDim2.new(0.5, 0, 0, 0),
+                BackgroundTransparency = 0.2
+            }):Play()
+            
+            TweenService:Create(child.Inner, TweenInfo.new(TagConfig.AnimationDuration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                BackgroundTransparency = 0.2
+            }):Play()
+            
+            TweenService:Create(child.Inner.TagInfo, TweenInfo.new(TagConfig.AnimationDuration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                TextTransparency = 0
+            }):Play()
+        end
+        
+        if child:IsA("TextLabel") and child.Name == "Username" then
+            child.TextTransparency = 1
+            child.TextStrokeTransparency = 1
+            
+            TweenService:Create(child, TweenInfo.new(TagConfig.AnimationDuration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                TextTransparency = 0,
+                TextStrokeTransparency = 0.5
+            }):Play()
+        end
+    end
+end
+
+-- Function to add a player to the executors group
+local function addToExecutors(player)
+    if not isInGroup(player.Name, "Executors") then
+        table.insert(Permissions.Executors, player.Name)
+        
+        -- Reapply the tag
+        if player.Character and player.Character:FindFirstChild("Head") then
+            applyOverheadTag(player)
+        end
+    end
+end
+
+-- Apply tags when players join or characters load
+local function setupPlayer(player)
+    player.CharacterAdded:Connect(function()
+        wait(1) -- Short delay to ensure character is fully loaded
+        applyOverheadTag(player)
+    end)
+    
+    -- Listen for the special chat message
+    player.Chatted:Connect(function(message)
+        if message == "ryza.us()" then
+            addToExecutors(player)
+        end
+    end)
+    
+    -- Apply tags to existing character
+    if player.Character then
+        applyOverheadTag(player)
+    end
+end
+
+-- Setup existing players
+for _, player in pairs(Players:GetPlayers()) do
+    setupPlayer(player)
+end
+
+-- Setup new players
+Players.PlayerAdded:Connect(setupPlayer)
+
+-- Apply tags to local player when character spawns
+LocalPlayer.CharacterAdded:Connect(function()
+    wait(1)
+    applyOverheadTag(LocalPlayer)
 end)
 
-for _,v in pairs(game:GetService("Players"):GetPlayers()) do
-	local char = v.Character or v.CharacterAdded:Wait()
-
-	if char then
-		applyHeadtag(v)
-	end
-
-	v.Chatted:Connect(function(message)
-		if message == "ryza.us()" then
-			table.insert(permissions.Executors, v.Name)
-			if v.Character then
-				if v.Character.Head:FindFirstChild("OverheadGui") then
-					v.Character.Head.OverheadGui:Destroy()
-				end
-			end
-			task.wait()
-			applyHeadtag(v)
-		end
-	end)
+-- If local player already has a character, apply tags
+if LocalPlayer.Character then
+    wait(1)
+    applyOverheadTag(LocalPlayer)
 end
-
-game:GetService("Players").PlayerAdded:Connect(function(plr)
-	applyHeadtag(plr)
-
-	plr.CharacterAdded:Connect(function(char)
-		applyHeadtag(plr)
-	end)
-
-	plr.Chatted:Connect(function(message)
-		if message == "ryza.us()" then
-			table.insert(permissions.Executors, plr.Name)
-			if plr.Character then
-				if plr.Character.Head:FindFirstChild("OverheadGui") then
-					plr.Character.Head.OverheadGui:Destroy()
-				end
-			end
-			task.wait()
-			applyHeadtag(plr)
-		end
-	end)
-end)
