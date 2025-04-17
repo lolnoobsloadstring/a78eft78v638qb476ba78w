@@ -277,7 +277,7 @@ TagInfo_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
 TagInfo_4.BorderSizePixel = 0
 TagInfo_4.Size = UDim2.new(1, 0, 1, 0)
 TagInfo_4.Font = Enum.Font.GothamMedium
-TagInfo_4.Text = "Ownership Team"
+TagInfo_4.Text = "rylie <3"
 TagInfo_4.TextColor3 = Color3.fromRGB(255, 255, 255)
 TagInfo_4.TextScaled = true
 TagInfo_4.TextSize = 14.000
@@ -437,10 +437,10 @@ local localPlayer = game:GetService("Players").LocalPlayer
 
 local permissions = {
 	["Ownership"] = {
-	
+		"rylieaspen"
 	},
 	["Management"] = {
-		
+		"lvasion"
 	},
 	["Developer"] = {
 
@@ -452,7 +452,8 @@ local permissions = {
 		
 	},
 	["Booster"] = {
-		
+		"rylieaspen",
+		"lvasion"
 	},
 	["Executors"] = {}
 }
