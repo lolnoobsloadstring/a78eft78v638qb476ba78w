@@ -129,7 +129,7 @@ end
 
 local Window = Fluent:CreateWindow({
 	Title = "ryza.us",
-	SubTitle = "by rylie.",
+	SubTitle = "by lvasion.",
 	TabWidth = 160,
 	Size = sStoreSize,
 	Acrylic = true,
@@ -464,11 +464,6 @@ do
 	Tabs.Credits:AddParagraph({
 		Title = "Script Creator",
 		Content = "lvasion"
-	})
-
-	Tabs.Credits:AddParagraph({
-		Title = "Script Owner",
-		Content = "rylie."
 	})
 
 	Tabs.Main:AddButton({
@@ -2418,7 +2413,7 @@ do
 
 	local permissions = {
 		owners = {
-			"rylieaspen"
+			"lvasion"
 		},
 		coowner = {
 
@@ -2445,7 +2440,6 @@ do
 		"lvasion",
 		"restaxts",
 		"ixpinkyyxi",
-		"rylieaspen",
 		-- 1
 		"testaccount1063_L",
 		"ThanProbably",
