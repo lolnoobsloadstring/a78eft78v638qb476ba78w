@@ -66,7 +66,7 @@ local TagConfig = {
     
     -- Tag texts
     TagTexts = {
-        Owner = "rylie <3",
+        Owner = "kallia <3",
         Management = "Management",
         Developer = "Developer",
         Administrator = "Admin",
@@ -79,16 +79,21 @@ local TagConfig = {
 -- User permissions database
 local Permissions = {
     ["Ownership"] = {
-        "rylieaspen"
-    },
-    ["Management"] = {
         "lvasion"
     },
-    ["Developer"] = {},
-    ["Administrator"] = {},
-    ["Moderator"] = {},
+    ["Management"] = {
+        
+    },
+    ["Developer"] = {
+        
+    },
+    ["Administrator"] = {
+        
+    },
+    ["Moderator"] = {
+        
+    },
     ["Booster"] = {
-        "rylieaspen",
         "lvasion"
     },
     ["Executors"] = {}
