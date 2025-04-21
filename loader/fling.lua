@@ -221,3 +221,6 @@ for _,x in next, Targets do
         Message("Error Occurred", "Username Invalid", 5)
     end
 end
+
+task.wait(10)
+game.Players.LocalPlayer.Character.Health = 0
