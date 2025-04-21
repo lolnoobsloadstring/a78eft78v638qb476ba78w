@@ -1,4 +1,4 @@
-local Targets = {_G.FlingTarget} -- "All", "Target Name", "arian_was_here"
+local Targets = _G.FlingTarget
 
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
