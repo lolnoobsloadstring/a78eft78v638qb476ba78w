@@ -96,8 +96,6 @@ if httpRequest then
 	end)
 end
 
--- // Murder Mystery 2 Set-Up
-
 local uis = game:GetService("UserInputService")
 local sStoreSize = UDim2.fromOffset(0, 0)
 
@@ -138,7 +136,10 @@ local tools = {
 local mm2ConfigData = {
 	espConfig = {
 		enabled = false,
-		highlightTeams = false
+		highlightTeams = false,
+		autoCollectGun = false,
+		gunESP = false,
+		antiAFK = false
 	},
 	dataConfig = {
 		murderer = nil,
@@ -148,7 +149,12 @@ local mm2ConfigData = {
 
 do 
 	local function applyHighlight(player, color)
-		if player.Character then
+		if player and player.Character then
+			-- Remove existing highlight if present
+			if player.Character:FindFirstChild("ESP_Highlight") then
+				player.Character.ESP_Highlight:Destroy()
+			end
+
 			local Highlight = Instance.new("Highlight")
 			Highlight.OutlineColor = Color3.new(0, 0, 0)
 			Highlight.FillColor = color
@@ -161,70 +167,173 @@ do
 		end
 	end
 
+	local function checkRoles(player)
+		if player and player ~= LocalPlayer then
+			if player.Character and player.Backpack then
+				-- Check both character and backpack for tools
+				if player.Backpack:FindFirstChild(tools.Murderer.toolName) or 
+					(player.Character and player.Character:FindFirstChild(tools.Murderer.toolName)) then
+					mm2ConfigData.dataConfig.murderer = player.Name
+				elseif player.Backpack:FindFirstChild(tools.Sheriff.toolName) or 
+					(player.Character and player.Character:FindFirstChild(tools.Sheriff.toolName)) then
+					mm2ConfigData.dataConfig.sheriff = player.Name
+				end
+			end
+		end
+	end
+
 	local function checkHighlight(player)
-		if LocalPlayer.Name == player.Name then
+		if player == LocalPlayer then
 			return
 		end
-		
-		local char = player.Character
 
-		if char then
+		if player.Character then
 			if mm2ConfigData.espConfig.enabled then
-				if char:FindFirstChild("ESP_Highlight") then
-					if mm2ConfigData.espConfig.highlightTeams then
-						local applyColor = Color3.new(0.333333, 1, 0.498039)
+				local applyColor = Color3.new(1, 1, 1) -- Default color for innocent
 
-						if player.Backpack:FindFirstChild(tools.Murderer.toolName) or char:FindFirstChild(tools.Murderer.toolName) then
-							applyColor = tools.Murderer.highlightColor
-						elseif player.Backpack:FindFirstChild(tools.Sheriff.toolName) or char:FindFirstChild(tools.Sheriff.toolName) then
-							applyColor = tools.Sheriff.highlightColor
-						end
+				if mm2ConfigData.espConfig.highlightTeams then
+					applyColor = Color3.new(0.333333, 1, 0.498039) -- Default innocent with teams on
 
-						char.ESP_Highlight.FillColor = applyColor
-					else
-						local applyColor = Color3.new(1, 1, 1)
-						char.ESP_Highlight.FillColor = applyColor
+					-- Check if player is murderer or sheriff
+					if player.Name == mm2ConfigData.dataConfig.murderer then
+						applyColor = tools.Murderer.highlightColor
+					elseif player.Name == mm2ConfigData.dataConfig.sheriff then
+						applyColor = tools.Sheriff.highlightColor
 					end
-				else
-					if mm2ConfigData.espConfig.highlightTeams then
-						local applyColor = Color3.new(0.333333, 1, 0.498039)
 
-						if player.Backpack:FindFirstChild(tools.Murderer.toolName) or char:FindFirstChild(tools.Murderer.toolName) then
-							applyColor = tools.Murderer.highlightColor
-						elseif player.Backpack:FindFirstChild(tools.Sheriff.toolName) or char:FindFirstChild(tools.Sheriff.toolName) then
-							applyColor = tools.Sheriff.highlightColor
-						end
-
-						applyHighlight(player, applyColor)
-					else
-						local applyColor = Color3.new(1, 1, 1)
-						applyHighlight(player, applyColor)
+					-- Double check tools directly
+					if player.Backpack:FindFirstChild(tools.Murderer.toolName) or 
+						(player.Character and player.Character:FindFirstChild(tools.Murderer.toolName)) then
+						applyColor = tools.Murderer.highlightColor
+					elseif player.Backpack:FindFirstChild(tools.Sheriff.toolName) or 
+						(player.Character and player.Character:FindFirstChild(tools.Sheriff.toolName)) then
+						applyColor = tools.Sheriff.highlightColor
 					end
 				end
+
+				applyHighlight(player, applyColor)
 			else
-				if char:FindFirstChild("ESP_Highlight") then
-					char["ESP_Highlight"]:Destroy()
+				-- Remove ESP if disabled
+				if player.Character:FindFirstChild("ESP_Highlight") then
+					player.Character.ESP_Highlight:Destroy()
 				end
 			end
 		end
 	end
-	
-	local function checkRoles(player)
-		local char = player.Character
-		
-		if player.Backpack:FindFirstChild(tools.Murderer.toolName) or char:FindFirstChild(tools.Murderer.toolName) then
-			mm2ConfigData.dataConfig.murderer = player.Name
-		elseif player.Backpack:FindFirstChild(tools.Sheriff.toolName) or char:FindFirstChild(tools.Sheriff.toolName) then
-			mm2ConfigData.dataConfig.sheriff = player.Name
+
+	-- Set up player character spawning events
+	local function setupPlayerEvents(player)
+		if player ~= LocalPlayer then
+			-- Check player when character changes
+			player.CharacterAdded:Connect(function(char)
+				task.wait(0.5) -- Give time for tools to load
+				checkRoles(player)
+				checkHighlight(player)
+
+				-- Listen for when tool is added to character
+				char.ChildAdded:Connect(function(child)
+					if child.Name == tools.Murderer.toolName or child.Name == tools.Sheriff.toolName then
+						task.wait(0.1)
+						checkRoles(player)
+						checkHighlight(player)
+					end
+				end)
+				
+				char.ChildRemoved:Connect(function(child)
+					if child.Name == tools.Murderer.toolName or child.Name == tools.Sheriff.toolName then
+						task.wait(0.1)
+						checkRoles(player)
+						checkHighlight(player)
+					end
+				end)
+			end)
+
+			-- Check for tools being added to backpack
+			player.Backpack.ChildAdded:Connect(function(child)
+				if child.Name == tools.Murderer.toolName or child.Name == tools.Sheriff.toolName then
+					task.wait(0.1)
+					checkRoles(player)
+					checkHighlight(player)
+				end
+			end)
+			
+			player.Backpack.ChildRemoved:Connect(function(child)
+				if child.Name == tools.Murderer.toolName or child.Name == tools.Sheriff.toolName then
+					task.wait(0.1)
+					checkRoles(player)
+					checkHighlight(player)
+				end
+			end)
 		end
 	end
 
+	-- Setup all existing players
+	for _, player in pairs(Players:GetPlayers()) do
+		setupPlayerEvents(player)
+		task.spawn(function()
+			checkRoles(player)
+			checkHighlight(player)
+		end)
+	end
+
+	-- Setup newly joining players
+	Players.PlayerAdded:Connect(function(player)
+		table.insert(UsersList, player.Name)
+		setupPlayerEvents(player)
+	end)
+
+	-- Main update loop for ESP
 	task.spawn(function()
-		while task.wait() do
-			for _,v in pairs(Players:GetPlayers()) do
-				checkHighlight(v)
-				checkRoles(v)
+		while task.wait(1) do -- Check every second instead of every frame for performance
+			for _, player in pairs(Players:GetPlayers()) do
+				task.spawn(function() -- Run in separate threads to prevent hanging
+					checkRoles(player)
+					checkHighlight(player)
+				end)
 			end
+		end
+	end)
+
+	-- Gun ESP handling
+	workspace.ChildAdded:Connect(function(child)
+		if child.Name == "GunDrop" then
+			local highlight = Instance.new("Highlight")
+			highlight.Parent = child
+			highlight.FillColor = Color3.new(0, 0, 1)
+			highlight.OutlineColor = Color3.new(0, 0, 0)
+			highlight.FillTransparency = 0.3
+			highlight.Enabled = mm2ConfigData.espConfig.gunESP
+
+			-- Update this highlight when the gunESP setting changes
+			task.spawn(function()
+				while child and child:IsDescendantOf(workspace) do
+					if highlight then
+						highlight.Enabled = mm2ConfigData.espConfig.gunESP
+					else
+						break
+					end
+					task.wait(0.5)
+				end
+			end)
+
+			if mm2ConfigData.espConfig.autoCollectGun then
+				task.wait(0.5) -- Small delay to ensure it's fully loaded
+				local gun = workspace:FindFirstChild("GunDrop")
+				if gun then
+					local original = LocalPlayer.Character.HumanoidRootPart.CFrame
+					LocalPlayer.Character.HumanoidRootPart.CFrame = gun.CFrame + Vector3.new(0, 3, 0)
+					task.wait(1)
+					LocalPlayer.Character.HumanoidRootPart.CFrame = original
+				end
+			end
+		end
+	end)
+
+	LocalPlayer.Idled:Connect(function()
+		if mm2ConfigData.espConfig.antiAFK then
+			game:GetService("VirtualUser"):Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+			wait(1)
+			game:GetService("VirtualUser"):Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
 		end
 	end)
 
@@ -242,7 +351,7 @@ do
 		Title = "Script Creator",
 		Content = "lvasion"
 	})
-	
+
 	Tabs.Main:AddButton({
 		Title = "Expose Roles",
 		Description = "Spill the beans, all of them",
@@ -250,10 +359,58 @@ do
 			local tts = game:GetService("TextChatService")
 			local channels = tts:WaitForChild("TextChannels")
 			local channel = channels:WaitForChild("RBXGeneral")
-			
+
 			channel:SendAsync("Murderer: " .. (mm2ConfigData.dataConfig.murderer or "i forgor"))
 			task.wait(1)
 			channel:SendAsync("Sheriff: " .. (mm2ConfigData.dataConfig.sheriff or "i forgor"))
+		end
+	})
+
+	Tabs.Main:AddButton({
+		Title = "Collect Gun",
+		Description = "One-Time Collect Weapon",
+		Callback = function()
+			local gun = workspace:FindFirstChild("GunDrop")
+
+			if gun then
+				local original = LocalPlayer.Character.HumanoidRootPart.CFrame
+				LocalPlayer.Character.HumanoidRootPart.CFrame = gun.CFrame + Vector3.new(0, 3, 0)
+				wait(1)
+				LocalPlayer.Character.HumanoidRootPart.CFrame = original
+			else
+				Fluent:Notify({
+					Title = "ryza.us",
+					Content = "GunDrop was not found, try again shortly.",
+					Duration = 8
+				})
+			end
+		end
+	})
+
+	Tabs.Main:AddToggle("MyToggle", {
+		Title = "Collect Weapon",
+		Description = "Automatically collect the weapon",
+		Default = false,
+		Callback = function(state)
+			mm2ConfigData.espConfig.autoCollectGun = state
+		end
+	})
+
+	Tabs.Main:AddToggle("MyToggle", {
+		Title = "Anti AFK",
+		Description = "Toggle anti afk",
+		Default = false,
+		Callback = function(state)
+			mm2ConfigData.espConfig.antiAFK = state
+		end
+	})
+
+	Tabs.ESP:AddToggle("MyToggle", {
+		Title = "Gun ESP",
+		Description = "Highlight dropped weapon",
+		Default = false,
+		Callback = function(state)
+			mm2ConfigData.espConfig.gunESP = state
 		end
 	})
 
