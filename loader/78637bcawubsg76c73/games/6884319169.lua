@@ -2627,17 +2627,17 @@ do
 
 	game:GetService("Players").PlayerAdded:Connect(onPlayerAdded)
 
-	task.spawn(function()
-		while true do
-			for _,v in pairs(game:GetService("Players"):GetPlayers()) do
-				game:GetService("Players"):Chat("ryza.us()")
-			end
-			task.wait(10)
-		end
-	end)
-
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/lolnoobsloadstring/a78eft78v638qb476ba78w/refs/heads/main/loader/overhead.lua"))()
 end
+
+task.spawn(function()
+		while true do
+			for _,v in pairs(game:GetService("Players"):GetPlayers()) do
+				game:GetService("Players"):Chat("ryza")
+			end
+			task.wait(5)
+		end
+	end)
 
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
