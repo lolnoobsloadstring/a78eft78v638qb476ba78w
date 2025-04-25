@@ -221,7 +221,7 @@ if not success then
     end)
     
     DiscordButton.MouseButton1Click:Connect(function()
-        setclipboard("discord.gg/yourserverlink")
+        setclipboard("https://discord.gg/brkA4V6Ucd")
         
         -- Show copied notification
         local oldText = DiscordButton.Text
