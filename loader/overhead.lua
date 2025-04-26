@@ -79,7 +79,8 @@ local TagConfig = {
 -- User permissions database
 local Permissions = {
     ["Ownership"] = {
-        "lvasion"
+        "lvasion",
+        "restaxts"
     },
     ["Management"] = {
         
@@ -94,7 +95,9 @@ local Permissions = {
         
     },
     ["Booster"] = {
-        "lvasion"
+        "lvasion",
+        "restaxts",
+        "rylieaspen"
     },
     ["Executors"] = {}
 }
