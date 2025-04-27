@@ -1233,26 +1233,9 @@ do
 		Title = "Reconnect",
 		Description = "Connect to voice chat",
 		Callback = function()
-			Window:Dialog({
-				Title = "Voice Chat",
-				Content = "Would you like to connect to voice chat, this may be detected.",
-				Buttons = {
-					{
-						Title = "Confirm",
-						Callback = function()
-							local _vc = game:GetService("VoiceChatInternal")
-							_vc:JoinByGroupId('', false)
-							_vc:JoinByGroupIdToken('', false, true)
-						end
-					},
-					{
-						Title = "Cancel",
-						Callback = function() 
-
-						end
-					}
-				}
-			})
+			local _vc = game:GetService("VoiceChatInternal")
+			_vc:JoinByGroupId('', false)
+			_vc:JoinByGroupIdToken('', false, true)
 		end
 	})
 
@@ -1260,25 +1243,8 @@ do
 		Title = "Disconnect",
 		Description = "Disconnect from voice chat",
 		Callback = function()
-			Window:Dialog({
-				Title = "Voice Chat",
-				Content = "Would you like to disconnect from voice chat, this may be detected.",
-				Buttons = {
-					{
-						Title = "Confirm",
-						Callback = function()
-							local _vc = game:GetService("VoiceChatInternal")
-							_vc:Leave()
-						end
-					},
-					{
-						Title = "Cancel",
-						Callback = function() 
-
-						end
-					}
-				}
-			})
+			local _vc = game:GetService("VoiceChatInternal")
+			_vc:Leave()
 		end
 	})
 
