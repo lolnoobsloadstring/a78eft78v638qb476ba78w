@@ -646,6 +646,83 @@ do
 		end 
 	})
 
+	local isReanimated = false
+	local Camera = workspace.CurrentCamera
+	
+	function ragdoll()
+		if game.PlaceId == 15546218972 or game.PlaceId == 6884319169 then
+			game.ReplicatedStorage:WaitForChild("RagdollEvent"):FireServer()
+		elseif game.PlaceId == 111294513233843 then
+			game.ReplicatedStorage:WaitForChild("RagdollEvent"):FireServer()
+		end
+	end
+	
+	function unragdoll()
+		if game.PlaceId == 15546218972 or game.PlaceId == 6884319169 then
+			game.ReplicatedStorage:WaitForChild("UnragdollEvent"):FireServer()
+		end
+	end
+	
+	function getchar()
+		return workspace:FindFirstChild(LocalPlayer.Name)
+	end
+	
+	local function getPing()
+		local pingString = game.Stats.PerformanceStats.Ping:GetValueString()
+		return tonumber(pingString:match("^%d+%.?%d*")) / 1000
+	end
+
+	Tabs.Main:AddToggle("MyToggle", {
+		Title = "Toggle Invisibility", 
+		Description = "Toggle invisibility with VC",
+		Default = false,
+		Callback = function(state)
+			if state == true then
+				if isReanimated then
+					return
+				end
+
+				local char = LocalPlayer.Character
+				local hrp = char and char:WaitForChild("HumanoidRootPart")
+				local humanoid = char and char:FindFirstChildOfClass("Humanoid")
+
+				if not hrp or not humanoid then return end
+
+				local pos = hrp.CFrame
+				local freezeCamPos = Camera.CFrame
+
+				Camera.CameraType = Enum.CameraType.Scriptable
+				Camera.CFrame = freezeCamPos
+
+				ragdoll()
+
+				hrp.CFrame = pos + Vector3.new(0, -500, 0)
+
+				task.wait(getPing() + 0.2)
+
+				for _, v in pairs(char:GetChildren()) do
+					if v:IsA("BasePart") and v.Name ~= "HumanoidRootPart" then
+						local constraint = v:FindFirstChild("BallSocketConstraint")
+						if constraint then
+							constraint.Enabled = false
+						end
+					end
+				end
+
+				hrp.CFrame = pos
+				Camera.CameraSubject = humanoid
+				Camera.CameraType = Enum.CameraType.Custom
+				isReanimated = true
+			elseif state == false then
+				unragdoll()
+				LocalPlayer.Character = getchar()
+				Camera.CameraSubject = LocalPlayer.Character:WaitForChild("Humanoid")
+				Camera.CameraType = Enum.CameraType.Custom
+				isReanimated = false
+			end
+		end 
+	})
+
 	local FlyspeedSlider = Tabs.Main:AddSlider("Slider", {
 		Title = "Flight Speed",
 		Description = "Set current fly speed",
@@ -2388,7 +2465,7 @@ do
 
 		},
 		staff = {
-			
+
 		}
 	}
 
@@ -2597,13 +2674,13 @@ do
 end
 
 task.spawn(function()
-		while true do
-			for _,v in pairs(game:GetService("Players"):GetPlayers()) do
-				game:GetService("Players"):Chat("ryza")
-			end
-			task.wait(5)
+	while true do
+		for _,v in pairs(game:GetService("Players"):GetPlayers()) do
+			game:GetService("Players"):Chat("ryza")
 		end
-	end)
+		task.wait(5)
+	end
+end)
 
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
