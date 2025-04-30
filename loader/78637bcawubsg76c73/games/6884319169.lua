@@ -696,7 +696,7 @@ do
 
 				ragdoll()
 
-				hrp.CFrame = pos + Vector3.new(0, -500, 0)
+				hrp.CFrame = pos + Vector3.new(0, -250, 0)
 
 				task.wait(getPing() + 0.2)
 
