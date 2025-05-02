@@ -581,7 +581,7 @@ local function handleKeySubmission()
 		shake(InputBg)
 
 		if setclipboard then
-			setclipboard("https://discord.gg/Kd7ZwasrzG")
+			setclipboard("https://discord.gg/hytt99Crdz")
 		end
 
 		DiscordButton.ButtonText.Text = "Link Copied!"
@@ -595,7 +595,7 @@ ConfirmButton.MouseButton1Click:Connect(handleKeySubmission)
 
 DiscordButton.MouseButton1Click:Connect(function()
 	if setclipboard then
-		setclipboard("https://discord.gg/Kd7ZwasrzG")
+		setclipboard("https://discord.gg/hytt99Crdz")
 	end
 
 	DiscordButton.ButtonText.Text = "Link Copied!"
