@@ -158,13 +158,7 @@ local Options = Fluent.Options
 do	
 	Fluent:Notify({
 		Title = "ryza.us",
-		Content = "https://discord.gg/Kd7ZwasrzG", -- Optional
-		Duration = nil -- Set to nil to make the notification not disappear
-	})
-
-	Fluent:Notify({
-		Title = "ryza.us",
-		Content = "ryza.us is undergoing new ownership, make sure to join the discord!",
+		Content = "https://discord.gg/hytt99Crdz", -- Optional
 		Duration = nil -- Set to nil to make the notification not disappear
 	})
 
