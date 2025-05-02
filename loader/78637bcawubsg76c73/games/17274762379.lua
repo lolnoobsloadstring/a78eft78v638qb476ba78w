@@ -1542,160 +1542,6 @@ do
 		end
 	})
 
-	local BoothSnatchInput = Tabs.Exploits:AddInput("Input", {
-		Title = "Unclaim a booth",
-		Description = "Steal a players booth",
-		Default = "",
-		Placeholder = "Player",
-		Numeric = false, -- Only allows numbers
-		Finished = true, -- Only calls callback when you press enter
-		Callback = function(Value)
-			local Folder = workspace.Booth
-			local getPlayer = getPlayer(Value)
-
-			if getPlayer == LocalPlayer then
-				return game.ReplicatedStorage:WaitForChild("DeleteBoothOwnership"):FireServer()
-			end
-
-			if not getPlayer then
-				return 
-			end
-
-			local function getStall()
-				for i,v in pairs(workspace.Booth:GetChildren()) do
-					if v ~= LocalPlayer and v:FindFirstChild("Username"):FindFirstChild("BillboardGui").TextLabel.Text == "Owned by: "..tostring(getPlayer) then
-						return v
-					end
-				end
-				return nil
-			end
-
-			local plr_booth = getStall()
-
-			if not plr_booth and getPlayer then
-				return
-			end
-
-			local Folder = workspace.Booth
-			local OldCF = LocalPlayer.Character.HumanoidRootPart.CFrame
-
-			local stalls = {
-				Folder:FindFirstChild("Booth01"),
-				Folder:FindFirstChild("Booth02"),
-				Folder:FindFirstChild("Booth03"),
-				Folder:FindFirstChild("Booth04"),
-				Folder:FindFirstChild("Booth05")
-			}
-
-			local function setupProximityPrompt(stall)
-				local ProximityPrompt = stall:FindFirstChild("Activate"):FindFirstChildOfClass("ProximityPrompt")
-				if ProximityPrompt and not ProximityPrompt.Enabled then
-					ProximityPrompt.Enabled = true
-					ProximityPrompt.ClickablePrompt = true
-					ProximityPrompt.MaxActivationDistance = 15
-					ProximityPrompt.RequiresLineOfSight = false
-					ProximityPrompt.HoldDuration = 0
-				end
-			end
-
-			local function Claim_A_Booth()
-				local OldCF = LocalPlayer.Character.HumanoidRootPart.CFrame
-
-				local stall = plr_booth
-				local ProximityPrompt = stall:FindFirstChild("Activate"):FindFirstChildOfClass("ProximityPrompt")
-
-				if stall then
-					setupProximityPrompt(stall)
-					LocalPlayer.Character:PivotTo(stall:GetPivot())
-					task.wait(0.3)
-					fireproximityprompt(ProximityPrompt)
-					local args = {
-						[1] = "",
-						[2] = "Gray",
-						[3] = "SourceSans"
-					}
-
-					game.ReplicatedStorage:WaitForChild("UpdateBoothText"):FireServer(unpack(args))
-					game.ReplicatedStorage:WaitForChild("DeleteBoothOwnership"):FireServer()
-					LocalPlayer.Character:SetPrimaryPartCFrame(OldCF)
-
-					if plr_booth then
-						return 
-					end
-				end
-			end
-
-			local stall = plr_booth
-			setupProximityPrompt(stall)
-			wait(0.3)
-			Claim_A_Booth()
-		end
-	})
-
-	Tabs.Exploits:AddButton({ 
-		Title = "Unclaim All Booths", 
-		Description = "Unclaims all booths automatically.",
-		Callback = function()
-			Window:Dialog({
-				Title = "Unclaim All Booths",
-				Content = "Are you sure you want to unclaim all booths?",
-				Buttons = {
-					{
-						Title = "Confirm",
-						Callback = function()
-							local Folder = workspace:WaitForChild("Booth")
-							local OldCF = LocalPlayer.Character.HumanoidRootPart.CFrame
-
-							local function setupProximityPrompt(stall)
-								local ProximityPrompt = stall:FindFirstChild("Activate"):FindFirstChildOfClass("ProximityPrompt")
-								if ProximityPrompt then
-									ProximityPrompt.Enabled = true
-									ProximityPrompt.ClickablePrompt = true
-									ProximityPrompt.MaxActivationDistance = 15
-									ProximityPrompt.RequiresLineOfSight = false
-									ProximityPrompt.HoldDuration = 0
-								end
-								return ProximityPrompt
-							end
-
-							for _, stall in ipairs(Folder:GetChildren()) do
-								local ownerTag = stall:FindFirstChild("Username") and stall.Username:FindFirstChild("BillboardGui") and stall.Username.BillboardGui:FindFirstChild("TextLabel")
-								if ownerTag and ownerTag.Text ~= "Owned by: " then
-									local ProximityPrompt = setupProximityPrompt(stall)
-									if ProximityPrompt then
-										LocalPlayer.Character:PivotTo(stall:GetPivot())
-										task.wait(0.3)
-										fireproximityprompt(ProximityPrompt)
-										task.wait(0.2)
-
-										local args = {
-											[1] = "",
-											[2] = "Gray",
-											[3] = "SourceSans"
-										}
-
-										game.ReplicatedStorage:WaitForChild("UpdateBoothText"):FireServer(unpack(args))
-										game.ReplicatedStorage:WaitForChild("DeleteBoothOwnership"):FireServer()
-										task.wait(0.2)
-									end
-								end
-								task.wait(0.5)
-							end
-
-							LocalPlayer.Character:SetPrimaryPartCFrame(OldCF)
-						end
-					},
-					{
-						Title = "Cancel",
-						Callback = function()
-
-						end
-					}
-				}
-			})
-		end
-	})
-
 	-- lighting tab
 
 	Tabs.Lighting:AddButton({
@@ -2259,18 +2105,12 @@ do
 						" ---------------------  " .. blob .. "\r" ..
 						".gg/Bm4syhCu5s" 
 
-					-- New message for the old chat system (without ASCII art)
-					local oldMessage = "🔥AK ADMIN🔥 👉 .ĝĝ/akadmin 👈"
 
 
 					-- Send the appropriate message based on the chat system
 					local function sendMessage()
 						if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-							-- New chat system
 							chatMessage(newMessage)
-						else
-							-- Old chat system
-							chatMessage(oldMessage)
 						end
 					end
 
