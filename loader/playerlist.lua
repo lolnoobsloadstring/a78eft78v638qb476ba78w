@@ -18,6 +18,12 @@ if not ryza then
 	return
 end
 
+if UserInputService.TouchEnabled then
+	local scale = Instance.new("UIScale")
+	scale.Parent = ryza
+	scale.Scale = 0.5
+end
+
 -- Create the PlayerList main container with fixed size
 local PlayerList = Instance.new("Frame")
 PlayerList.Name = "PlayerList"
