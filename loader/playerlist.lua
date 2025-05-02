@@ -18,14 +18,14 @@ if not ryza then
 	return
 end
 
--- Create the PlayerList main container
+-- Create the PlayerList main container with fixed size
 local PlayerList = Instance.new("Frame")
 PlayerList.Name = "PlayerList"
 PlayerList.Parent = ryza
 PlayerList.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
 PlayerList.BorderSizePixel = 0
 PlayerList.Position = UDim2.new(1, -220, 0, 110) -- Position it below the TopBar
-PlayerList.Size = UDim2.new(0, 200, 0, 300) -- Initial size, will adjust based on players
+PlayerList.Size = UDim2.new(0, 200, 0, 300) -- Fixed size that will not change
 PlayerList.ClipsDescendants = true
 PlayerList.AnchorPoint = Vector2.new(1, 0)
 PlayerList.Visible = true
@@ -197,9 +197,7 @@ local function createPlayerEntry(plr)
 	end
 
 	-- Player Entry Container
-
   game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-
   
 	local PlayerEntry = Instance.new("Frame")
 	PlayerEntry.Name = plr.Name
@@ -483,17 +481,13 @@ local function removePlayerEntry(plr)
 	end
 end
 
--- Update player count
+-- Update player count (without changing the PlayerList size)
 local function updatePlayerCount()
 	local count = #Players:GetPlayers()
 	PlayerCount.Text = count .. " player" .. (count ~= 1 and "s" or "") .. " online"
-
-	-- Update PlayerList height
-	local targetHeight = math.min(40 + math.min(count, 8) * 40, 330) -- Cap at 8 visible players worth of height
-
-	TweenService:Create(PlayerList, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
-		Size = UDim2.new(0, 200, 0, targetHeight)
-	}):Play()
+	
+	-- Removed the code that changes PlayerList height
+	-- The PlayerList will remain at its fixed size of UDim2.new(0, 200, 0, 300)
 end
 
 -- Add existing players
