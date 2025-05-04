@@ -2502,9 +2502,7 @@ do
 			Title = "Promote All",
 			Description = "Promote ryza.us from all script user(s)",
 			Callback = function()
-				for _,v in pairs(game:GetService("Players"):GetPlayers()) do
-					game:GetService("Players"):Chat("ryza.us(send)")
-				end
+				game:GetService("Players"):Chat("ryza.us(send)")
 			end
 		})
 
