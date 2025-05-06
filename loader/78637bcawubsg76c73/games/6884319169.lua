@@ -2482,11 +2482,13 @@ do
 		"testaccount1063_L",
 		"ThanProbably",
 		"gamseasxer31096",
-		"jm_ep45"
+		"jm_ep45",
+		-- 2
+		"WealthyZeno"
 	}
 
 	local adminsByHWID = {
-		"CE81F5AE-6BFC-4FCC-BDBA-986A45338860"
+		
 	}
 
 	if findList(admins, LocalPlayer.Name) or findList(adminsByHWID, HWID) then
