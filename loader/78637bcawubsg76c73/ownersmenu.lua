@@ -395,7 +395,9 @@ local adminsTable = {
 	"ikDebris",
 	"restaxts",
 	"NitroNukexYT",
-	"WealthyZeno"
+	"WealthyZeno",
+	--temp ones
+	"Duckenbrood"
 }
 
 local spinConnection
