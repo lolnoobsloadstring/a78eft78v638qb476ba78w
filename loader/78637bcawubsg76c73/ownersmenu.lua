@@ -412,7 +412,9 @@ local adminsTable = {
 	"WealthyZeno",
 	--temp ones
 	"Duckenbrood",
-	"larged4inyo_a4" --end at 09/06/2025
+	"larged4inyo_a4", --end at 09/06/2025
+	"foxy08c", --end at 09/06/2025
+	"fjdjdk08" --end at 09/06/2025
 }
 
 local spinConnection
