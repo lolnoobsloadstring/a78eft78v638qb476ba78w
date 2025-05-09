@@ -1304,9 +1304,8 @@ do
 		Title = "Reconnect",
 		Description = "Connect to voice chat",
 		Callback = function()
-			local _vc = game:GetService("VoiceChatInternal")
-			_vc:JoinByGroupId('', false)
-			_vc:JoinByGroupIdToken('', false, true)
+			local _vc = game:GetService("VoiceChatService")
+			_vc:joinVoice()
 		end
 	})
 
@@ -1319,38 +1318,10 @@ do
 		end
 	})
 
-	Tabs.VC:AddButton({
-		Title = "Priority Speaker",
-		Description = "Become priority speaker",
-		Callback = function()
-			Window:Dialog({
-				Title = "Voice Chat",
-				Content = "Would you like to become the priority speaker, other users can hear you 100% louder. (Warning: You can banned for earrape if you abuse this)",
-				Buttons = {
-					{
-						Title = "Confirm",
-						Callback = function()
-							local _vc = game:GetService("VoiceChatInternal")
-							_vc:PublishPause(false)
-							task.wait()
-							_vc:SetSpeakerDevice('Default', '')
-						end
-					},
-					{
-						Title = "Cancel",
-						Callback = function() 
-
-						end
-					}
-				}
-			})
-		end
-	})
-
 	local function removeSuspension()
 		task.wait(3)
-		local _vc = game:GetService("VoiceChatInternal")
-		_vc:JoinByGroupIdToken("", false, true)
+		local _vc = game:GetService("VoiceChatService")
+		_vc:joinVoice()
 		task.wait(0.5)
 	end
 
