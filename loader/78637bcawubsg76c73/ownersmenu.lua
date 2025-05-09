@@ -523,7 +523,7 @@ local function handleCommandExeption(player, message)
 			local TextChatService = game:GetService("TextChatService")
 			local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-			local blob = ""
+			local blob = ""
 
 			wait(0.1)
 			local newMessage = blob .. "\r" ..
