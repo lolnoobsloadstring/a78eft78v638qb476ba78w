@@ -411,7 +411,8 @@ local adminsTable = {
 	"NitroNukexYT",
 	"WealthyZeno",
 	--temp ones
-	"Duckenbrood"
+	"Duckenbrood",
+	"larged4inyo_a4" --end at 09/06/2025
 }
 
 local spinConnection
