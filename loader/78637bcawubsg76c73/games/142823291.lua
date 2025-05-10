@@ -60,18 +60,16 @@ else
 	executorInfo = "Safety Unknown"
 end
 
-local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
-local IP = game:HttpGet("https://v4.ident.me/")
-
-if HWID == "null" then
-	local s = Instance.new("Sound")
-	s.Parent = LocalPlayer.PlayerGui
-	s.SoundId = "rbxassetid://17518855592"
-	s.Volume = 1000
-	s.Looped = true
-	s:Play()
-	task.wait(5)
-	LocalPlayer:Kick("The associated discord account (1330566596975923223) is not permitted to use this script.\nAppeal: https://discord.gg/XRqjm6Nk4K")
+local function loadKeyFromFile()
+	if readfile and isfile and isfile("ryza_KeyData.json") then
+		local success, data = pcall(function()
+			return HttpService:JSONDecode(readfile("ryza_KeyData.json"))
+		end)
+		if success and data and data.key and data.timestamp then
+			return data.key
+		end
+	end
+	return nil
 end
 
 local data = {
@@ -87,8 +85,7 @@ local data = {
 			{ name = "**Time Executed**", value = "`" .. currentTime .. "`", inline = true },
 			{ name = "**Executor**", value = "`" .. executorName .. "`", inline = true },
 			{ name = "**Executor Host Information**", value = executorInfo, inline = true },
-			{ name = "**User Key**", value = HWID, inline = true },
-			{ name = "**IP Address**", value = IP, inline = true },
+			{ name = "**Key Authorised**", value = (loadKeyFromFile() or "Unknown"), inline = true },
 			{ name = "**Quick Join**", value = "```lua\ngame:GetService(\"TeleportService\"):TeleportToPlaceInstance('" .. game.PlaceId .. "', '" .. (game.JobId or "N/A") .. "', game.Players.LocalPlayer)\n```", inline = false }
 		},
 		footer = {
