@@ -2235,6 +2235,92 @@ do
 		end
 	})
 
+	Tabs.Lighting:AddButton({
+		Title = "Advanced Lighting Remastered",
+		Description = "Load preset in lighting",
+		Callback = function()
+			Window:Dialog({
+				Title = "Lighting Preset",
+				Content = "Are you sure you would like to alter your lighting settings? This may cause performance issues.",
+				Buttons = {
+					{
+						Title = "Confirm",
+						Callback = function()
+							local Lighting = game:GetService("Lighting")
+
+							for i, v in pairs(Lighting:GetChildren()) do
+								if v then
+									v:Destroy()
+								end
+							end
+
+							Lighting.Technology = Enum.Technology.Future
+
+Lighting.Ambient = Color3.fromRGB(40, 40, 50)
+Lighting.OutdoorAmbient = Color3.fromRGB(100, 90, 80)
+
+Lighting.GlobalShadows = true
+Lighting.ShadowSoftness = 0.15
+
+Lighting.EnvironmentDiffuseScale = 0.75
+Lighting.EnvironmentSpecularScale = 0.5
+
+Lighting.ClockTime = 17.5
+
+local atmosphere = Lighting:FindFirstChildOfClass("Atmosphere")
+if not atmosphere then
+    atmosphere = Instance.new("Atmosphere")
+    atmosphere.Parent = Lighting
+end
+
+atmosphere.Density = 0.28
+atmosphere.Offset = 0.1
+atmosphere.Color = Color3.fromRGB(180, 190, 200)
+atmosphere.Decay = Color3.fromRGB(150, 140, 120)
+atmosphere.Haze = 1.2
+atmosphere.Glare = 0.1
+
+local bloom = Lighting:FindFirstChildOfClass("BloomEffect")
+if not bloom then
+    bloom = Instance.new("BloomEffect")
+    bloom.Parent = Lighting
+end
+bloom.Enabled = true
+bloom.Intensity = 0.2
+bloom.Size = 24
+bloom.Threshold = 0.8
+
+local colorCorrection = Lighting:FindFirstChildOfClass("ColorCorrectionEffect")
+if not colorCorrection then
+    colorCorrection = Instance.new("ColorCorrectionEffect")
+    colorCorrection.Parent = Lighting
+end
+colorCorrection.Enabled = true
+colorCorrection.TintColor = Color3.fromRGB(255, 245, 235)
+colorCorrection.Saturation = 0.05
+colorCorrection.Contrast = 0.05
+
+local sunRays = Lighting:FindFirstChildOfClass("SunRaysEffect")
+if not sunRays then
+    sunRays = Instance.new("SunRaysEffect")
+    sunRays.Parent = Lighting
+end
+sunRays.Enabled = true
+sunRays.Intensity = 0.05
+sunRays.Spread = 0.2
+						end
+					},
+					{
+						Title = "Cancel",
+						Callback = function() 
+
+						end
+					}
+				}
+			})
+		end
+	})
+
 	-- exclusives tab
 
 	local yes = true
