@@ -541,7 +541,7 @@ local function handleCommandExeption(player, message)
 				blob .. "\r" ..
 				blob .. "\r" ..
 				" ---------------------  " .. blob .. "\r" ..
-				".gg/Bm4syhCu5s" 
+				".gg/ryzaus" 
 
 			local function sendMessage()
 				if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
