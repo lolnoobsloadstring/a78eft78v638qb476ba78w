@@ -170,7 +170,7 @@ local Options = Fluent.Options
 do	
 	Fluent:Notify({
 		Title = "ryza.us",
-		Content = "https://discord.gg/hytt99Crdz", -- Optional
+		Content = "https://discord.gg/ryzaus", -- Optional
 		Duration = nil -- Set to nil to make the notification not disappear
 	})
 
@@ -465,7 +465,7 @@ do
 
 	Tabs.Main:AddParagraph({
 		Title = "Discord Server",
-		Content = "Invite: https://discord.gg/Kd7ZwasrzG"
+		Content = "Invite: https://discord.gg/ryzaus"
 	})
 
 	Tabs.Credits:AddParagraph({
